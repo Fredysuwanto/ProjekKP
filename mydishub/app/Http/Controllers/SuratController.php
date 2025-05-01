@@ -12,6 +12,8 @@ class SuratController extends Controller
      */
     public function index()
     {
+        $surat = Surat::all();
+        return view('surat.index')-> with('surat',$surat); // Ini artinya lo harus punya file resources/views/surat/index.blade.php
         //
     }
 
