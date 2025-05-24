@@ -1,8 +1,10 @@
 <?php
+
+use App\Http\Controllers\PemilikController;
 use App\Http\Controllers\SuratController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layout.main');
 });
-Route::resource('surat',SuratController::class);
+Route::resource('pemilik',PemilikController::class);
