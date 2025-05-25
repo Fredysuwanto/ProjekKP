@@ -7,7 +7,7 @@
   <div class="card">
     <div class="card-body">
       <h4 class="card-title">Data Pemilik Kapal</h4>
-      <p class="card-description">Data Pemilik</p>
+      <p class="card-description">Perhatian</p>
 
       {{-- FLASH MESSAGE --}}
       @if (session('success'))
@@ -30,7 +30,7 @@
         @foreach ($pemilik as $item)
         <table class="table table-bordered mb-4">
           <tr>
-            <th style="width: 30%">Nama</th>
+            <th style="width: 30%">Data diri/Perusahaan</th>
             <td>{{ $item["nama"] }}</td>
           </tr>
           <tr>

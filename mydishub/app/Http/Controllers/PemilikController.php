@@ -36,7 +36,7 @@ class PemilikController extends Controller
     {
         $val = $request->validate([
             'nama' => "required",
-            'nik' => "required",
+            'nik' => "required|max:16",
             'alamat' => "required",
             'telepon' => "required",
             'email' => "required|email",
@@ -69,7 +69,7 @@ class PemilikController extends Controller
     {
         $request->validate([
             'nama' => 'required',
-            'nik' => 'required',
+            'nik' => "required|max:16",
             'alamat' => 'required',
             'telepon' => 'required',
             'email' => 'required|email',

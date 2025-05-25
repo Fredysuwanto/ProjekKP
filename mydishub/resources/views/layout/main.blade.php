@@ -23,51 +23,55 @@
     <!-- partial:./partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <ul class="nav">
+       <li class="nav-item sidebar-category text-center">
+  <img src="{{ asset('images/dishub.png') }}" alt="Logo Dishub" 
+       style="width: 100px; height: auto; margin-bottom: 10px;">
+  <p style="font-size: 1.5rem; font-weight: bold; letter-spacing: 1px;">MY DISHUB</p>
+  <span></span>
+</li>
+
+
+       
         <li class="nav-item sidebar-category">
-          <p>Navigation</p>
+          <p>Components</p>
           <span></span>
         </li>
-        <li class="nav-item">
+         <li class="nav-item">
           <a class="nav-link" href="{{ url('dashboard') }}">
             <i class="mdi mdi-view-quilt menu-icon"></i>
             <span class="menu-title">Dashboard</span>
             <div class="badge badge-info badge-pill">2</div>
           </a>
         </li>
-        <li class="nav-item sidebar-category">
-          <p>Components</p>
-          <span></span>
-        </li>
+<li class="nav-item">
+  <a class="nav-link d-flex align-items-center" href="{{ url('pemilik') }}">
+    <i class="mdi mdi-account-plus menu-icon" style="margin-right: 10px; font-size: 20px;"></i>
+    <span class="menu-title">Data Diri/Perusahaan</span>
+  </a>
+</li>
+
+       <li class="nav-item">
+  <a class="nav-link d-flex align-items-center" href="{{ url('kapal') }}">
+    <i class="mdi mdi-grease-pencil menu-icon" style="margin-right: 10px; font-size: 20px;"></i>
+    <span class="menu-title">Data Kapal</span>
+  </a>
+</li>
+
         <li class="nav-item">
-          <a class="nav-link" href="{{url('pemilik')}}">
-            <i class="mdi mdi-bank menu-icon"></i>
-            <span class="menu-title">Data Pemilik</span>
-          </a>
-        </li>
+  <a class="nav-link" href="{{ url('surat') }}">
+    <i class="mdi mdi-file-multiple menu-icon"></i>
+    <span class="menu-title">Surat</span>
+  </a>
+</li>
+
         <li class="nav-item">
-          <a class="nav-link" href="{{url('prodi')}}">
-            <i class="mdi mdi-bank menu-icon"></i>
-            <span class="menu-title">Program Studi</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{url('mahasiswa')}}">
-            <i class="mdi mdi-chart-pie menu-icon"></i>
-            <span class="menu-title">Mahasiswa</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="pages/tables/basic-table.html">
-            <i class="mdi mdi-grid-large menu-icon"></i>
-            <span class="menu-title">Tables</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="pages/icons/mdi.html">
-            <i class="mdi mdi-emoticon menu-icon"></i>
-            <span class="menu-title">Icons</span>
-          </a>
-        </li>
+  <a class="nav-link" href="{{ url('riwayat') }}">
+    <i class="mdi mdi-history menu-icon"></i>
+    <span class="menu-title">Riwayat</span>
+  </a>
+</li>
+
+        
         <li class="nav-item sidebar-category">
           <p>Pages</p>
           <span></span>
@@ -113,11 +117,16 @@
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-menu"></span>
           </button>
-          <div class="navbar-brand-wrapper">
-            <a class="navbar-brand brand-logo" href="index.html"><img src="images/logo.svg" alt="logo" /></a>
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a>
-          </div>
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Welcome back, </h4>
+         <div class="navbar-brand-wrapper">
+  <a class="navbar-brand brand-logo" href="index.html">
+    <img src="images/logo_dishub.png" alt="logo" style="height: 32px; width: auto;" />
+  </a>
+  <a class="navbar-brand brand-logo-mini" href="index.html">
+    <img src="images/logo_dishub.png" alt="logo mini" style="height: 32px; width: auto;" />
+  </a>
+</div>
+
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">MY DISHUB </h4>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item">
               <h4 class="mb-0 font-weight-bold d-none d-xl-block">Mar 12, 2019 - Apr 10, 2019</h4>

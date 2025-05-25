@@ -10,9 +10,5 @@ class Pemilik extends Model
     use HasFactory;
     protected $fillable = ['nama', 'nik', 'alamat', 'telepon', 'email'];
 
-    public function pemilik()
-    {
-        return $this->belongsTo(Pemilik::class, 'pemilik_id');
-        
-    }
+   
 }
