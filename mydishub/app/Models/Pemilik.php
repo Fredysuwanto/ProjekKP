@@ -9,6 +9,5 @@ class Pemilik extends Model
 {
     use HasFactory;
     protected $fillable = ['nama', 'nik', 'alamat', 'telepon', 'email'];
-
-   
 }
+    

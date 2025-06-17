@@ -10,4 +10,13 @@ Route::get('/', function () {
 });
 Route::resource('pemilik',PemilikController::class);
 Route::resource('kapal',KapalController::class);
+Route::resource('surat', SuratController::class);
+Route::get('/kapal/{id}', function($id) {
+    return App\Models\Kapal::findOrFail($id);
+});
 
+Route::post('/logout', function () {
+    // logika logout manual
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
