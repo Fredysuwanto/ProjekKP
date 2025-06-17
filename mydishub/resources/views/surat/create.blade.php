@@ -3,9 +3,8 @@
 @section('content')
 <div class="container">
     <h1>Buat Surat Baru</h1>
-    <form method="POST" action="{{ route('surat.store') }}">
+    <form method="POST" action="{{ route('surat.store') }}" enctype="multipart/form-data">
         @csrf
-
         <div class="mb-3">
             <label>Pemilik</label>
             <select name="pemilik_id" class="form-control" required>

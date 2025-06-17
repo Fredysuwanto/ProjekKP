@@ -1,65 +1,75 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Riwayat;
+use App\Models\Kapal;
 use Illuminate\Http\Request;
 
 class RiwayatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $riwayats = Riwayat::with('kapal')->get();
+        return view('riwayat.index', compact('riwayats'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $kapals = Kapal::all();
+        return view('riwayat.create', compact('kapals'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nosurat' => "required|max:16",
+            'kapal_id' => 'required',
+            'file_surat' => 'nullable|mimes:pdf|max:2048', // validasi pdf
+        ]);
+        $riwayat = new Riwayat();
+        $riwayat->nosurat = $request->nosurat;
+        $riwayat->kapal_id = $request->kapal_id;
+        if ($request->hasFile('file_surat')) {
+            $filename = time() . '_' . $request->file('file_surat')->getClientOriginalName();
+            $path = $request->file('file_surat')->storeAs('surats', $filename, 'public');
+            $riwayat->file_surat = $path;
+        }
+
+        $riwayat->save();
+            return redirect()->route('riwayat.index')->with('success', 'Riwayat berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Riwayat $riwayat)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Riwayat $riwayat)
     {
-        //
+        $kapals = Kapal::all(); // ✅ Benar
+        return view('riwayat.edit', compact('riwayat', 'kapals'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Riwayat $riwayat)
-    {
-        //
+        public function update(Request $request, Riwayat $riwayat)
+        {
+            $request->validate([
+                'nosurat' => "required|max:16",
+                'kapal_id' => 'required',
+                'file_surat' => 'nullable|mimes:pdf|max:2048', // validasi file PDF
+            ]);
+        $riwayat->nosurat = $request->nosurat;
+        $riwayat->kapal_id = $request->kapal_id;
+        if ($request->hasFile('file_surat')) {
+        // Simpan file baru
+        if ($request->hasFile('file_surat')) {
+        $filename = time() . '_' . $request->file('file_surat')->getClientOriginalName();
+        $path = $request->file('file_surat')->storeAs('surats', $filename, 'public');
+        $riwayat->file_surat = $path;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Riwayat $riwayat)
+    $riwayat->save(); // HANYA ini
+
+    return redirect()->route('riwayat.index')->with('success', 'Riwayat berhasil diperbarui');
+        }
+    }
+        public function destroy(Riwayat $riwayat)
     {
-        //
+        $riwayat->delete();
+        return redirect()->route('riwayat.index')->with('success', 'riwayat berhasil dihapus.');
     }
 }

@@ -9,17 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('riwayats', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
+public function up()
+{
+    Schema::create('riwayats', function (Blueprint $table) {
+        $table->id();
+        $table->string('nosurat');
+        $table->foreignId('kapal_id');
+        $table->string('file_surat')->nullable();
+        $table->timestamps();
+    });
+}
     public function down(): void
     {
         Schema::dropIfExists('riwayats');

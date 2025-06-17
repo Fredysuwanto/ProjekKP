@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\KapalController;
 use App\Http\Controllers\PemilikController;
+use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\SuratController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,9 +12,8 @@ Route::get('/', function () {
 Route::resource('pemilik',PemilikController::class);
 Route::resource('kapal',KapalController::class);
 Route::resource('surat', SuratController::class);
-Route::get('/kapal/{id}', function($id) {
-    return App\Models\Kapal::findOrFail($id);
-});
+Route::resource('riwayat', RiwayatController::class);
+
 
 Route::post('/logout', function () {
     // logika logout manual
