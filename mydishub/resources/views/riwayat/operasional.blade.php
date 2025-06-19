@@ -2,22 +2,27 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Surat Persetujuan Izin Operasional</title>
+    <title>Surat Persetujuan Pengoperasian Kapal</title>
     <style>
         body {
-            font-family: "Times New Roman", Times, serif;
+            font-family: 'DejaVu Sans', sans-serif;
             font-size: 12pt;
-            line-height: 1.6;
+            line-height: 1.5;
         }
-        h2, h3 {
+        .text-center {
             text-align: center;
-            margin: 0;
         }
-        table {
-            width: 100%;
+        .mt-4 {
+            margin-top: 1.5rem;
         }
-        .section {
-            margin-top: 15px;
+        .mt-2 {
+            margin-top: 0.75rem;
+        }
+        .mb-2 {
+            margin-bottom: 0.75rem;
+        }
+        .indent {
+            text-indent: 2em;
         }
         .signature {
             margin-top: 50px;
@@ -27,89 +32,71 @@
 </head>
 <body>
 
-    <h3>SURAT PERSETUJUAN IZIN OPERASIONAL</h3>
-    <h3>ANGKUTAN SUNGAI DAN DANAU ANTAR KABUPATEN / KOTA DALAM PROVINSI</h3>
+    <h2 class="text-center">SURAT PERSETUJUAN PENGOPERASIAN</h2>
+    <h3 class="text-center">KAPAL SUNGAI DAN DANAU</h3>
 
-    <p><strong>Nomor:</strong> 551.31 / 0001 / 4 /DISHUB-25</p>
+    <p class="text-center mt-2">Nomor : 551.31 / 0001 / 4 /DISHUB-25</p>
 
-    <div class="section">
-        <strong>DASAR HUKUM</strong>
-        <ol>
-            <li>Undang-Undang RI Nomor 17 Tahun 2008 tentang Pelayaran;</li>
-            <li>Undang-Undang RI Nomor 28 Tahun 2009 tentang Pajak Daerah dan Retribusi Daerah;</li>
-            <li>Undang-Undang RI Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;</li>
-            <li>Undang-Undang RI Nomor 11 Tahun 2020 tentang Cipta Kerja;</li>
-            <li>Peraturan Pemerintah RI Nomor 20 Tahun 2010 tentang Angkutan di Perairan;</li>
-            <li>Peraturan Pemerintah RI Nomor 31 Tahun 2021 tentang Penyelenggaraan Bidang Pelayaran;</li>
-            <li>Peraturan Daerah Provinsi Sumatera Selatan Nomor 5 Tahun 2012 tentang Retribusi Perizinan Tertentu.</li>
-        </ol>
-    </div>
+    <p>Berdasarkan Surat Permohonan Penerbitan Persetujuan Pengoperasian Kapal Sungai dan Danau Perorangan : <u>............... </u> Nomor : <u> - </u>, diberikan Persetujuan Pengoperasian Kapal Sungai dan Danau kepada:</p>
 
-    <div class="section">
-        <strong>Surat Permohonan dari:</strong>
-        <table>
-            <tr>
-                <td>Nama Pemohon</td>
-                <td>: {{ $pemohon->nama ?? '................' }}</td>
-            </tr>
-            <tr>
-                <td>Alamat Pemilik</td>
-                <td>: {{ $pemohon->alamat ?? '................' }}</td>
-            </tr>
-            <tr>
-                <td>Nama Kapal</td>
-                <td>: {{ $kapal->nama ?? '................' }}</td>
-            </tr>
-            <tr>
-                <td>Tanda Selar</td>
-                <td>: {{ $kapal->noselar ?? '................' }}</td>
-            </tr>
-            <tr>
-                <td>Ukuran</td>
-                <td>: {{ $kapal->ukuran ?? '................' }}</td>
-            </tr>
-            <tr>
-                <td>Jenis Kapal</td>
-                <td>: {{ $kapal->jenis ?? '................' }}</td>
-            </tr>
-            <tr>
-                <td>Daya Mesin</td>
-                <td>: {{ $kapal->daya ?? '-' }}</td>
-            </tr>
-            <tr>
-                <td>Nomor Sertifikat Keselamatan</td>
-                <td>: {{ $kapal->sertifikat ?? '................' }}</td>
-            </tr>
-            <tr>
-                <td>Tanggal</td>
-                <td>: {{ $kapal->tanggal ?? '................' }}</td>
-            </tr>
-            <tr>
-                <td>Trayek</td>
-                <td>: Palembang – {{ $kapal->trayek ?? '................' }}</td>
-            </tr>
-        </table>
-    </div>
+    <table style="margin-top: 10px;">
+        <tr>
+            <td style="width: 200px;">NAMA KAPAL</td>
+            <td>: TONGKANG “<u>...................</u>”</td>
+        </tr>
+        <tr>
+            <td>UKURAN</td>
+            <td>: ..,.. X ..,.. X ..,.. M</td>
+        </tr>
+        <tr>
+            <td>TANDA SELAR/NO. PLAT</td>
+            <td>: GT. .... NO. ......</td>
+        </tr>
+        <tr>
+            <td>DI PERAIRAN SUNGAI DAN DANAU</td>
+            <td>: SUMATERA SELATAN</td>
+        </tr>
+        <tr>
+            <td>ALAMAT PEMILIK / PENANGGUNG JAWAB</td>
+            <td>: .......................................................</td>
+        </tr>
+        <tr>
+            <td>NPWP / KTP</td>
+            <td>: .......................................................</td>
+        </tr>
+    </table>
 
-    <div class="section">
-        <strong>KETENTUAN:</strong>
-        <ol>
-            <li>Mengoperasikan kapal yang memenuhi persyaratan keselamatan (laik layar), sesuai dengan trayek yang ditetapkan;</li>
-            <li>Melaksanakan ketentuan tarif angkutan sungai dan danau;</li>
-            <li>Mematuhi penggunaan dermaga ataupun tempat sandar lain yang ditetapkan oleh pihak-pihak yang berwenang;</li>
-            <li>Menjamin keselamatan dan kelancaran naik turunnya penumpang, barang, hewan, kendaraan dan muatan lainnya.</li>
-        </ol>
+    <p class="mt-4">KEWAJIBAN PEMEGANG (SPPKSD):</p>
+    <ol>
+        <li>Memiliki izin yang sah.</li>
+        <li>Mengoperasikan kapal yang memenuhi persyaratan keselamatan (laik laut), sesuai dengan peraturan yang berlaku.</li>
+        <li>Selambat-lambatnya dalam waktu 1 (satu) bulan setelah memperoleh Persetujuan Pengoperasian Kapal Sungai dan Danau perusahaan harus melakukan kegiatan yang nyata.</li>
+        <li>Mematuhi penggunaan dermaga ataupun tempat tambatan lain yang ditetapkan oleh pihak-pihak lain yang berwenang.</li>
+        <li>Menghindari segala sesuatu yang dapat menimbulkan pencemaran lingkungan.</li>
+        <li>Melaporkan kegiatan operasional kepada Dirjen Perhubungan Darat/Gubernur Sumsel melalui Dinas Perhubungan Provinsi Sumatera Selatan secara periodik sesuai ketentuan yang berlaku.</li>
+    </ol>
 
-        <p>Surat ini berlaku selama 5 (lima) tahun sejak ditandatangani sampai dengan tanggal <strong>{{ $berlaku_sampai ?? '................' }}</strong></p>
-    </div>
+    <p>Surat Persetujuan ini dapat ditinjau kembali atau dicabut apabila pemegang tidak mematuhi ketentuan atau melakukan tindak pidana terkait usaha ini.</p>
+
+    <p>Surat ini berlaku selama 5 (lima) tahun sejak tanggal dikeluarkan sampai dengan tanggal <u>.....................</u></p>
+
+    <table class="mt-4" style="width: 100%;">
+        <tr>
+            <td style="width: 50%;"></td>
+            <td>
+                Dikeluarkan di : Palembang<br>
+                Pada Tanggal : 06 Januari 2025
+            </td>
+        </tr>
+    </table>
 
     <div class="signature">
-        <p>Dikeluarkan di: Palembang</p>
-        <p>Pada Tanggal: {{ $tanggal ?? '06 Januari 2025' }}</p>
-        <br><br>
-        <p><strong>KEPALA DINAS PERHUBUNGAN</strong><br>PROVINSI SUMATERA SELATAN</p>
-        <br><br><br>
-        <p><strong>Drs. H. ARINARSA JS</strong><br>Pembina Utama Madya (IV/d)<br>NIP. 19710603 199101 1002</p>
+        <p>KEPALA DINAS PERHUBUNGAN<br>
+        PROVINSI SUMATERA SELATAN</p>
+
+        <p class="mt-2"><strong>Drs. H. ARINARSA JS</strong><br>
+        Pembina Utama Madya (IV/d)<br>
+        NIP. 197106031991011002</p>
     </div>
 
 </body>
