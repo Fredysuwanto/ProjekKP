@@ -71,6 +71,20 @@
   </a>
 </li>
 
+<li class="nav-item">
+  <a class="nav-link" href="{{ url('laporan') }}">
+    <i class="mdi mdi-history menu-icon"></i>
+    <span class="menu-title">Laporan</span>
+  </a>
+</li>
+
+<li class="nav-item">
+  <a class="nav-link" href="{{ url('proses') }}">
+    <i class="mdi mdi-history menu-icon"></i>
+    <span class="menu-title">Proses yang berjalan</span>
+  </a>
+</li>
+
         
         <li class="nav-item sidebar-category">
           <p>Pages</p>

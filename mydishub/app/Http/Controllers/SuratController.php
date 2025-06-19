@@ -28,6 +28,7 @@ class SuratController extends Controller
         $request->validate([
             'kapal_id' => 'required',
             'pemilik_id' => 'required',
+            
         ]);
 
         Surat::create($request->all());
@@ -52,4 +53,22 @@ class SuratController extends Controller
         $surat->delete();
         return redirect()->route('surat.index')->with('success', 'Surat berhasil dihapus.');
     }
+
+    public function proses($id)
+{
+    $surat = Surat::findOrFail($id);
+    $surat->status = 'diproses';
+    $surat->save();
+
+    return redirect()->route('surat.index')->with('success', 'Surat berhasil diproses.');
+}
+
+    public function tolak($id)
+{
+    $surat = Surat::findOrFail($id);
+    $surat->status = 'ditolak';
+    $surat->save();
+
+    return redirect()->route('surat.index')->with('success', 'Surat berhasil ditolak.');
+}
 }

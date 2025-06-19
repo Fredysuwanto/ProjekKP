@@ -5,16 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Surat extends Model
+class Laporan extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'kapal_id',
-        'pemilik_id',
-        'jenis_perizinan', // <- ini perlu ditambahkan agar bisa disimpan saat create/update
-    ];
+    protected $table = 'surats'; // Gunakan tabel surats
 
+    // Tidak perlu fillable karena hanya untuk read/report
     public function kapal()
     {
         return $this->belongsTo(Kapal::class);
