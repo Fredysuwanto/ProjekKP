@@ -23,16 +23,15 @@
     <!-- partial:./partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <ul class="nav">
-       <li class="nav-item sidebar-category text-center">
+       <li class="nav-item sidebar-category text-center" style="margin-bottom: 20px;">
   <img src="{{ asset('images/dishub.png') }}" alt="Logo Dishub" 
        style="width: 100px; height: auto; margin-bottom: 10px;">
-  <p style="font-size: 1.5rem; font-weight: bold; letter-spacing: 1px;">MY DISHUB</p>
-  <span></span>
+  <p style="font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; margin-bottom: 10px;">MY DISHUB</p>
 </li>
 
 
        
-        <li class="nav-item sidebar-category">
+        {{-- <li class="nav-item sidebar-category">
           <p>Components</p>
           <span></span>
         </li>
@@ -42,7 +41,7 @@
             <span class="menu-title">Dashboard</span>
             <div class="badge badge-info badge-pill">2</div>
           </a>
-        </li>
+        </li> --}}
 <li class="nav-item">
   <a class="nav-link d-flex align-items-center" href="{{ url('pemilik') }}">
     <i class="mdi mdi-account-plus menu-icon" style="margin-right: 10px; font-size: 20px;"></i>
@@ -140,7 +139,7 @@
   </a>
 </div>
 
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">MY DISHUB </h4>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Halo Selamat Datang, </h4>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item">
               <h4 class="mb-0 font-weight-bold d-none d-xl-block">Mar 12, 2019 - Apr 10, 2019</h4>
@@ -261,7 +260,7 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                 <img src="images/faces/face5.jpg" alt="profile" />
-                <span class="nav-profile-name"></span>
+                <span class="nav-profile-name"></span></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                 <a class="dropdown-item">

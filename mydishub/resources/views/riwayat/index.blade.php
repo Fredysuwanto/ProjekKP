@@ -15,7 +15,8 @@
                             <th>Nama</th>
                             <th>Nama Kapal</th>
                             <th>Jenis Perizinan</th>
-                            <th>Aksi</th>
+                            <th>Tanggal Pengajuan</th>
+                            <th>Dokumen</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,6 +25,7 @@
                             <td>{{ $surat->pemilik->nama }}</td>
                             <td>{{ $surat->kapal->nama }}</td>
                             <td>{{ $surat->kapal->jenisperizinan }}</td>
+                            <td>{{ \Carbon\Carbon::parse($surat->updated_at)->format('d-m-Y') }}</td>
                             <td>
                                 <a href="{{ route('riwayat.cetak', $surat->id) }}" class="btn btn-sm btn-purple text-white px-3 py-1" style="background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%); border: none;">
                                     Unduh PDF
@@ -32,7 +34,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center text-muted">Belum ada data surat yang diproses.</td>
+                            <td colspan="5" class="text-center text-muted">Belum ada data surat yang diproses.</td>
                         </tr>
                         @endforelse
                     </tbody>

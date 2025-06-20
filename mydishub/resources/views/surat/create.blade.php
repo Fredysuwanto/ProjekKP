@@ -3,6 +3,12 @@
 @section('content')
 <div class="container">
     <h1>Buat Surat Baru</h1>
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
     <form method="POST" action="{{ route('surat.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">

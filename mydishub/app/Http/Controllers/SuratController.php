@@ -24,16 +24,30 @@ class SuratController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'kapal_id' => 'required',
-            'pemilik_id' => 'required',
-            
-        ]);
+{
+    $request->validate([
+        'kapal_id' => 'required|exists:kapals,id',
+        'pemilik_id' => 'required|exists:pemiliks,id',
+    ]);
 
-        Surat::create($request->all());
-        return redirect()->route('surat.index')->with('success', 'Surat berhasil dibuat.');
+    // Cek apakah kombinasi kapal dan pemilik sudah pernah dibuat
+    $exists = Surat::where('kapal_id', $request->kapal_id)
+                   ->where('pemilik_id', $request->pemilik_id)
+                   ->exists();
+
+    if ($exists) {
+        return redirect()->back()->with('error', 'Surat untuk kapal dan pemilik ini sudah ada.');
     }
+
+    // Buat surat baru jika belum ada
+    Surat::create([
+        'kapal_id' => $request->kapal_id,
+        'pemilik_id' => $request->pemilik_id,
+        'status' => 'Menunggu', // default status awal
+    ]);
+
+    return redirect()->route('surat.index')->with('success', 'Surat berhasil dibuat.');
+}
 
     public function edit(Surat $surat)
     {
@@ -71,4 +85,15 @@ class SuratController extends Controller
 
     return redirect()->route('surat.index')->with('success', 'Surat berhasil ditolak.');
 }
+public function prosesList()
+{
+    $proses = Surat::with(['kapal', 'pemilik'])
+                ->where('status', 'diproses')
+                ->orderBy('updated_at', 'desc')
+                ->get();
+
+    return view('surat.proses', compact('proses'));
+}
+
+
 }

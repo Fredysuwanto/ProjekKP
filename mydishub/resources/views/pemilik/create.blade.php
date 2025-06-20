@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label for="nik">NIK/NPWP PRIBADI/PERUSAHAAN</label>
                     <input type="text" class="form-control" id="nik" name="nik" value="{{old('nik')}}"
-                        placeholder="Masukan nik">
+                        placeholder="Masukan NIK/NPWP">
                     @error('nik')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <label for="alamat">Alamat</label>
                     <input type="text" class="form-control" id="alamat" name="alamat" value="{{old('alamat')}}"
-                        placeholder="Masukan Tempat Lahir">
+                        placeholder="Masukan Alamat ">
                     @error('alamat')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label for="telepon">Telepon</label>
                     <input type="text" class="form-control" id="telepon" name="telepon" value="{{old('telepon')}}"
-                        placeholder="Masukan Tanggal Lahir">
+                        placeholder="Masukan No.Telepon">
                     @error('telepon')
                         <span class="text-danger">{{$message}}</span>
                     @enderror

@@ -8,7 +8,7 @@
         <div class="card-body">
             <h4 class="card-title">Tambah Kapal</h4>
             <p class="card-description">
-                Basic form layout
+                Masukan Kapal Dan Jenis Izin
             </p>
             <form method="POST" action="{{ route('kapal.store') }}" class="forms-sample">
                 @csrf
