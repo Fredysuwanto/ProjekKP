@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pemilik;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PemilikController extends Controller
 {
@@ -12,8 +13,9 @@ class PemilikController extends Controller
      */
     public function index()
     {
-        $pemilik = Pemilik::all();
-        return view('pemilik.index')->with('pemilik', $pemilik);
+        // Hanya ambil data pemilik milik user yang login
+        $pemilik = Pemilik::where('user_id', Auth::id())->get();
+        return view('pemilik.index', compact('pemilik'));
     }
 
     /**
@@ -21,11 +23,13 @@ class PemilikController extends Controller
      */
     public function create()
     {
-        
-         if (Pemilik::count() >= 1) {
-        return redirect()->route('pemilik.index')->with('error', 'Data pemilik sudah ada.');
-    }
-        
+        // Cegah lebih dari 1 data pemilik untuk user login
+        $existing = Pemilik::where('user_id', Auth::id())->exists();
+
+        if ($existing) {
+            return redirect()->route('pemilik.index')->with('error', 'Data pemilik sudah ada.');
+        }
+
         return view('pemilik.create');
     }
 
@@ -35,23 +39,19 @@ class PemilikController extends Controller
     public function store(Request $request)
     {
         $val = $request->validate([
-            'nama' => "required",
-            'nik' => "required|max:16",
-            'alamat' => "required",
-            'telepon' => "required",
-            'email' => "required|email",
+            'nama' => 'required|string|max:255',
+            'nik' => 'required|string|max:16',
+            'alamat' => 'required|string',
+            'telepon' => 'required|string',
+            'email' => 'required|email|max:255',
         ]);
 
-        Pemilik::create($val);
-        return redirect()->route('pemilik.index')->with('success', $val['nama'] . ' berhasil disimpan');
-    }
+        // Tambahkan user_id ke data yang akan disimpan
+        $val['user_id'] = Auth::id();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pemilik $pemilik)
-    {
-        //
+        Pemilik::create($val);
+
+        return redirect()->route('pemilik.index')->with('success', $val['nama'] . ' berhasil disimpan.');
     }
 
     /**
@@ -59,7 +59,12 @@ class PemilikController extends Controller
      */
     public function edit(Pemilik $pemilik)
     {
-        return view('pemilik.edit')->with('pemilik', $pemilik);
+        // Pastikan user hanya bisa mengedit miliknya sendiri
+        if ($pemilik->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('pemilik.edit', compact('pemilik'));
     }
 
     /**
@@ -67,15 +72,19 @@ class PemilikController extends Controller
      */
     public function update(Request $request, Pemilik $pemilik)
     {
+        if ($pemilik->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         $request->validate([
-            'nama' => 'required',
-            'nik' => "required|max:16",
-            'alamat' => 'required',
-            'telepon' => 'required',
-            'email' => 'required|email',
+            'nama' => 'required|string|max:255',
+            'nik' => 'required|string|max:16',
+            'alamat' => 'required|string',
+            'telepon' => 'required|string',
+            'email' => 'required|email|max:255',
         ]);
 
-        $pemilik->update($request->all());
+        $pemilik->update($request->only('nama', 'nik', 'alamat', 'telepon', 'email'));
 
         return redirect()->route('pemilik.index')->with('success', 'Data berhasil diperbarui.');
     }
@@ -85,6 +94,12 @@ class PemilikController extends Controller
      */
     public function destroy(Pemilik $pemilik)
     {
-        //
+        if ($pemilik->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $pemilik->delete();
+
+        return redirect()->route('pemilik.index')->with('success', 'Data berhasil dihapus.');
     }
 }

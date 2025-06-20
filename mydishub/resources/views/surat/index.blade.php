@@ -9,9 +9,11 @@
       <h4 class="card-title">Data Surat Izin Kapal</h4>
       <p class="card-description">Daftar Surat yang Telah Diajukan</p>
 
-      <a href="{{ route('surat.create') }}" class="btn btn-rounded btn-primary mb-3" style="background-color: #6f42c1; border-color: #6f42c1;">
-        Tambah Surat
-      </a>
+      @if(auth()->user()->role === 'b')
+        <a href="{{ route('surat.create') }}" class="btn btn-rounded btn-primary mb-3" style="background-color: #6f42c1; border-color: #6f42c1;">
+          Tambah Surat
+        </a>
+      @endif
 
       <div class="table-responsive">
         <table class="table table-bordered table-striped align-middle text-center">
@@ -26,7 +28,9 @@
               <th>Daya Mesin</th>
               <th>Jenis Perizinan</th>
               <th>Status</th>
-              <th>Aksi</th>
+              @if(auth()->user()->role === 'a')
+                <th>Aksi</th>
+              @endif
             </tr>
           </thead>
           <tbody>
@@ -47,6 +51,7 @@
                   <span class="badge bg-info text-white">{{ ucfirst($surat->status) }}</span>
                 @endif
               </td>
+              @if(auth()->user()->role === 'a')
               <td>
                 @if ($surat->status === null)
                 <div class="d-flex justify-content-center gap-2">
@@ -57,10 +62,11 @@
                 <span class="text-muted">-</span>
                 @endif
               </td>
+              @endif
             </tr>
             @empty
             <tr>
-              <td colspan="10" class="text-center">Tidak ada data surat.</td>
+              <td colspan="{{ auth()->user()->role === 'a' ? '10' : '9' }}" class="text-center">Tidak ada data surat.</td>
             </tr>
             @endforelse
           </tbody>

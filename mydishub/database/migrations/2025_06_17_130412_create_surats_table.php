@@ -12,6 +12,8 @@ class CreateSuratsTable extends Migration
             $table->id();
             $table->foreignId('kapal_id')->constrained()->onDelete('cascade');
             $table->foreignId('pemilik_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }

@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Pemilik extends Model
 {
     use HasFactory;
-    protected $fillable = ['nama', 'nik', 'alamat', 'telepon', 'email'];
+    protected $fillable = ['nama', 'nik', 'alamat', 'telepon', 'email','user_id',];
+    
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
 }
     

@@ -42,47 +42,58 @@
             <div class="badge badge-info badge-pill">2</div>
           </a>
         </li> --}}
-<li class="nav-item">
-  <a class="nav-link d-flex align-items-center" href="{{ url('pemilik') }}">
-    <i class="mdi mdi-account-plus menu-icon" style="margin-right: 10px; font-size: 20px;"></i>
-    <span class="menu-title">Data Diri/Perusahaan</span>
-  </a>
-</li>
+{{-- Cek jika user sudah login --}}
+@auth
 
-       <li class="nav-item">
-  <a class="nav-link d-flex align-items-center" href="{{ url('kapal') }}">
-    <i class="mdi mdi-grease-pencil menu-icon" style="margin-right: 10px; font-size: 20px;"></i>
-    <span class="menu-title">Data Kapal</span>
-  </a>
-</li>
+  {{-- MENU UNTUK USER (role = b) --}}
+  @if(auth()->user()->role === 'b')
+    <li class="nav-item">
+      <a class="nav-link d-flex align-items-center" href="{{ url('pemilik') }}">
+        <i class="mdi mdi-account-plus menu-icon" style="margin-right: 10px; font-size: 20px;"></i>
+        <span class="menu-title">Data Diri/Perusahaan</span>
+      </a>
+    </li>
 
-        <li class="nav-item">
-  <a class="nav-link" href="{{ url('surat') }}">
-    <i class="mdi mdi-file-multiple menu-icon"></i>
-    <span class="menu-title">Surat</span>
-  </a>
-</li>
+    <li class="nav-item">
+      <a class="nav-link d-flex align-items-center" href="{{ url('kapal') }}">
+        <i class="mdi mdi-grease-pencil menu-icon" style="margin-right: 10px; font-size: 20px;"></i>
+        <span class="menu-title">Data Kapal</span>
+      </a>
+    </li>
 
-        <li class="nav-item">
-  <a class="nav-link" href="{{ url('riwayat') }}">
-    <i class="mdi mdi-history menu-icon"></i>
-    <span class="menu-title">Riwayat</span>
-  </a>
-</li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url('surat') }}">
+        <i class="mdi mdi-file-multiple menu-icon"></i>
+        <span class="menu-title">Surat</span>
+      </a>
+    </li>
 
-<li class="nav-item">
-  <a class="nav-link" href="{{ url('laporan') }}">
-    <i class="mdi mdi-history menu-icon"></i>
-    <span class="menu-title">Laporan</span>
-  </a>
-</li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url('riwayat') }}">
+        <i class="mdi mdi-history menu-icon"></i>
+        <span class="menu-title">Riwayat</span>
+      </a>
+    </li>
+  @endif
 
-<li class="nav-item">
-  <a class="nav-link" href="{{ url('proses') }}">
-    <i class="mdi mdi-history menu-icon"></i>
-    <span class="menu-title">Proses yang berjalan</span>
-  </a>
-</li>
+  {{-- MENU UNTUK ADMIN (role = a) --}}
+  @if(auth()->user()->role === 'a')
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url('laporan') }}">
+        <i class="mdi mdi-file-document-box menu-icon"></i>
+        <span class="menu-title">Laporan</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url('proses') }}">
+        <i class="mdi mdi-grease-pencil menu-icon"></i>
+        <span class="menu-title">Proses yang Berjalan</span>
+      </a>
+    </li>
+  @endif
+
+@endauth
 
         
         <li class="nav-item sidebar-category">

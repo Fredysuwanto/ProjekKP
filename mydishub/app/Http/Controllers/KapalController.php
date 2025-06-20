@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kapal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KapalController extends Controller
 {
@@ -12,8 +13,9 @@ class KapalController extends Controller
      */
     public function index()
     {
-         $kapal = Kapal::all();
-        return view('kapal.index')->with('kapal', $kapal);
+        // Hanya ambil kapal milik user login
+        $kapal = Kapal::where('user_id', Auth::id())->get();
+        return view('kapal.index', compact('kapal'));
     }
 
     /**
@@ -21,7 +23,7 @@ class KapalController extends Controller
      */
     public function create()
     {
-              return view('kapal.create');
+        return view('kapal.create');
     }
 
     /**
@@ -29,7 +31,7 @@ class KapalController extends Controller
      */
     public function store(Request $request)
     {
-         $val = $request->validate([
+        $val = $request->validate([
             'nama' => "required|max:25",
             'noplat' => "required|max:16",
             'jenis' => "required|max:16",
@@ -37,20 +39,13 @@ class KapalController extends Controller
             'daya' => "required",
             'muatan' => "required",
             'jenisperizinan' => "required",
-
         ]);
+
+        // Tambahkan user_id sebelum simpan
+        $val['user_id'] = Auth::id();
 
         Kapal::create($val);
         return redirect()->route('kapal.index')->with('success', $val['nama'] . ' berhasil disimpan');
-
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Kapal $kapal)
-    {
-        //
     }
 
     /**
@@ -58,7 +53,11 @@ class KapalController extends Controller
      */
     public function edit(Kapal $kapal)
     {
-         return view('kapal.edit')->with('kapal', $kapal);
+        if ($kapal->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('kapal.edit', compact('kapal'));
     }
 
     /**
@@ -66,6 +65,10 @@ class KapalController extends Controller
      */
     public function update(Request $request, Kapal $kapal)
     {
+        if ($kapal->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         $request->validate([
             'nama' => "required|max:25",
             'noplat' => "required|max:16",
@@ -74,9 +77,11 @@ class KapalController extends Controller
             'daya' => "required",
             'muatan' => "required",
             'jenisperizinan' => "required",
-
         ]);
-         $kapal->update($request->all());
+
+        $kapal->update($request->only([
+            'nama', 'noplat', 'jenis', 'ukuran', 'daya', 'muatan', 'jenisperizinan'
+        ]));
 
         return redirect()->route('kapal.index')->with('success', 'Data kapal berhasil diperbarui.');
     }
@@ -86,7 +91,11 @@ class KapalController extends Controller
      */
     public function destroy(Kapal $kapal)
     {
-        $kapal->delete(); //hapus data kapal
-        return redirect() ->route('kapal.index')-> with('success','data kapal berhasil dihapus');
+        if ($kapal->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $kapal->delete();
+        return redirect()->route('kapal.index')->with('success', 'Data kapal berhasil dihapus.');
     }
 }

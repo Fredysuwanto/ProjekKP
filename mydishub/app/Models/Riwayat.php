@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Riwayat extends Model
 {
-    protected $fillable = ['nosurat','kapal_id','file_surat'];
+    protected $fillable = ['nosurat','kapal_id','file_surat','user_id',];
 
     public function kapal()
     {

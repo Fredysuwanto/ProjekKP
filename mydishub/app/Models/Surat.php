@@ -12,6 +12,7 @@ class Surat extends Model
     protected $fillable = [
         'kapal_id',
         'pemilik_id',
+        'user_id',
         'jenis_perizinan', // <- ini perlu ditambahkan agar bisa disimpan saat create/update
     ];
 
@@ -24,4 +25,9 @@ class Surat extends Model
     {
         return $this->belongsTo(Pemilik::class);
     }
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
 }
