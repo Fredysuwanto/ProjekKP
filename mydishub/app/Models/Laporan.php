@@ -21,4 +21,5 @@ class Laporan extends Model
     {
         return $this->belongsTo(Pemilik::class);
     }
+    
 }

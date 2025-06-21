@@ -13,10 +13,16 @@ class PemilikController extends Controller
      */
     public function index()
     {
-        // Hanya ambil data pemilik milik user yang login
-        $pemilik = Pemilik::where('user_id', Auth::id())->get();
-        return view('pemilik.index', compact('pemilik'));
+    if (auth()->user()->role === 'a') {
+        // Admin: lihat semua data
+        $pemilik = Pemilik::all();
+    } else {
+        // User: hanya lihat data sendiri
+        $pemilik = Pemilik::where('user_id', auth()->id())->get();
     }
+
+    return view('pemilik.index', compact('pemilik'));
+}
 
     /**
      * Show the form for creating a new resource.

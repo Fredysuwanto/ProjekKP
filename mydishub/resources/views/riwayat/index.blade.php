@@ -20,7 +20,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($riwayats as $surat)
+                        @forelse($riwayat as $surat)
                         <tr>
                             <td>{{ $surat->pemilik->nama }}</td>
                             <td>{{ $surat->kapal->nama }}</td>
