@@ -9,20 +9,20 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::table('kapals', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->after('id');
-        });
-    }
+   public function up()
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->dropColumn('user_id');
+    });
+}
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('kapals', function (Blueprint $table) {
-            //
-        });
+       
+   
+       
     }
 };
