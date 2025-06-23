@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
+@section('content')
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Halo, {{ auth()->user()->name }}</h2>
+      @if(auth()->user()->role === 'a')
+        <p>Anda login sebagai <strong>Admin</strong>. Silakan cek menu Laporan dan Proses.</p>
+      @elseif(auth()->user()->role === 'b')
+        <p>Anda login sebagai <strong>Pemilik</strong>. Silakan kelola Data Kapal, Surat, dan Riwayat.</p>
+      @endif
+    </div>
+  </div>
+@endsection
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -150,8 +162,9 @@
   </a>
 </div>
 
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Halo Selamat Datang, </h4>
-          <ul class="navbar-nav navbar-nav-right">
+@auth
+  <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Halo Selamat Datang, {{ auth()->user()->name }}</h4>
+@endauth          <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item">
               <h4 class="mb-0 font-weight-bold d-none d-xl-block">Mar 12, 2019 - Apr 10, 2019</h4>
             </li>
@@ -271,8 +284,11 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                 <img src="images/faces/face5.jpg" alt="profile" />
-                <span class="nav-profile-name"></span></span>
-              </a>
+@auth
+  <span class="nav-profile-name">{{ auth()->user()->name }}</span>
+@else
+  <span class="nav-profile-name">Guest</span>
+@endauth              </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                 <a class="dropdown-item">
                   <i class="mdi mdi-settings text-primary"></i>
