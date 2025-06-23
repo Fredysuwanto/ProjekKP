@@ -12,7 +12,7 @@
                 <table class="table table-bordered table-striped align-middle text-center">
                     <thead class="table-dark">
                         <tr>
-                            <th>Nama</th>
+                            <th>Nama Pemilik</th>
                             <th>Nama Kapal</th>
                             <th>Jenis Perizinan</th>
                             <th>Tanggal Pengajuan</th>
@@ -24,11 +24,17 @@
                         <tr>
                             <td>{{ $surat->pemilik->nama }}</td>
                             <td>{{ $surat->kapal->nama }}</td>
-                            <td>{{ $surat->kapal->jenisperizinan }}</td>
+                            <td>
+                                <span class="badge bg-primary text-white px-2 py-1">
+                                    {{ $surat->kapal->jenisperizinan }}
+                                </span>
+                            </td>
                             <td>{{ \Carbon\Carbon::parse($surat->updated_at)->format('d-m-Y') }}</td>
                             <td>
-                                <a href="{{ route('riwayat.cetak', $surat->id) }}" class="btn btn-sm btn-purple text-white px-3 py-1" style="background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%); border: none;">
-                                    Unduh PDF
+                                <a href="{{ route('riwayat.cetak', $surat->id) }}" 
+                                   class="btn btn-sm text-white fw-semibold"
+                                   style="background-color: #007bff; border: none;">
+                                    <i class="mdi mdi-file-download-outline me-1"></i> Unduh PDF
                                 </a>
                             </td>
                         </tr>

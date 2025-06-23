@@ -14,9 +14,9 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group">
-                    <label for="nama">Nama</label>
+                    <label for="nama">Nama/Nama Perusahaan</label>
                     <input type="text" class="form-control" id="nama" name="nama" value="{{old('nama') ? old('nama'): $pemilik['nama'] }}"
-                        placeholder="Masukan nama ">
+                        placeholder="Masukan nama atau Nama Perusahaan ">
                     @error('nama')
                         <span class="text-danger">{{$message}}</span>
                     @enderror

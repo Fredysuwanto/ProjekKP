@@ -9,17 +9,16 @@ use Illuminate\Support\Facades\Auth;
 class KapalController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar kapal milik user yang sedang login.
      */
     public function index()
     {
-        // Hanya ambil kapal milik user login
         $kapal = Kapal::where('user_id', Auth::id())->get();
         return view('kapal.index', compact('kapal'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan form tambah kapal baru.
      */
     public function create()
     {
@@ -27,75 +26,93 @@ class KapalController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan data kapal baru.
      */
     public function store(Request $request)
     {
-        $val = $request->validate([
-            'nama' => "required|max:25",
-            'noplat' => "required|max:16",
-            'jenis' => "required|max:16",
-            'ukuran' => "required",
-            'daya' => "required",
-            'muatan' => "required",
-            'jenisperizinan' => "required",
+        $validated = $request->validate([
+            'nama' => 'required|max:25',
+            'noplat' => 'required|max:16',
+            'jenis' => 'required|max:16',
+            'ukuran' => 'required',
+            'daya' => 'required',
+            'muatan' => 'required',
+            'jenisperizinan' => 'required',
         ]);
 
-        // Tambahkan user_id sebelum simpan
-        $val['user_id'] = Auth::id();
+        $validated['user_id'] = Auth::id();
 
-        Kapal::create($val);
-        return redirect()->route('kapal.index')->with('success', $val['nama'] . ' berhasil disimpan');
+        Kapal::create($validated);
+
+        return redirect()->route('kapal.index')->with('success', "{$validated['nama']} berhasil disimpan.");
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan form edit jika kapal belum digunakan.
      */
     public function edit(Kapal $kapal)
     {
-        if ($kapal->user_id !== Auth::id()) {
-            abort(403);
+        $this->authorizeKapal($kapal);
+
+        if ($kapal->riwayat()->exists()) {
+            return redirect()->route('kapal.index')
+                ->with('error', 'Kapal ini sudah digunakan dalam surat izin dan tidak dapat diedit.');
         }
 
         return view('kapal.edit', compact('kapal'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui data kapal.
      */
     public function update(Request $request, Kapal $kapal)
     {
-        if ($kapal->user_id !== Auth::id()) {
-            abort(403);
+        $this->authorizeKapal($kapal);
+
+        if ($kapal->riwayat()->exists()) {
+            return redirect()->route('kapal.index')
+                ->with('error', 'Kapal ini sudah digunakan dalam surat izin dan tidak dapat diperbarui.');
         }
 
-        $request->validate([
-            'nama' => "required|max:25",
-            'noplat' => "required|max:16",
-            'jenis' => "required|max:16",
-            'ukuran' => "required",
-            'daya' => "required",
-            'muatan' => "required",
-            'jenisperizinan' => "required",
+        $validated = $request->validate([
+            'nama' => 'required|max:25',
+            'noplat' => 'required|max:16',
+            'jenis' => 'required|max:16',
+            'ukuran' => 'required',
+            'daya' => 'required',
+            'muatan' => 'required',
+            'jenisperizinan' => 'required',
         ]);
 
-        $kapal->update($request->only([
-            'nama', 'noplat', 'jenis', 'ukuran', 'daya', 'muatan', 'jenisperizinan'
-        ]));
+        $kapal->update($validated);
 
         return redirect()->route('kapal.index')->with('success', 'Data kapal berhasil diperbarui.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus kapal jika belum digunakan dalam riwayat.
      */
     public function destroy(Kapal $kapal)
     {
-        if ($kapal->user_id !== Auth::id()) {
-            abort(403);
+        $this->authorizeKapal($kapal);
+
+        if ($kapal->riwayat()->exists()) {
+            return redirect()->route('kapal.index')
+                ->with('error', 'Kapal ini sudah digunakan dalam surat izin dan tidak dapat dihapus.');
         }
 
         $kapal->delete();
+
         return redirect()->route('kapal.index')->with('success', 'Data kapal berhasil dihapus.');
+    }
+
+    /**
+     * Memastikan hanya pemilik kapal yang boleh mengakses/ubah.
+     */
+    private function authorizeKapal(Kapal $kapal)
+    {
+        if ($kapal->user_id !== Auth::id()) {
+            abort(403, 'Anda tidak memiliki izin terhadap kapal ini.');
+        }
     }
 }

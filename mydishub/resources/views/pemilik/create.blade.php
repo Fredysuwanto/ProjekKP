@@ -13,7 +13,7 @@
             <form method="POST" action="{{route('pemilik.store')}}" class="forms-sample" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <label for="nama">Nama</label>
+                    <label for="nama">Nama/Nama Perusahaan</label>
                     <input type="text" class="form-control" id="nama" name="nama" value="{{old('nama')}}"
                         placeholder="Masukan nama ">
                     @error('nama')

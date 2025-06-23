@@ -19,7 +19,7 @@
         <table class="table table-bordered table-striped align-middle text-center">
           <thead class="thead-dark">
             <tr>
-              <th>Nama Pemilik</th>
+              <th>Nama Pemilik/Nama Perusahaan</th>
               <th>Alamat</th>
               <th>Nama Kapal</th>
               <th>No. Plat</th>

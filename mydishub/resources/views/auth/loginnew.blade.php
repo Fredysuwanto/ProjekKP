@@ -7,20 +7,34 @@
   <link rel="stylesheet" href="{{ url('vendors/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ url('vendors/css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ url('css/style.css') }}">
-  <link rel="shortcut icon" href="{{ url('images/favicon.png') }}" />
+  <link rel="shortcut icon" href="{{ url('images/dishub.png') }}" />
+
+  <style>
+    .login-half-bg {
+      background: url('{{ asset('images/dishub.png') }}') no-repeat center center;
+      background-size: contain;
+      background-color: #fff;
+    }
+    .brand-logo img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
 <div class="container-scroller d-flex">
   <div class="container-fluid page-body-wrapper full-page-wrapper d-flex">
     <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
-      <div class="row flex-grow">
+      <div class="row flex-grow w-100">
+        <!-- Form login -->
         <div class="col-lg-6 d-flex align-items-center justify-content-center">
-          <div class="auth-form-transparent text-left p-3">
-            <div class="brand-logo">
-              <img src="../../images/logo.svg" alt="logo">
+          <div class="auth-form-transparent text-left p-3" style="max-width: 400px; width: 100%;">
+            <div class="brand-logo text-center">
+              <img src="{{ asset('images/dishub.png') }}" alt="Dishub Logo">
             </div>
             <h4>Welcome back!</h4>
-            <h6 class="font-weight-light">Happy to see you again!</h6>
+            <h6 class="font-weight-light"></h6>
             <form class="pt-3" method="POST" action="{{ route('login') }}">
               @csrf
               <div class="form-group">
@@ -33,7 +47,7 @@
                   </div>
                   <input type="text" class="form-control form-control-lg border-left-0" id="email" name="email" placeholder="Email">
                   @error('email')
-                      <span class="text-danger">{{ $message }}</span>
+                      <span class="text-danger small">{{ $message }}</span>
                   @enderror
                 </div>
               </div>
@@ -47,15 +61,14 @@
                   </div>
                   <input type="password" class="form-control form-control-lg border-left-0" id="password" name="password" placeholder="Password">
                   @error('password')
-                      <span class="text-danger">{{ $message }}</span>
+                      <span class="text-danger small">{{ $message }}</span>
                   @enderror
                 </div>
               </div>
               <div class="my-2 d-flex justify-content-between align-items-center">
                 <div class="form-check">
                   <label class="form-check-label text-muted">
-                    <input type="checkbox" class="form-check-input">
-                    Keep me signed in
+                    <input type="checkbox" class="form-check-input"> Keep me signed in
                   </label>
                 </div>
                 <a href="#" class="auth-link text-black">Forgot password?</a>
@@ -69,13 +82,16 @@
             </form>
           </div>
         </div>
-        <div class="col-lg-6 login-half-bg d-none d-lg-flex flex-row">
-          <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2018 All rights reserved.</p>
+
+        <!-- Bagian kanan dengan gambar dishub -->
+        <div class="col-lg-6 login-half-bg d-none d-lg-flex align-items-end justify-content-center">
+          <p class="text-muted mb-3">© {{ date('Y') }} All rights reserved.</p>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <script src="{{ url('vendors/js/vendor.bundle.base.js') }}"></script>
 <script src="{{ url('js/off-canvas.js') }}"></script>
 <script src="{{ url('js/hoverable-collapse.js') }}"></script>

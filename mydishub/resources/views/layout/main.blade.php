@@ -2,17 +2,35 @@
 <html lang="en">
 
 @section('content')
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Halo, {{ auth()->user()->name }}</h2>
-      @if(auth()->user()->role === 'a')
-        <p>Anda login sebagai <strong>Admin</strong>. Silakan cek menu Laporan dan Proses.</p>
-      @elseif(auth()->user()->role === 'b')
-        <p>Anda login sebagai <strong>Pemilik</strong>. Silakan kelola Data Kapal, Surat, dan Riwayat.</p>
-      @endif
+<div class="row">
+  <div class="col-md-12">
+    <div class="card shadow-sm border-0 rounded-3 p-4 bg-light">
+      <div class="d-flex align-items-center mb-3">
+        <i class="mdi mdi-account-circle text-primary" style="font-size: 2.5rem;"></i>
+        <div class="ms-3">
+          <h3 class="mb-1 fw-bold">Selamat Datang, {{ auth()->user()->name }} 👋</h3>
+          <p class="text-muted mb-0">
+            @if(auth()->user()->role === 'a')
+              Anda login sebagai <strong>Admin</strong>. Silakan cek menu <em>Laporan</em> dan <em>Proses</em>.
+            @elseif(auth()->user()->role === 'b')
+              Anda login sebagai <strong>Pemilik</strong>. Silakan kelola <em>Data Kapal</em>, <em>Surat</em>, dan <em>Riwayat</em>.
+            @endif
+          </p>
+        </div>
+      </div>
+
+      <hr class="my-3">
+
+      <div class="alert alert-info mb-0">
+        <i class="mdi mdi-information-outline me-2"></i>
+        Gunakan menu navigasi di samping kiri untuk mengakses fitur aplikasi Dishub.
+      </div>
     </div>
   </div>
+</div>
 @endsection
+
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -294,80 +312,91 @@
                   <i class="mdi mdi-settings text-primary"></i>
                   Settings
                 </a>
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                  @csrf
-                  <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="dropdown-item">
-                    <i class="mdi mdi-logout text-primary"></i> {{ _('Log Out') }}
-                  </x-dropdown-link>
-                </form>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link icon-link">
-                <i class="mdi mdi-plus-circle-outline"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link icon-link">
-                <i class="mdi mdi-web"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link icon-link">
-                <i class="mdi mdi-clock-outline"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper">
-          @yield('content')
-        </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:./partials/_footer.html -->
-        <footer class="footer">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
-                  bootstrapdash.com 2020</span>
-                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Distributed By: <a
-                    href="https://www.themewagon.com/" target="_blank">ThemeWagon</a></span>
-                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
-                    href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from
-                  Bootstrapdash.com</span>
-              </div>
-            </div>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
-      <!-- main-panel ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
+               <!-- Authentication -->
+<form method="POST" action="{{ route('logout') }}" id="logout-form">
+  @csrf
+  <a href="#" onclick="confirmLogout(event)" class="dropdown-item">
+    <i class="mdi mdi-logout text-primary"></i> {{ __('Log Out') }}
+  </a>
+</form>
+</div>
+</li>
+<li class="nav-item">
+  <a href="#" class="nav-link icon-link">
+    <i class="mdi mdi-plus-circle-outline"></i>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="#" class="nav-link icon-link">
+    <i class="mdi mdi-web"></i>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="#" class="nav-link icon-link">
+    <i class="mdi mdi-clock-outline"></i>
+  </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    @yield('content')
   </div>
-  <!-- container-scroller -->
+  <!-- content-wrapper ends -->
+  <!-- partial:./partials/_footer.html -->
+  <footer class="footer">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
+            bootstrapdash.com 2020</span>
+          <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Distributed By: <a
+              href="https://www.themewagon.com/" target="_blank">ThemeWagon</a></span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
+              href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from
+            Bootstrapdash.com</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- partial -->
+</div>
+<!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
 
-  <!-- base:js -->
-  <script src="{{url('vendors/js/vendor.bundle.base.js')}}"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <script src="{{url('vendors/chart.js/Chart.min.js')}}"></script>
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="{{url('js/off-canvas.js')}}"></script>
-  <script src="{{url('js/hoverable-collapse.js')}}"></script>
-  <script src="{{url('js/template.js')}}"></script>
-  <!-- endinject -->
-  <!-- plugin js for this page -->
-  <!-- End plugin js for this page -->
-  <!-- Custom js for this page-->
-  <script src="js/dashboard.js"></script>
-  <!-- End custom js for this page-->
-  @yield('scripts')
+<!-- base:js -->
+<script src="{{url('vendors/js/vendor.bundle.base.js')}}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<script src="{{url('vendors/chart.js/Chart.min.js')}}"></script>
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="{{url('js/off-canvas.js')}}"></script>
+<script src="{{url('js/hoverable-collapse.js')}}"></script>
+<script src="{{url('js/template.js')}}"></script>
+<!-- endinject -->
+<!-- plugin js for this page -->
+<!-- End plugin js for this page -->
+<!-- Custom js for this page-->
+<script src="js/dashboard.js"></script>
+<!-- End custom js for this page-->
+
+<!-- Custom logout confirmation script -->
+<script>
+  function confirmLogout(event) {
+    event.preventDefault();
+    if (confirm('Apakah Anda yakin ingin logout?')) {
+      document.getElementById('logout-form').submit();
+    }
+  }
+</script>
+
+@yield('scripts')
 
 </body>
 

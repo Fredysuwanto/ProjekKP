@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{ url('vendors/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ url('vendors/css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ url('css/style.css') }}">
-  <link rel="shortcut icon" href="{{ url('images/favicon.png') }}" />
+  <link rel="shortcut icon" href="{{ url('images/dishub.png') }}" />
 </head>
 <body>
 <div class="container-scroller d-flex">
@@ -16,12 +16,15 @@
       <div class="row flex-grow">
         <div class="col-lg-6 d-flex align-items-center justify-content-center">
           <div class="auth-form-transparent text-left p-3">
-            <div class="brand-logo">
-              <img src="{{ url('images/logo.svg') }}" alt="logo">
+
+            <!-- Ganti logo di sini -->
+            <div class="brand-logo text-center mb-4">
+              <img src="{{ url('images/dishub.png') }}" alt="logo" style="width: 100px; height: auto;">
             </div>
-            <h4>New here?</h4>
-            <h6 class="font-weight-light">Join us today! It only takes a few steps</h6>
-            
+
+            <h4>Belum Punya Akun?</h4>
+            <h6 class="font-weight-light">Silahkan Isi Kelengkapan Data Berikut</h6>
+
             <form class="pt-3" method="POST" action="{{ route('register') }}">
               @csrf
 
@@ -73,7 +76,7 @@
                 @enderror
               </div>
 
-              <!-- Password Confirmation -->
+              <!-- Confirm Password -->
               <div class="form-group">
                 <label for="password_confirmation">Confirm Password</label>
                 <div class="input-group">
@@ -93,7 +96,7 @@
                 </button>
               </div>
 
-              <!-- Link to Login -->
+              <!-- Link to login -->
               <div class="text-center mt-4 font-weight-light">
                 Already have an account? <a href="{{ url('/login') }}" class="text-primary">Login</a>
               </div>
@@ -101,7 +104,9 @@
           </div>
         </div>
         <div class="col-lg-6 register-half-bg d-none d-lg-flex flex-row">
-          <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright © 2018 All rights reserved.</p>
+          <p class="text-white font-weight-medium text-center flex-grow align-self-end">
+            Copyright © 2018 All rights reserved.
+          </p>
         </div>
       </div>
     </div>
