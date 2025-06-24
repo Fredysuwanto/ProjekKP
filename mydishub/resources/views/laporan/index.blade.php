@@ -1,5 +1,6 @@
 @extends('layout.main')
 
+@section('title', 'Laporan Surat')
 @section('content')
 <div class="container p-5 shadow bg-white rounded" style="font-family: 'Times New Roman', Times, serif;">
 

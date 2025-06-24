@@ -1,5 +1,7 @@
 @extends('layout.main')
 
+@section('title', 'Profil Kami')
+
 @section('content')
 <style>
     .background-tentang {

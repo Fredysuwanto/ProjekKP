@@ -1,5 +1,7 @@
 @extends('layout.main')
 
+@section('title', 'Visi Misi')
+
 @section('content')
 <style>
     .bg-visimisi {

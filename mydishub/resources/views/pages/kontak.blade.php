@@ -1,5 +1,7 @@
 @extends('layout.main')
 
+@section('title', 'Kontak Kami')
+
 @section('content')
 <style>
     .bg-kontak {

@@ -1,5 +1,7 @@
 @extends('layout.main')
 
+@section('title', 'Dashboard')
+
 @section('content')
 <div class="container py-4">
     {{-- Header Selamat Datang --}}
