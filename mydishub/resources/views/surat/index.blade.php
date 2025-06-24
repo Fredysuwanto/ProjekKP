@@ -10,7 +10,8 @@
         <i class="mdi mdi-file-document-outline text-primary me-1"></i> Data Surat Izin Kapal
       </h4>
       <p class="text-muted">
-        Berikut adalah daftar surat izin kapal yang telah diajukan oleh pemilik kapal. Data ini akan menjadi acuan dalam proses verifikasi dan persetujuan perizinan.
+        Berikut adalah daftar surat izin kapal yang telah diajukan oleh pemilik kapal. 
+         <span class="text-primary fw-semibold">Data ini akan menjadi acuan dalam proses verifikasi dan persetujuan perizinan.</span>
       </p>
 
       @if(auth()->user()->role === 'b')
