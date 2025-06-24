@@ -20345,7 +20345,7 @@ dl li {
 /* === Landing screens === */
 /* Auth */
 .auth .login-half-bg {
-  background-image: url("../images/auth/login-bg-new2.jpg");
+  background-image: url("../images/auth/login-bg-new4.jpeg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -20354,7 +20354,7 @@ dl li {
 }
 
 .auth .register-half-bg {
-  background-image: url("../images/auth/login-bg-new2.jpg");
+  background-image: url("../images/auth/login-bg-new4.jpeg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LOGIN</title>
   <link rel="stylesheet" href="{{ url('vendors/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ url('vendors/css/vendor.bundle.base.css') }}">
@@ -10,85 +10,134 @@
   <link rel="shortcut icon" href="{{ url('images/dishub.png') }}" />
 
   <style>
-    .login-half-bg {
-      background: url('{{ asset('images/dishub.png') }}') no-repeat center center;
-      background-size: contain;
-      background-color: #fff;
+    body, html {
+      height: 100%;
     }
+
+    .auth-container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .login-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 2rem;
+      background-color: #f4f6f9;
+    }
+
+    .login-form-box {
+      width: 100%;
+      max-width: 420px;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
     .brand-logo img {
-      width: 100px;
+      width: 80px;
       height: auto;
-      margin-bottom: 20px;
+      display: block;
+      margin: 0 auto 1rem auto;
+    }
+
+    .login-right {
+  background-color: #001DFF; /* Biru gelap seperti tampilan Dishub */
+  width: 100%;
+  max-width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+
+    .login-right img {
+  max-width: 60%;
+  height: auto;
+  object-fit: contain;
+}
+
+    @media (max-width: 991.98px) {
+      .login-right {
+        display: none;
+      }
+    }
+
+    .btn-primary {
+      background-color: #5e50f9;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #4836e0;
+    }
+
+    .text-small {
+      font-size: 0.875rem;
     }
   </style>
 </head>
 <body>
-<div class="container-scroller d-flex">
-  <div class="container-fluid page-body-wrapper full-page-wrapper d-flex">
-    <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
-      <div class="row flex-grow w-100">
-        <!-- Form login -->
-        <div class="col-lg-6 d-flex align-items-center justify-content-center">
-          <div class="auth-form-transparent text-left p-3" style="max-width: 400px; width: 100%;">
-            <div class="brand-logo text-center">
-              <img src="{{ asset('images/dishub.png') }}" alt="Dishub Logo">
-            </div>
-            <h4>Welcome back!</h4>
-            <h6 class="font-weight-light"></h6>
-            <form class="pt-3" method="POST" action="{{ route('login') }}">
-              @csrf
-              <div class="form-group">
-                <label for="email">Email</label>
-                <div class="input-group">
-                  <div class="input-group-prepend bg-transparent">
-                    <span class="input-group-text bg-transparent border-right-0">
-                      <i class="mdi mdi-account-outline text-primary"></i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control form-control-lg border-left-0" id="email" name="email" placeholder="Email">
-                  @error('email')
-                      <span class="text-danger small">{{ $message }}</span>
-                  @enderror
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-group">
-                  <div class="input-group-prepend bg-transparent">
-                    <span class="input-group-text bg-transparent border-right-0">
-                      <i class="mdi mdi-lock-outline text-primary"></i>
-                    </span>
-                  </div>
-                  <input type="password" class="form-control form-control-lg border-left-0" id="password" name="password" placeholder="Password">
-                  @error('password')
-                      <span class="text-danger small">{{ $message }}</span>
-                  @enderror
-                </div>
-              </div>
-              <div class="my-2 d-flex justify-content-between align-items-center">
-                <div class="form-check">
-                  <label class="form-check-label text-muted">
-                    <input type="checkbox" class="form-check-input"> Keep me signed in
-                  </label>
-                </div>
-                <a href="#" class="auth-link text-black">Forgot password?</a>
-              </div>
-              <div class="my-3">
-                <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">LOGIN</button>
-              </div>
-              <div class="text-center mt-4 font-weight-light">
-                Don't have an account? <a href="{{ url('/registernew') }}" class="text-primary">Create</a>
-              </div>
-            </form>
+
+<div class="auth-container">
+  <!-- Left Panel -->
+  <div class="login-left">
+    <div class="login-form-box">
+      <div class="brand-logo">
+        <img src="{{ asset('images/dishub.png') }}" alt="Dishub Logo">
+      </div>
+      <h4 class="text-center mb-4">Selamat Datang Kembali</h4>
+
+      <form method="POST" action="{{ route('login') }}">
+        @csrf
+
+        <div class="form-group mb-3">
+          <label for="email">Email</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="mdi mdi-account-outline text-primary"></i></span>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
           </div>
+          @error('email')
+              <span class="text-danger small">{{ $message }}</span>
+          @enderror
         </div>
 
-        <!-- Bagian kanan dengan gambar dishub -->
-        <div class="col-lg-6 login-half-bg d-none d-lg-flex align-items-end justify-content-center">
-          <p class="text-muted mb-3">© {{ date('Y') }} All rights reserved.</p>
+        <div class="form-group mb-3">
+          <label for="password">Password</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="mdi mdi-lock-outline text-primary"></i></span>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+          </div>
+          @error('password')
+              <span class="text-danger small">{{ $message }}</span>
+          @enderror
         </div>
-      </div>
+
+        <div class="form-check mb-2">
+          <input type="checkbox" class="form-check-input" id="remember">
+          <label class="form-check-label text-small" for="remember">Ingat Saya</label>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <a href="#" class="text-decoration-none text-small">Lupa Password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block w-100 mb-3">Login</button>
+
+        <div class="text-center text-small">
+          Belum punya akun? <a href="{{ url('/registernew') }}" class="text-primary">Daftar</a>
+        </div>
+      </form>
     </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="login-right">
+    <img src="{{ asset('images/auth/login-bg-new4.jpeg') }}" alt="Dishub Illustration">
   </div>
 </div>
 

@@ -1,115 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>REGISTER</title>
   <link rel="stylesheet" href="{{ url('vendors/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ url('vendors/css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ url('css/style.css') }}">
   <link rel="shortcut icon" href="{{ url('images/dishub.png') }}" />
+
+  <style>
+    body, html {
+      height: 100%;
+    }
+
+    .auth-container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .register-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 2rem;
+      background-color: #f4f6f9;
+    }
+
+    .register-form-box {
+      width: 100%;
+      max-width: 450px;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .brand-logo img {
+      width: 80px;
+      height: auto;
+      display: block;
+      margin: 0 auto 1rem auto;
+    }
+
+    .register-right {
+  background-color: #001DFF; /* Biru gelap seperti tampilan Dishub */
+  width: 100%;
+  max-width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+
+    .register-right img {
+  max-width: 60%;
+  height: auto;
+  object-fit: contain;
+}
+
+    @media (max-width: 991.98px) {
+      .register-right {
+        display: none;
+      }
+    }
+
+    .btn-primary {
+      background-color: #5e50f9;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #4836e0;
+    }
+
+    .text-small {
+      font-size: 0.875rem;
+    }
+  </style>
 </head>
 <body>
-<div class="container-scroller d-flex">
-  <div class="container-fluid page-body-wrapper full-page-wrapper d-flex">
-    <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
-      <div class="row flex-grow">
-        <div class="col-lg-6 d-flex align-items-center justify-content-center">
-          <div class="auth-form-transparent text-left p-3">
 
-            <!-- Ganti logo di sini -->
-            <div class="brand-logo text-center mb-4">
-              <img src="{{ url('images/dishub.png') }}" alt="logo" style="width: 100px; height: auto;">
-            </div>
+<div class="auth-container">
+  <!-- Left Panel -->
+  <div class="register-left">
+    <div class="register-form-box">
+      <div class="brand-logo">
+        <img src="{{ asset('images/dishub.png') }}" alt="Dishub Logo">
+      </div>
+      <h4 class="text-center mb-3">Daftar Akun Baru</h4>
+      <p class="text-center text-muted mb-4">Silakan isi data di bawah ini untuk membuat akun.</p>
 
-            <h4>Belum Punya Akun?</h4>
-            <h6 class="font-weight-light">Silahkan Isi Kelengkapan Data Berikut</h6>
+      <form method="POST" action="{{ route('register') }}">
+        @csrf
 
-            <form class="pt-3" method="POST" action="{{ route('register') }}">
-              @csrf
+        <div class="form-group mb-3">
+          <label for="name">Username</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="mdi mdi-account-outline text-primary"></i></span>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Username" value="{{ old('name') }}">
+          </div>
+          @error('name')
+              <small class="text-danger">{{ $message }}</small>
+          @enderror
+        </div>
 
-              <!-- Name -->
-              <div class="form-group">
-                <label for="name">Username</label>
-                <div class="input-group">
-                  <div class="input-group-prepend bg-transparent">
-                    <span class="input-group-text bg-transparent border-right-0">
-                      <i class="mdi mdi-account-outline text-primary"></i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control form-control-lg border-left-0" id="name" name="name" placeholder="Username" value="{{ old('name') }}">
-                </div>
-                @error('name')
-                  <small class="text-danger">{{ $message }}</small>
-                @enderror
-              </div>
+        <div class="form-group mb-3">
+          <label for="email">Email</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="mdi mdi-email-outline text-primary"></i></span>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email') }}">
+          </div>
+          @error('email')
+              <small class="text-danger">{{ $message }}</small>
+          @enderror
+        </div>
 
-              <!-- Email -->
-              <div class="form-group">
-                <label for="email">Email</label>
-                <div class="input-group">
-                  <div class="input-group-prepend bg-transparent">
-                    <span class="input-group-text bg-transparent border-right-0">
-                      <i class="mdi mdi-email-outline text-primary"></i>
-                    </span>
-                  </div>
-                  <input type="email" class="form-control form-control-lg border-left-0" id="email" name="email" placeholder="Email" value="{{ old('email') }}">
-                </div>
-                @error('email')
-                  <small class="text-danger">{{ $message }}</small>
-                @enderror
-              </div>
+        <div class="form-group mb-3">
+          <label for="password">Password</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="mdi mdi-lock-outline text-primary"></i></span>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+          </div>
+          @error('password')
+              <small class="text-danger">{{ $message }}</small>
+          @enderror
+        </div>
 
-              <!-- Password -->
-              <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-group">
-                  <div class="input-group-prepend bg-transparent">
-                    <span class="input-group-text bg-transparent border-right-0">
-                      <i class="mdi mdi-lock-outline text-primary"></i>
-                    </span>
-                  </div>
-                  <input type="password" class="form-control form-control-lg border-left-0" id="password" name="password" placeholder="Password">
-                </div>
-                @error('password')
-                  <small class="text-danger">{{ $message }}</small>
-                @enderror
-              </div>
-
-              <!-- Confirm Password -->
-              <div class="form-group">
-                <label for="password_confirmation">Confirm Password</label>
-                <div class="input-group">
-                  <div class="input-group-prepend bg-transparent">
-                    <span class="input-group-text bg-transparent border-right-0">
-                      <i class="mdi mdi-lock-outline text-primary"></i>
-                    </span>
-                  </div>
-                  <input type="password" class="form-control form-control-lg border-left-0" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
-                </div>
-              </div>
-
-              <!-- Submit -->
-              <div class="mt-3">
-                <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
-                  SIGN UP
-                </button>
-              </div>
-
-              <!-- Link to login -->
-              <div class="text-center mt-4 font-weight-light">
-                Already have an account? <a href="{{ url('/login') }}" class="text-primary">Login</a>
-              </div>
-            </form>
+        <div class="form-group mb-3">
+          <label for="password_confirmation">Konfirmasi Password</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="mdi mdi-lock-outline text-primary"></i></span>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Ulangi Password">
           </div>
         </div>
-        <div class="col-lg-6 register-half-bg d-none d-lg-flex flex-row">
-          <p class="text-white font-weight-medium text-center flex-grow align-self-end">
-            Copyright © 2018 All rights reserved.
-          </p>
+
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary btn-block w-100">Daftar</button>
         </div>
-      </div>
+
+        <div class="text-center text-small">
+          Sudah punya akun? <a href="{{ url('/login') }}" class="text-primary">Login</a>
+        </div>
+      </form>
     </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="register-right">
+    <img src="{{ asset('images/auth/login-bg-new4.jpeg') }}" alt="Ilustrasi Dishub">
   </div>
 </div>
 

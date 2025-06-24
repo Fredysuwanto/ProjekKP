@@ -9,11 +9,11 @@ use App\Http\Controllers\SuratController;
 use App\Http\Controllers\LaporanController;
 
 // ==========================
-// Halaman Utama
+// Halaman Utama (HARUS login)
 // ==========================
 Route::get('/', function () {
-    return view('layout.main');
-});
+    return redirect()->route('dashboard');
+})->middleware(['auth', 'verified']); // redirect ke dashboard
 
 // ==========================
 // Login Fallback (untuk redirect logout)
@@ -30,6 +30,15 @@ Route::get('/registernew', function () {
 })->name('registernew');
 
 // ==========================
+// Dashboard (untuk semua user login)
+// ==========================
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+// ==========================
 // Group untuk User Login & Terverifikasi
 // ==========================
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -39,6 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('pemilik', PemilikController::class);
         Route::resource('kapal', KapalController::class);
         Route::resource('riwayat', RiwayatController::class);
+        Route::get('/riwayat/detail/{id}', [RiwayatController::class, 'show'])->name('riwayat.detail');
+
 
         Route::get('/riwayat/cetak/{id}', [RiwayatController::class, 'cetakPDF'])->name('riwayat.cetak');
     });
@@ -53,6 +64,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('laporan', LaporanController::class);
         Route::get('/proses', [SuratController::class, 'prosesList'])->name('surat.prosesList');
     });
+
+    // ======== Halaman Tentang Kami ========
+    Route::get('/tentang/profil', fn() => view('pages.profil'))->name('tentang.profil');
+    Route::get('/tentang/visi-misi', fn() => view('pages.visi_misi'))->name('tentang.visi');
+    Route::get('/tentang/kontak', fn() => view('pages.kontak'))->name('tentang.kontak');
 
     // ======== Umum (untuk semua user login) ========
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

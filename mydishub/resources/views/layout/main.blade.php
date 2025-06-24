@@ -1,34 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@section('content')
-<div class="row">
-  <div class="col-md-12">
-    <div class="card shadow-sm border-0 rounded-3 p-4 bg-light">
-      <div class="d-flex align-items-center mb-3">
-        <i class="mdi mdi-account-circle text-primary" style="font-size: 2.5rem;"></i>
-        <div class="ms-3">
-          <h3 class="mb-1 fw-bold">Selamat Datang, {{ auth()->user()->name }} 👋</h3>
-          <p class="text-muted mb-0">
-            @if(auth()->user()->role === 'a')
-              Anda login sebagai <strong>Admin</strong>. Silakan cek menu <em>Laporan</em> dan <em>Proses</em>.
-            @elseif(auth()->user()->role === 'b')
-              Anda login sebagai <strong>Pemilik</strong>. Silakan kelola <em>Data Kapal</em>, <em>Surat</em>, dan <em>Riwayat</em>.
-            @endif
-          </p>
-        </div>
-      </div>
 
-      <hr class="my-3">
 
-      <div class="alert alert-info mb-0">
-        <i class="mdi mdi-information-outline me-2"></i>
-        Gunakan menu navigasi di samping kiri untuk mengakses fitur aplikasi Dishub.
-      </div>
-    </div>
-  </div>
-</div>
-@endsection
 
 
 <head>
@@ -45,7 +19,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="{{url('css/style.css')}}">
   <!-- endinject -->
-  <link rel="shortcut icon" href="{{url('images/dishub.png')}}" />
+  <link rel="shortcut icon" href="{{url('images/dishub.jpg')}}" />
 </head>
 
 <body>
@@ -61,18 +35,22 @@
 
 
        
-        {{-- <li class="nav-item sidebar-category">
-          <p>Components</p>
+         <li class="nav-item sidebar-category">
+          <p>Berita</p>
           <span></span>
         </li>
          <li class="nav-item">
           <a class="nav-link" href="{{ url('dashboard') }}">
             <i class="mdi mdi-view-quilt menu-icon"></i>
             <span class="menu-title">Dashboard</span>
-            <div class="badge badge-info badge-pill">2</div>
+            <div class="badge badge-info badge-pill">News</div>
           </a>
-        </li> --}}
+        </li> 
 {{-- Cek jika user sudah login --}}
+<li class="nav-item sidebar-category">
+          <p>Daftar</p>
+          <span></span>
+        </li>
 @auth
 
   {{-- MENU UNTUK USER (role = b) --}}
@@ -127,40 +105,24 @@
 
         
         <li class="nav-item sidebar-category">
-          <p>Pages</p>
+          <p>Informasi</p>
           <span></span>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
             <i class="mdi mdi-account menu-icon"></i>
-            <span class="menu-title">User Pages</span>
+            <span class="menu-title">Tentang Kami</span>
             <i class="menu-arrow"></i>
           </a>
           <div class="collapse" id="auth">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> Login 2 </a></li>
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/register-2.html"> Register 2 </a></li>
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/lock-screen.html"> Lockscreen </a></li>
-            </ul>
+           <ul class="nav flex-column sub-menu"> 
+          <li class="nav-item"> <a class="nav-link" href="{{ route('tentang.profil') }}"> Profil Perusahaan </a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('tentang.visi') }}"> Visi Misi </a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('tentang.kontak') }}"> Kontak </a></li>
+          </ul>
           </div>
         </li>
-        <li class="nav-item sidebar-category">
-          <p>Apps</p>
-          <span></span>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="docs/documentation.html">
-            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-            <span class="menu-title">Documentation</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="http://www.bootstrapdash.com/demo/spica/template/">
-            <button class="btn bg-danger btn-sm menu-title">Upgrade to pro</button>
-          </a>
-        </li>
+        
       </ul>
     </nav>
     <!-- partial -->
@@ -180,12 +142,18 @@
   </a>
 </div>
 
-@auth
-  <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Halo Selamat Datang, {{ auth()->user()->name }}</h4>
-@endauth          <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item">
-              <h4 class="mb-0 font-weight-bold d-none d-xl-block">Mar 12, 2019 - Apr 10, 2019</h4>
-            </li>
+
+  <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Selamat Datang Di Website Pendaftaran Surat Perizinan</h4>
+         <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item d-none d-xl-block">
+    <li class="nav-item d-none d-xl-block">
+    <div class="d-flex align-items-center">
+        <i class="mdi mdi-calendar-clock me-2" style="font-size: 1.4rem; color: white;"></i>
+        <h6 id="currentDateTime" class="mb-0" style="font-size: 1rem; color: white;"></h6>
+    </div>
+</li>
+
+
             <li class="nav-item dropdown mr-1">
               <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
                 id="messageDropdown" href="#" data-toggle="dropdown">
@@ -301,7 +269,7 @@
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                <img src="images/faces/face5.jpg" alt="profile" />
+                <img src="images/faces/profil.png" alt="profile" />
 @auth
   <span class="nav-profile-name">{{ auth()->user()->name }}</span>
 @else
@@ -327,7 +295,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link icon-link">
+  <a href="https://dishub.sumselprov.go.id/" class="nav-link icon-link" target="_blank" rel="noopener">
     <i class="mdi mdi-web"></i>
   </a>
 </li>
@@ -397,6 +365,25 @@
 </script>
 
 @yield('scripts')
+
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const dateStr = now.toLocaleDateString('en-US', options);
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const target = document.getElementById("currentDateTime");
+        if (target) {
+            target.textContent = `${dateStr} - ${timeStr}`;
+        }
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 60000);
+</script>
+@stack('scripts')
+
 
 </body>
 

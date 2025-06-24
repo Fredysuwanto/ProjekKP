@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Surat;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class RiwayatController extends Controller
 {
@@ -15,7 +16,7 @@ class RiwayatController extends Controller
         } else {
             $riwayat = Surat::with(['kapal', 'pemilik'])
                         ->where('status', 'diproses')
-                        ->whereHas('kapal', function($query) {
+                        ->whereHas('kapal', function ($query) {
                             $query->where('user_id', auth()->id());
                         })->get();
         }
@@ -27,7 +28,7 @@ class RiwayatController extends Controller
     {
         $surat = Surat::with(['kapal', 'pemilik'])->findOrFail($id);
 
-        // Tambahkan validasi agar user hanya bisa cetak surat miliknya sendiri
+        // Hanya pemilik data atau admin yang bisa akses
         if (auth()->user()->role !== 'a' && $surat->kapal->user_id !== auth()->id()) {
             abort(403, 'Anda tidak memiliki akses ke surat ini.');
         }
@@ -42,7 +43,19 @@ class RiwayatController extends Controller
             abort(404, 'Jenis perizinan tidak dikenali.');
         }
 
-        $pdf = Pdf::loadView($view, compact('surat'));
+        // Tambahan data agar sesuai dengan kebutuhan blade (khusus surat trayek seperti contoh)
+        $pemohon = $surat->pemilik;
+        $kapal = $surat->kapal;
+        $tanggal = Carbon::parse($surat->updated_at)->translatedFormat('d F Y');
+        $berlaku_sampai = Carbon::parse($surat->updated_at)->addYears(5)->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView($view, compact('surat', 'pemohon', 'kapal', 'tanggal', 'berlaku_sampai'));
         return $pdf->download('surat-izin-kapal.pdf');
+    }
+
+    public function show($id)
+    {
+        $surat = Surat::with(['pemilik', 'kapal'])->findOrFail($id);
+        return view('riwayat.detail', compact('surat'));
     }
 }

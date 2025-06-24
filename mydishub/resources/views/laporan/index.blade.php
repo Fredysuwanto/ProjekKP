@@ -26,6 +26,7 @@
                 <th>No Plat</th>
                 <th>Jenis</th>
                 <th>Ukuran</th>
+                <th>tandaselar</th>
                 <th>Daya Mesin</th>
                 <th>Jenis Perizinan</th>
                 <th>Status</th>
@@ -40,6 +41,7 @@
                     <td>{{ $surat->kapal->noplat }}</td>
                     <td>{{ $surat->kapal->jenis }}</td>
                     <td>{{ $surat->kapal->ukuran }}</td>
+                    <td>{{ $surat->kapal->tandaselar }}</td>
                     <td>{{ $surat->kapal->daya }}</td>
                     <td>{{ $surat->kapal->jenisperizinan }}</td>
                     <td class="text-center">
@@ -80,8 +82,20 @@
                         <td>{{ $surat->kapal->nama }}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
-                                <a href="{{ route('surat.proses', $surat->id) }}" class="btn btn-sm btn-outline-success">Proses</a>
-                                <a href="{{ route('surat.tolak', $surat->id) }}" class="btn btn-sm btn-outline-danger">Tolak</a>
+                                <button
+                                    class="btn btn-sm btn-outline-success btn-konfirmasi"
+                                    data-url="{{ route('surat.proses', $surat->id) }}"
+                                    data-action="proses"
+                                >
+                                    Proses
+                                </button>
+                                <button
+                                    class="btn btn-sm btn-outline-danger btn-konfirmasi"
+                                    data-url="{{ route('surat.tolak', $surat->id) }}"
+                                    data-action="tolak"
+                                >
+                                    Tolak
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -101,3 +115,49 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.btn-konfirmasi');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                const url = this.getAttribute('data-url');
+                const action = this.getAttribute('data-action');
+                let pesan = '';
+                let judul = '';
+                let icon = 'question';
+
+                if (action === 'proses') {
+                    judul = 'Proses Surat?';
+                    pesan = 'Apakah data sudah lengkap dan ingin diproses sekarang?';
+                    icon = 'info';
+                } else if (action === 'tolak') {
+                    judul = 'Tolak Surat?';
+                    pesan = 'Apakah Anda yakin ingin menolak surat ini? Tindakan ini tidak bisa dibatalkan.';
+                    icon = 'warning';
+                }
+
+                Swal.fire({
+                    title: judul,
+                    text: pesan,
+                    icon: icon,
+                    showCancelButton: true,
+                    confirmButtonColor: action === 'proses' ? '#28a745' : '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: action === 'proses' ? 'Ya, Proses!' : 'Ya, Tolak!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    });
+</script>
+@endpush

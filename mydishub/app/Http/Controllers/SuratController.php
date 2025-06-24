@@ -135,4 +135,6 @@ class SuratController extends Controller
 
         return view('surat.proses', compact('proses'));
     }
+
+    
 }

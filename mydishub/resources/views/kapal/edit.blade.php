@@ -51,6 +51,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="tandaselar">Tanda Selar</label>
+                    <input type="text" class="form-control" id="tandaselar" name="tandaselar" 
+                        value="{{ old('tandaselar', $kapal->tandaselar) }}" placeholder="Masukan tandaselar Kapal">
+                    @error('tandaselar')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <label for="daya">Daya Mesin</label>
                     <input type="text" class="form-control" id="daya" name="daya" 
                         value="{{ old('daya', $kapal->daya) }}" placeholder="Masukan Daya Mesin">

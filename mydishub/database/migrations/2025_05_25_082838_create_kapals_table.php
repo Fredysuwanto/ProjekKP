@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("noplat");
             $table->string("jenis");
             $table->string("ukuran");
+            $table->string("tandaselar");
             $table->string("daya");
             $table->string("muatan");
             $table->string("jenisperizinan");

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kapal extends Model
 {
      use HasFactory;
-    protected $fillable = ['nama', 'noplat', 'jenis', 'ukuran', 'daya','muatan','jenisperizinan','user_id',];
+    protected $fillable = ['nama', 'noplat', 'jenis', 'ukuran','tandaselar', 'daya','muatan','jenisperizinan','user_id',];
 
     public function user()
 {
