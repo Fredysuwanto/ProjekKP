@@ -11,5 +11,9 @@ class Riwayat extends Model
     {
         return $this->belongsTo(Kapal::class);
     }
+    public function surats()
+{
+    return $this->hasMany(Perpanjangsurat::class);
+}
 }
 

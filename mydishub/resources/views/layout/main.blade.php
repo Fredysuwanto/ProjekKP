@@ -93,6 +93,12 @@
         <span class="menu-title">Riwayat</span>
       </a>
     </li>
+        <li class="nav-item">
+      <a class="nav-link" href="{{ url('perpanjangsurat') }}">
+        <i class="mdi mdi-file refresh menu-icon"></i>
+        <span class="menu-title">Perpanjang Surat</span>
+      </a>
+    </li>
   @endif
 
   {{-- MENU UNTUK ADMIN (role = a) --}}
@@ -170,10 +176,10 @@
   <span class="nav-profile-name">Guest</span>
 @endauth              </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item">
-                  <i class="mdi mdi-settings text-primary"></i>
-                  Settings
-                </a>
+<a class="dropdown-item" href="{{ route('profile.edit') }}">
+  <i class="mdi mdi-settings text-primary"></i>
+  Settings
+</a>
                <!-- Authentication -->
 <form method="POST" action="{{ route('logout') }}" id="logout-form">
   @csrf
@@ -192,8 +198,9 @@
 </div>
 </nav>
 <!-- partial -->
-<div class="main-panel">
-  <div class="content-wrapper">
+  <div class="container-scroller ">
+    <div class="main-panel flex-fill ">
+      <div class="content-wrapper flex-grow-1">
     @yield('content')
   </div>
   <!-- content-wrapper ends -->
@@ -204,19 +211,19 @@
             <!-- Alamat Kantor -->
             <div class="col-md-4 mb-4">
                 <h5 class="fw-bold mb-3">Alamat Kantor</h5>
-                <p><i class="fas fa-map-marker-alt me-2"></i>Jalan Kapten A. Rivai No. 51, Sungai Pangeran, Ilir Timur I, Sungai Pangeran, Kec. Ilir Tim. I, Kota Palembang, Sumatera Selatan 30127, Indonesia</p>
-                <p><i class="fas fa-phone me-2"></i>(0711) 352005-363125 / (0711) 377170</p>
-                <p><i class="fas fa-envelope me-2"></i>dishubsumsel2019@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt me-2"></i> Jalan Kapten A. Rivai No. 51, Sungai Pangeran, Ilir Timur I, Sungai Pangeran, Kec. Ilir Tim. I, Kota Palembang, Sumatera Selatan 30127, Indonesia</p>
+                <p><i class="fas fa-phone me-2"></i> (0711) 352005-363125 / (0711) 377170</p>
+                <p><i class="fas fa-envelope me-2"></i> dishubsumsel2019@gmail.com</p>
             </div>
 
             <!-- Tentang Kami -->
             <div class="col-md-2 mb-4">
                 <h5 class="fw-bold mb-3">Tentang Kami</h5>
                 <ul class="list-unstyled">
-                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/') }}" class="text-white text-decoration-none">Home</a></li>
-                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/tentang/profil') }}" class="text-white text-decoration-none">Profil</a></li>
-                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/tentang/visi-misi') }}" class="text-white text-decoration-none">Visi Misi</a></li>
-                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/tentang/kontak') }}" class="text-white text-decoration-none">Kontak Kami</a></li>
+                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/') }}" class="text-white text-decoration-none"> Home</a></li>
+                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/tentang/profil') }}" class="text-white text-decoration-none"> Profil</a></li>
+                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/tentang/visi-misi') }}" class="text-white text-decoration-none"> Visi Misi</a></li>
+                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/tentang/kontak') }}" class="text-white text-decoration-none"> Kontak Kami</a></li>
                 </ul>
             </div>
 
