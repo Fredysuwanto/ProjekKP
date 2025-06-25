@@ -18,14 +18,15 @@
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+<!-- Page Heading -->
+@isset($header)
+    <header style="background-image: url('{{ asset('images/header/header.png') }}'); background-size: cover; background-position: center;">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-white bg-black/50">
+            {{ $header }}
+        </div>
+    </header>
+@endisset
+
 
            <!-- Page Content -->
         <main>
