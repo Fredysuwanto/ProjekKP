@@ -27,6 +27,9 @@
   }
 </style>
   <!-- endinject -->
+  <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <link rel="shortcut icon" href="{{url('images/dishub.jpg')}}" />
 </head>
 
@@ -195,21 +198,50 @@
   </div>
   <!-- content-wrapper ends -->
   <!-- partial:./partials/_footer.html -->
-  <footer class="footer">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-sm-flex justify-content-center justify-content-sm-between">
-          <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
-            bootstrapdash.com 2020</span>
-          <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Distributed By: <a
-              href="https://www.themewagon.com/" target="_blank">ThemeWagon</a></span>
-          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
-              href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from
-            Bootstrapdash.com</span>
+<footer style="background-color: #8b8b8b;" class="text-white pt-5">
+    <div class="container py-4">
+        <div class="row">
+            <!-- Alamat Kantor -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold mb-3">Alamat Kantor</h5>
+                <p><i class="fas fa-map-marker-alt me-2"></i>Jalan Kapten A. Rivai No. 51, Sungai Pangeran, Ilir Timur I, Sungai Pangeran, Kec. Ilir Tim. I, Kota Palembang, Sumatera Selatan 30127, Indonesia</p>
+                <p><i class="fas fa-phone me-2"></i>(0711) 352005-363125 / (0711) 377170</p>
+                <p><i class="fas fa-envelope me-2"></i>dishubsumsel2019@gmail.com</p>
+            </div>
+
+            <!-- Tentang Kami -->
+            <div class="col-md-2 mb-4">
+                <h5 class="fw-bold mb-3">Tentang Kami</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/') }}" class="text-white text-decoration-none">Home</a></li>
+                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/tentang/profil') }}" class="text-white text-decoration-none">Profil</a></li>
+                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/tentang/visi-misi') }}" class="text-white text-decoration-none">Visi Misi</a></li>
+                    <li><i class="fas fa-angle-double-right me-2"></i><a href="{{ url('/tentang/kontak') }}" class="text-white text-decoration-none">Kontak Kami</a></li>
+                </ul>
+            </div>
+
+            <!-- Situs Kelola -->
+            <div class="col-md-3 mb-4">
+                <h5 class="fw-bold mb-3">Situs Kelola</h5>
+                <p>Dikelola Oleh Dinas Perhubungan <br>Provinsi Sumatera Selatan</p>
+            </div>
+
+            <!-- Sosial Media -->
+            <div class="col-md-3 mb-4">
+                <h5 class="fw-bold mb-3">Follow Us On</h5>
+                <a href="https://web.facebook.com/dinasperhubungan.provinsisumsel?mibextid=LQQJ4d&_rdc=1&_rdr#" class="text-white me-3"><i class="fab fa-facebook-f fa-lg border rounded-circle p-3 fs-5"></i></a>
+                <a href="https://www.youtube.com/@dishubsumsel2198" class="text-white me-3"><i class="fab fa-youtube fa-lg border rounded-circle p-3 fs-5"></i></a>
+                <a href="https://www.instagram.com/dishub_sumsel/" class="text-white"><i class="fab fa-instagram fa-lg border rounded-circle p-3 fs-5"></i></a>
+            </div>
         </div>
-      </div>
     </div>
-  </footer>
+
+    <div style="background-color: #00c67a;" class="text-center text-white py-2">
+        <p class="mb-0">Copyright © 2024 Dinas Perhubungan Prov. Sumsel</p>
+        <div class="text-center mt-1">dishub</div>
+    </div>
+</footer>
+
   <!-- partial -->
 </div>
 <!-- main-panel ends -->
