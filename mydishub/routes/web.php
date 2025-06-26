@@ -77,15 +77,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-    // ======== Shared: Admin & Pemilik akses surat ========
-    Route::resource('perpanjangsurat', PerpanjangsuratController::class);
-    Route::get('/perpanjangsurat/proses/{id}', [PerpanjangsuratController::class, 'proses'])->name('perpanjangsurat.proses');
-    Route::get('/perpanjangsurat/tolak/{id}', [PerpanjangsuratController::class, 'tolak'])->name('perpanjangsurat.tolak');
-
     // ======== Untuk Role ADMIN (a) ========
     Route::middleware('role:a')->group(function () {
         Route::resource('laporan', LaporanController::class);
-        Route::get('/proses', [PerpanjangsuratController::class, 'prosesList'])->name('perpanjangsurat.prosesList');
     });
 // ==========================
 // Route Auth (Login, Logout, Register)

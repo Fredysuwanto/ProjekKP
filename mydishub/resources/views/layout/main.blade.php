@@ -169,12 +169,14 @@
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                <img src="images/faces/profil.png" alt="profile" />
+                <img src="{{ asset('images/faces/profil.png') }}" alt="profile" style="max-height: 150px;">
+
 @auth
   <span class="nav-profile-name">{{ auth()->user()->name }}</span>
 @else
   <span class="nav-profile-name">Guest</span>
-@endauth              </a>
+@endauth             
+ </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
 <a class="dropdown-item" href="{{ route('profile.edit') }}">
   <i class="mdi mdi-settings text-primary"></i>
