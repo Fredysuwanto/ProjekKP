@@ -60,12 +60,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/surat/proses/{id}', [SuratController::class, 'proses'])->name('surat.proses');
     Route::get('/surat/tolak/{id}', [SuratController::class, 'tolak'])->name('surat.tolak');
 
-    // ======== Untuk Role ADMIN (a) ========
-    Route::middleware('role:a')->group(function () {
-        Route::resource('laporan', LaporanController::class);
-        Route::get('/proses', [SuratController::class, 'prosesList'])->name('surat.prosesList');
-    });
-
     // ======== Halaman Tentang Kami ========
     Route::get('/tentang/profil', fn() => view('pages.profil'))->name('tentang.profil');
     Route::get('/tentang/visi-misi', fn() => view('pages.visi_misi'))->name('tentang.visi');
@@ -77,9 +71,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+    // ======== Shared: Admin & Pemilik akses surat ========
+    Route::resource('perpanjangsurat', PerpanjangsuratController::class);
+    Route::get('/perpanjangsurat/proses/{id}', [PerpanjangsuratController::class, 'proses'])->name('perpanjangsurat.proses');
+    Route::get('/perpanjangsurat/tolak/{id}', [PerpanjangsuratController::class, 'tolak'])->name('perpanjangsurat.tolak');
+
     // ======== Untuk Role ADMIN (a) ========
     Route::middleware('role:a')->group(function () {
         Route::resource('laporan', LaporanController::class);
+        Route::get('/proses', [SuratController::class, 'prosesList'])->name('surat.prosesList');
+        Route::get('/proses2', [PerpanjangsuratController::class, 'proses2List'])->name('perpanjangsurat.proses2List');
     });
 // ==========================
 // Route Auth (Login, Logout, Register)

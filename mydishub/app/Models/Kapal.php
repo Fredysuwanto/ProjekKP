@@ -14,10 +14,6 @@ class Kapal extends Model
 {
     return $this->belongsTo(User::class);
 }
-public function riwayat()
-{
-    return $this->hasMany(Riwayat::class);
-}
 public function surats()
 {
     return $this->hasMany(Surat::class);

@@ -13,7 +13,6 @@ class Surat extends Model
         'kapal_id',
         'pemilik_id',
         'user_id',
-        'jenis_perizinan', // <- ini perlu ditambahkan agar bisa disimpan saat create/update
     ];
 
     public function kapal()
@@ -28,6 +27,10 @@ class Surat extends Model
     public function user()
 {
     return $this->belongsTo(User::class);
+}
+public function perpanjangsurat()
+{
+    return $this->hasMany(Perpanjangsurat::class);
 }
 
 }
