@@ -73,7 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // ======== Shared: Admin & Pemilik akses surat ========
     Route::resource('perpanjangsurat', PerpanjangsuratController::class);
-    Route::get('/perpanjangsurat/proses/{id}', [PerpanjangsuratController::class, 'proses'])->name('perpanjangsurat.proses');
+    Route::get('/perpanjangsurat/proses2/{id}', [PerpanjangsuratController::class, 'proses2'])->name('perpanjangsurat.proses2');
     Route::get('/perpanjangsurat/tolak/{id}', [PerpanjangsuratController::class, 'tolak'])->name('perpanjangsurat.tolak');
 
     // ======== Untuk Role ADMIN (a) ========

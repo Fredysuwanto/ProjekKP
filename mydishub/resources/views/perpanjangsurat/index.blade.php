@@ -1,16 +1,16 @@
 @extends('layout.main')
 
-@section('title', 'Perpanjang Data Surat Izin Kapal')
+@section('title', 'Data Surat Izin Kapal')
 
 @section('content')
 <div class="container-fluid">
   <div class="card shadow-sm border-0">
     <div class="card-body">
       <h4 class="fw-bold mb-3">
-        <i class="mdi mdi-file-document-outline text-primary me-1"></i> Data Surat Perpanjang Kapal
+        <i class="mdi mdi-file-document-outline text-primary me-1"></i> Data Surat Izin Kapal
       </h4>
       <p class="text-muted">
-        Berikut adalah daftar perpanjangan surat izin kapal yang telah diajukan oleh pemilik kapal. 
+        Berikut adalah daftar surat izin kapal yang telah diajukan oleh pemilik kapal. 
          <span class="text-primary fw-semibold">Data ini akan menjadi acuan dalam proses verifikasi dan persetujuan perizinan.</span>
       </p>
 
@@ -40,36 +40,36 @@
             </tr>
           </thead>
           <tbody>
-            @forelse($perpanjang as $r)
-<tr>
-  <td>{{ $r->surat->pemilik->nama }}</td>
-  <td>{{ $r->surat->pemilik->alamat }}</td>
-  <td>{{ $r->surat->kapal->nama }}</td>
-  <td>{{ $r->surat->kapal->noplat }}</td>
-  <td>{{ $r->surat->kapal->jenis }}</td>
-  <td>{{ $r->surat->kapal->ukuran }}</td>
-  <td>{{ $r->surat->kapal->tandaselar }}</td>
-  <td>{{ $r->surat->kapal->daya }}</td>
-  <td>
+            @forelse($perpanjang as $ps)
+            <tr>
+              <td>{{ $ps->surat->pemilik->nama }}</td>
+              <td>{{ $ps->surat->pemilik->alamat }}</td>
+              <td>{{ $ps->surat->kapal->nama }}</td>
+              <td>{{ $ps->surat->kapal->noplat }}</td>
+              <td>{{ $ps->surat->kapal->jenis }}</td>
+              <td>{{ $ps->surat->kapal->ukuran }}</td>
+              <td>{{ $ps->surat->kapal->tandaselar }}</td>
+              <td>{{ $ps->surat->kapal->daya }}</td>
+              <td>
                 <span class="badge bg-primary text-white px-3 py-2">
-                  {{ $r->surat->kapal->jenisperizinan }}
+                  {{ $ps->surat->kapal->jenisperizinan }}
                 </span>
               </td>
               <td>
-                @if ($r->status === null)
+                @if ($ps->status === null)
                   <span class="badge bg-warning text-dark px-3 py-2">Menunggu</span>
                 @else
-                  <span class="badge bg-info text-white px-3 py-2">{{ ucfirst($r->status) }}</span>
+                  <span class="badge bg-info text-white px-3 py-2">{{ ucfirst($ps->status) }}</span>
                 @endif
               </td>
               @if(auth()->user()->role === 'a')
               <td>
-                @if ($r->status === null)
+                @if ($ps->status === null)
                 <div class="d-flex justify-content-center gap-2">
-                  <a href="{{ route('perpanjangsurat.proses', $r->id) }}" class="btn btn-success btn-sm rounded-pill px-3">
+                  <a href="{{ route('perpanjangsurat.proses', $ps->id) }}" class="btn btn-success btn-sm rounded-pill px-3">
                     <i class="mdi mdi-check-circle-outline me-1"></i> Proses
                   </a>
-                  <a href="{{ route('perpanjangsurat.tolak', $r->id) }}" class="btn btn-danger btn-sm rounded-pill px-3">
+                  <a href="{{ route('perpanjangsurat.tolak', $ps->id) }}" class="btn btn-danger btn-sm rounded-pill px-3">
                     <i class="mdi mdi-close-circle-outline me-1"></i> Tolak
                   </a>
                 </div>

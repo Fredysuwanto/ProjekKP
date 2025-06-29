@@ -33,8 +33,7 @@ class PerpanjangsuratController extends Controller
 public function create()
 {
     $surats = Surat::with(['kapal', 'pemilik'])
-                    ->where('status', 'diproses')
-                    ->get();
+                    ->where('user_id', auth()->id())->get();
 
     return view('perpanjangsurat.create', compact('surats'));
 }
@@ -49,6 +48,13 @@ $tanggal_pengajuan = Carbon::parse($surat->updated_at);
 if (now()->lessThan($tanggal_pengajuan->addYears(5))) {
     return back()->with('error', 'Perpanjangan hanya dapat dilakukan setelah 5 tahun dari pengajuan terakhir.');
 }
+        Perpanjangsurat::create([
+            'surat_id'   => $request->surat_id,
+            'user_id'    => auth()->id(), // PENTING!
+            'status'     => 'Menunggu',
+        ]);
+
+        return redirect()->route('perpanjangsurat.index')->with('success', 'Surat berhasil dibuat.');
     }
 
     /**

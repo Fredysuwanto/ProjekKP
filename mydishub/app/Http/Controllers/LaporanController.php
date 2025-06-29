@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laporan;
+use App\Models\Perpanjangsurat;
 use Illuminate\Http\Request;
 use App\Models\Surat;
 
@@ -15,7 +16,8 @@ class LaporanController extends Controller
     {
         // Ambil semua data surat dengan relasi kapal dan pemilik
         $surats = Surat::with(['kapal', 'pemilik'])->get();
-        return view('laporan.index', compact('surats'));
+        $perpanjang = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])->get();
+        return view('laporan.index', compact('surats','perpanjang'));
     }
 
     /**

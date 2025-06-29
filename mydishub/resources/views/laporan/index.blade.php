@@ -64,7 +64,53 @@
             @endforelse
         </tbody>
     </table>
-
+    <h5 class="fw-bold mb-3">Tabel Data Surat</h5>
+    <table class="table table-bordered table-hover" style="font-size: 15px;">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>Nama Pemilik</th>
+                <th>Alamat</th>
+                <th>Nama Kapal</th>
+                <th>No Plat</th>
+                <th>Jenis</th>
+                <th>Ukuran</th>
+                <th>tandaselar</th>
+                <th>Daya Mesin</th>
+                <th>Jenis Perizinan</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($perpanjang as $ps)
+                <tr>
+                    <td>{{ $ps->surat->pemilik->nama }}</td>
+                    <td>{{ $ps->surat->pemilik->alamat }}</td>
+                    <td>{{ $ps->surat->kapal->nama }}</td>
+                    <td>{{ $ps->surat->kapal->noplat }}</td>
+                    <td>{{ $ps->surat->kapal->jenis }}</td>
+                    <td>{{ $ps->surat->kapal->ukuran }}</td>
+                    <td>{{ $ps->surat->kapal->tandaselar }}</td>
+                    <td>{{ $ps->surat->kapal->daya }}</td>
+                    <td>{{ $ps->surat->kapal->jenisperizinan }}</td>
+                    <td class="text-center">
+                        @if ($ps->status === 'Menunggu')
+                            <span class="badge bg-secondary">Belum Diproses</span>
+                        @elseif ($ps->status === 'diproses')
+                            <span class="badge bg-success">Diproses</span>
+                        @elseif ($ps->status === 'ditolak')
+                            <span class="badge bg-danger">Ditolak</span>
+                        @else
+                            <span class="badge bg-warning">Tidak Dikenal</span>
+                        @endif
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="9" class="text-center">Tidak ada data surat ditemukan.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
     <!-- Tabel Aksi -->
     <h5 class="fw-bold mt-5 mb-3">Tabel Aksi Pemrosesan</h5>
     <table class="table table-bordered table-striped" style="font-size: 15px;">
@@ -93,6 +139,48 @@
                                 <button
                                     class="btn btn-sm btn-outline-danger btn-konfirmasi"
                                     data-url="{{ route('surat.tolak', $surat->id) }}"
+                                    data-action="tolak"
+                                >
+                                    Tolak
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                @endif
+            @empty
+                <tr>
+                    <td colspan="3" class="text-center">Tidak ada data surat untuk diproses.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+    <h5 class="fw-bold mt-5 mb-3">Tabel Aksi Pemrosesan</h5>
+    <table class="table table-bordered table-striped" style="font-size: 15px;">
+        <thead class="table-light text-center">
+            <tr>
+                <th>Nama Pemilik</th>
+                <th>Nama Kapal</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($perpanjang as $ps)
+                @if ($ps->status === 'Menunggu')
+                    <tr>
+                        <td>{{ $ps->surat->pemilik->nama }}</td>
+                        <td>{{ $ps->surat->kapal->nama }}</td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center gap-2">
+                                <button
+                                    class="btn btn-sm btn-outline-success btn-konfirmasi"
+                                    data-url="{{ route('perpanjangsurat.proses2', $ps->id) }}"
+                                    data-action="proses"
+                                >
+                                    Proses
+                                </button>
+                                <button
+                                    class="btn btn-sm btn-outline-danger btn-konfirmasi"
+                                    data-url="{{ route('perpanjangsurat.tolak', $ps->id) }}"
                                     data-action="tolak"
                                 >
                                     Tolak

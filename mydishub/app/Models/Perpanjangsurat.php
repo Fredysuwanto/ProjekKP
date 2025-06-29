@@ -12,6 +12,7 @@ use HasFactory;
     protected $fillable = [
         'surat_id',
         'user_id',
+        'status'
     ];
     public function user()
 {

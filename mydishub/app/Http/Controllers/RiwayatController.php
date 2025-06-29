@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Perpanjangsurat;
 use App\Models\Surat;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -13,21 +14,27 @@ class RiwayatController extends Controller
     {
         if (auth()->user()->role === 'a') {
             $riwayat = Surat::with(['kapal', 'pemilik'])->where('status', 'diproses')->get();
+            $riwayat2 = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])->where('status', 'diproses')->get();
         } else {
             $riwayat = Surat::with(['kapal', 'pemilik'])
                         ->where('status', 'diproses')
                         ->whereHas('kapal', function ($query) {
                             $query->where('user_id', auth()->id());
                         })->get();
+            $riwayat2 = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])
+                        ->where('status', 'diproses')
+                        ->whereHas('surat.kapal', function ($query) {
+                            $query->where('user_id', auth()->id());
+                        })->get();
         }
 
-        return view('riwayat.index', compact('riwayat'));
+        return view('riwayat.index', compact('riwayat','riwayat2'));
     }
 
     public function cetakPDF($id)
     {
         $surat = Surat::with(['kapal', 'pemilik'])->findOrFail($id);
-
+        $perpanjangsurat = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])->findOrFail($id);
         // Hanya pemilik data atau admin yang bisa akses
         if (auth()->user()->role !== 'a' && $surat->kapal->user_id !== auth()->id()) {
             abort(403, 'Anda tidak memiliki akses ke surat ini.');
@@ -56,6 +63,7 @@ class RiwayatController extends Controller
     public function show($id)
     {
         $surat = Surat::with(['pemilik', 'kapal'])->findOrFail($id);
-        return view('riwayat.detail', compact('surat'));
+        $perpanjangsurat = Perpanjangsurat::with(['surat.kapal','surat.pemilik'])->findOrFail($id);
+        return view('riwayat.detail', compact('surat','perpanjangsurat'));
     }
 }
