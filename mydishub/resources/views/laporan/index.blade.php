@@ -64,7 +64,7 @@
             @endforelse
         </tbody>
     </table>
-    <h5 class="fw-bold mb-3">Tabel Data Surat</h5>
+    <h5 class="fw-bold mb-3">Tabel Data Perpanjang Surat</h5>
     <table class="table table-bordered table-hover" style="font-size: 15px;">
         <thead class="table-dark text-center">
             <tr>
@@ -154,7 +154,7 @@
             @endforelse
         </tbody>
     </table>
-    <h5 class="fw-bold mt-5 mb-3">Tabel Aksi Pemrosesan</h5>
+    <h5 class="fw-bold mt-5 mb-3">Tabel Aksi Pemrosesan Perpanjang Surat</h5>
     <table class="table table-bordered table-striped" style="font-size: 15px;">
         <thead class="table-light text-center">
             <tr>

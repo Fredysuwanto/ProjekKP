@@ -36,8 +36,11 @@
 
     <h2 class="text-center">SURAT PERSETUJUAN PENGOPERASIAN</h2>
     <h3 class="text-center">KAPAL SUNGAI DAN DANAU</h3>
-
-    <p class="text-center mt-2">Nomor : 551.31 / 0001 / 4 /DISHUB-25</p>
+@php
+    $lastId = $surat->id ?? 1;
+    $nomor = '551.31/' . str_pad($lastId, 4, '0', STR_PAD_LEFT) . '/4/Dishub-25';
+@endphp
+<p class="text-center mt-2">Nomor : {{ $nomor }}</p>
 
     <p>
         Berdasarkan Surat Permohonan Penerbitan Persetujuan Pengoperasian Kapal Sungai dan Danau Perorangan : 

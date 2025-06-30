@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Surat;
 use App\Models\Kapal;
 use App\Models\Pemilik;
+use App\Models\Perpanjangsurat;
 use Illuminate\Http\Request;
 
 class SuratController extends Controller
@@ -123,6 +124,10 @@ class SuratController extends Controller
                         ->where('status', 'diproses')
                         ->orderBy('updated_at', 'desc')
                         ->get();
+            $proses2 = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])
+                    ->where('status', 'diproses')
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
         } else {
             $proses = Surat::with(['kapal', 'pemilik'])
                         ->where('status', 'diproses')
@@ -131,9 +136,16 @@ class SuratController extends Controller
                         })
                         ->orderBy('updated_at', 'desc')
                         ->get();
+            $proses2 = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])
+                    ->where('status', 'diproses')
+                    ->whereHas('surat.kapal', function ($q) {
+                        $q->where('user_id', auth()->id());
+                    })
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
         }
 
-        return view('surat.proses', compact('proses'));
+        return view('surat.proses', compact('proses','proses2'));
     }
 
     

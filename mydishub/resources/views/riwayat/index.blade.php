@@ -109,13 +109,13 @@
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($surat->updated_at)->format('d-m-Y') }}</td>
                                 <td>
-                                    <a href="{{ route('riwayat.detail', $surat->id) }}" 
+                                    <a href="{{ route('riwayat.detail2', $surat->id) }}" 
                                        class="btn btn-outline-info btn-sm rounded-pill shadow-sm">
                                         <i class="mdi mdi-eye-outline me-1"></i> Detail
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('riwayat.cetak', $surat->id) }}" 
+                                    <a href="{{ route('riwayat.cetak2', $surat->id) }}" 
                                        class="btn btn-sm text-white fw-semibold rounded-pill shadow-sm" 
                                        style="background-color: #1e40af;">
                                         <i class="mdi mdi-file-download-outline me-1"></i> Unduh PDF

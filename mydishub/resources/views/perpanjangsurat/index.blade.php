@@ -7,10 +7,10 @@
   <div class="card shadow-sm border-0">
     <div class="card-body">
       <h4 class="fw-bold mb-3">
-        <i class="mdi mdi-file-document-outline text-primary me-1"></i> Data Surat Izin Kapal
+        <i class="mdi mdi-file-document-outline text-primary me-1"></i> Data Perpanjang Surat Izin Kapal
       </h4>
       <p class="text-muted">
-        Berikut adalah daftar surat izin kapal yang telah diajukan oleh pemilik kapal. 
+        Berikut adalah daftar perpanjang surat izin kapal yang telah diajukan oleh pemilik kapal. 
          <span class="text-primary fw-semibold">Data ini akan menjadi acuan dalam proses verifikasi dan persetujuan perizinan.</span>
       </p>
 

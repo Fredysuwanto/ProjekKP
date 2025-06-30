@@ -63,8 +63,8 @@
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $perpanjangsurat->surat->kapal->nama }}</td>
                 <td>{{ $perpanjangsurat->surat->pemilik->nama }}</td>
-                <td>{{ \Carbon\Carbon::parse($surat->updated_at)->format('d-m-Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($surat->updated_at)->addYears(5)->format('d-m-Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($perpanjangsurat->updated_at)->format('d-m-Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($perpanjangsurat->updated_at)->addYears(5)->format('d-m-Y') }}</td>
             </tr>
             @empty
             <tr>
