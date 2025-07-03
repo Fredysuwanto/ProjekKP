@@ -23,6 +23,7 @@
             <tr>
                 <th>Nama Pemilik</th>
                 <th>Alamat</th>
+                <th>Nik/NPWP</th>
                 <th>Nama Kapal</th>
                 <th>No Plat</th>
                 <th>Jenis</th>
@@ -38,6 +39,7 @@
                 <tr>
                     <td>{{ $surat->pemilik->nama }}</td>
                     <td>{{ $surat->pemilik->alamat }}</td>
+                    <td>{{ $surat->pemilik->nik }}</td>
                     <td>{{ $surat->kapal->nama }}</td>
                     <td>{{ $surat->kapal->noplat }}</td>
                     <td>{{ $surat->kapal->jenis }}</td>
@@ -70,6 +72,7 @@
             <tr>
                 <th>Nama Pemilik</th>
                 <th>Alamat</th>
+                <th>Nik</th>
                 <th>Nama Kapal</th>
                 <th>No Plat</th>
                 <th>Jenis</th>
@@ -85,6 +88,7 @@
                 <tr>
                     <td>{{ $ps->surat->pemilik->nama }}</td>
                     <td>{{ $ps->surat->pemilik->alamat }}</td>
+                    <td>{{ $ps->surat->pemilik->nik }}</td>
                     <td>{{ $ps->surat->kapal->nama }}</td>
                     <td>{{ $ps->surat->kapal->noplat }}</td>
                     <td>{{ $ps->surat->kapal->jenis }}</td>

@@ -158,6 +158,23 @@
     <img src="{{ asset('images/logo_dishub.png') }}" alt="logo" style="height: 40px; width: auto;">
   </a>
   <h5 class="mb-0 text-dark fw-bold">Selamat Datang di Website MyDishub</h5>
+{{-- <div class="d-flex flex-wrap justify-content-between align-items-center mt-2 w-100 gap-3">
+  {{-- Info Telepon --}}
+  {{-- <div class="d-flex align-items-center">
+    <i class="mdi mdi-phone-in-talk text-primary fs-4 me-2"></i>
+    <span class="fw-semibold">(0711) 352005 – 363125</span>
+  </div> --}}
+
+  {{-- Info Alamat --}}
+  {{-- <div class="d-flex align-items-center">
+    <i class="mdi mdi-map-marker text-primary fs-4 me-2"></i>
+    <div>
+      <span class="fw-semibold">Jl. Kapten A. Rivai No. 51</span><br>
+      <small class="text-muted">Palembang, Prov Sumsel</small>
+    </div>
+  </div> --}}
+{{-- </div> --}}
+
 </div>
 
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"

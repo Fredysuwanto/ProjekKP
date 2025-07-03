@@ -18,8 +18,6 @@ public function surats()
 {
     return $this->hasMany(Surat::class);
 }
-
-
 }
 
 
