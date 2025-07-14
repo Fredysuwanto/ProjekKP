@@ -16,108 +16,63 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+   
     <!-- Tabel Utama -->
-    <h5 class="fw-bold mb-3">Tabel Data Surat</h5>
-    <table class="table table-bordered table-hover" style="font-size: 15px;">
-        <thead class="table-dark text-center">
+<h5 class="fw-bold mb-3">Tabel Data Surat</h5>
+<table class="table table-bordered table-hover" style="font-size: 15px;">
+    <thead class="table-dark text-center">
+        <tr>
+            <th>Nama Pemilik</th>
+            <th>Alamat</th>
+            <th>Nik/NPWP</th>
+            <th>Nama Kapal</th>
+            <th>No Plat</th>
+            <th>Jenis</th>
+            <th>Ukuran</th>
+            <th>tandaselar</th>
+            <th>Jenis Perizinan</th>
+            <th>Tujuan</th> <!-- Kolom baru -->
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse ($surats as $surat)
             <tr>
-                <th>Nama Pemilik</th>
-                <th>Alamat</th>
-                <th>Nik/NPWP</th>
-                <th>Nama Kapal</th>
-                <th>No Plat</th>
-                <th>Jenis</th>
-                <th>Ukuran</th>
-                <th>tandaselar</th>
-                <th>Daya Mesin</th>
-                <th>Jenis Perizinan</th>
-                <th>Status</th>
+                <td>{{ $surat->pemilik->nama }}</td>
+                <td>{{ $surat->pemilik->alamat }}</td>
+                <td>{{ $surat->pemilik->nik }}</td>
+                <td>{{ $surat->kapal->nama }}</td>
+                <td>{{ $surat->kapal->noplat }}</td>
+                <td>{{ $surat->kapal->jenis }}</td>
+                <td>{{ $surat->kapal->ukuran }}</td>
+                <td>{{ $surat->kapal->tandaselar }}</td>
+                <td>{{ $surat->kapal->jenisperizinan }}</td>
+                <td>{{ $surat->kapal->tujuan ?? '-' }}</td> <!-- Data tujuan -->
+                <td class="text-center">
+                    @if ($surat->status === null)
+                        <span class="badge bg-secondary">Belum Diproses</span>
+                    @elseif ($surat->status === 'diproses')
+                        <span class="badge bg-success">Diproses</span>
+                    @elseif ($surat->status === 'ditolak')
+                        <span class="badge bg-danger">Ditolak</span>
+                    @else
+                        <span class="badge bg-warning">Tidak Dikenal</span>
+                    @endif
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @forelse ($surats as $surat)
-                <tr>
-                    <td>{{ $surat->pemilik->nama }}</td>
-                    <td>{{ $surat->pemilik->alamat }}</td>
-                    <td>{{ $surat->pemilik->nik }}</td>
-                    <td>{{ $surat->kapal->nama }}</td>
-                    <td>{{ $surat->kapal->noplat }}</td>
-                    <td>{{ $surat->kapal->jenis }}</td>
-                    <td>{{ $surat->kapal->ukuran }}</td>
-                    <td>{{ $surat->kapal->tandaselar }}</td>
-                    <td>{{ $surat->kapal->daya }}</td>
-                    <td>{{ $surat->kapal->jenisperizinan }}</td>
-                    <td class="text-center">
-                        @if ($surat->status === null)
-                            <span class="badge bg-secondary">Belum Diproses</span>
-                        @elseif ($surat->status === 'diproses')
-                            <span class="badge bg-success">Diproses</span>
-                        @elseif ($surat->status === 'ditolak')
-                            <span class="badge bg-danger">Ditolak</span>
-                        @else
-                            <span class="badge bg-warning">Tidak Dikenal</span>
-                        @endif
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="9" class="text-center">Tidak ada data surat ditemukan.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-    <h5 class="fw-bold mb-3">Tabel Data Perpanjang Surat</h5>
-    <table class="table table-bordered table-hover" style="font-size: 15px;">
-        <thead class="table-dark text-center">
+        @empty
             <tr>
-                <th>Nama Pemilik</th>
-                <th>Alamat</th>
-                <th>Nik</th>
-                <th>Nama Kapal</th>
-                <th>No Plat</th>
-                <th>Jenis</th>
-                <th>Ukuran</th>
-                <th>tandaselar</th>
-                <th>Daya Mesin</th>
-                <th>Jenis Perizinan</th>
-                <th>Status</th>
+                <td colspan="12" class="text-center">Tidak ada data surat ditemukan.</td>
             </tr>
-        </thead>
-        <tbody>
-            @forelse ($perpanjang as $ps)
-                <tr>
-                    <td>{{ $ps->surat->pemilik->nama }}</td>
-                    <td>{{ $ps->surat->pemilik->alamat }}</td>
-                    <td>{{ $ps->surat->pemilik->nik }}</td>
-                    <td>{{ $ps->surat->kapal->nama }}</td>
-                    <td>{{ $ps->surat->kapal->noplat }}</td>
-                    <td>{{ $ps->surat->kapal->jenis }}</td>
-                    <td>{{ $ps->surat->kapal->ukuran }}</td>
-                    <td>{{ $ps->surat->kapal->tandaselar }}</td>
-                    <td>{{ $ps->surat->kapal->daya }}</td>
-                    <td>{{ $ps->surat->kapal->jenisperizinan }}</td>
-                    <td class="text-center">
-                        @if ($ps->status === 'Menunggu')
-                            <span class="badge bg-secondary">Belum Diproses</span>
-                        @elseif ($ps->status === 'diproses')
-                            <span class="badge bg-success">Diproses</span>
-                        @elseif ($ps->status === 'ditolak')
-                            <span class="badge bg-danger">Ditolak</span>
-                        @else
-                            <span class="badge bg-warning">Tidak Dikenal</span>
-                        @endif
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="9" class="text-center">Tidak ada data surat ditemukan.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+        @endforelse
+    </tbody>
+</table>
+
+
+
     <!-- Tabel Aksi -->
     <h5 class="fw-bold mt-5 mb-3">Tabel Aksi Pemrosesan</h5>
-    <table class="table table-bordered table-striped" style="font-size: 15px;">
+<table class="table table-bordered table-striped mb-5" style="font-size: 15px;">
         <thead class="table-light text-center">
             <tr>
                 <th>Nama Pemilik</th>
@@ -158,6 +113,56 @@
             @endforelse
         </tbody>
     </table>
+
+<h5 class="fw-bold mb-3">Tabel Data Perpanjang Surat</h5>
+<table class="table table-bordered table-striped mb-5" style="font-size: 15px;">
+    <thead class="table-dark text-center">
+        <tr>
+            <th>Nama Pemilik</th>
+            <th>Alamat</th>
+            <th>Nik</th>
+            <th>Nama Kapal</th>
+            <th>No Plat</th>
+            <th>Jenis</th>
+            <th>Ukuran</th>
+            <th>tandaselar</th>
+            <th>Jenis Perizinan</th>
+            <th>Tujuan</th> <!-- Kolom baru -->
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse ($perpanjang as $ps)
+            <tr>
+                <td>{{ $ps->surat->pemilik->nama }}</td>
+                <td>{{ $ps->surat->pemilik->alamat }}</td>
+                <td>{{ $ps->surat->pemilik->nik }}</td>
+                <td>{{ $ps->surat->kapal->nama }}</td>
+                <td>{{ $ps->surat->kapal->noplat }}</td>
+                <td>{{ $ps->surat->kapal->jenis }}</td>
+                <td>{{ $ps->surat->kapal->ukuran }}</td>
+                <td>{{ $ps->surat->kapal->tandaselar }}</td>
+                <td>{{ $ps->surat->kapal->jenisperizinan }}</td>
+                <td>{{ $ps->surat->kapal->tujuan ?? '-' }}</td> <!-- Data tujuan -->
+                <td class="text-center">
+                    @if ($ps->status === 'Menunggu')
+                        <span class="badge bg-secondary">Belum Diproses</span>
+                    @elseif ($ps->status === 'diproses')
+                        <span class="badge bg-success">Diproses</span>
+                    @elseif ($ps->status === 'ditolak')
+                        <span class="badge bg-danger">Ditolak</span>
+                    @else
+                        <span class="badge bg-warning">Tidak Dikenal</span>
+                    @endif
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="12" class="text-center">Tidak ada data surat ditemukan.</td>
+            </tr>
+        @endforelse
+    </tbody>
+</table> 
     <h5 class="fw-bold mt-5 mb-3">Tabel Aksi Pemrosesan Perpanjang Surat</h5>
     <table class="table table-bordered table-striped" style="font-size: 15px;">
         <thead class="table-light text-center">

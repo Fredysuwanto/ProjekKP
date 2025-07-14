@@ -48,6 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('role:b')->group(function () {
         Route::resource('pemilik', PemilikController::class);
         Route::resource('kapal', KapalController::class);
+        Route::get('/kapal/{kapal}/detail', [KapalController::class, 'show'])->name('kapal.show');
         Route::resource('riwayat', RiwayatController::class);
         Route::get('/riwayat/detail/{id}', [RiwayatController::class, 'show'])->name('riwayat.detail');
         Route::get('/riwayat/cetak/{id}', [RiwayatController::class, 'cetakPDF'])->name('riwayat.cetak');

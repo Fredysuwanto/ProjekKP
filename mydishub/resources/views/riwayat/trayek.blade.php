@@ -98,16 +98,12 @@
             <td>: {{ $surat->kapal->daya ?? '.......................................................' }}</td>
             </tr>
             <tr>
-                <td>Nomor Sertifikat Keselamatan</td>
-                <td>: {{ $kapal->sertifikat ?? '................' }}</td>
-            </tr>
-            <tr>
                 <td>Tanggal</td>
                 <td>: {{ $tanggal ?? '................' }}</td>
             </tr>
             <tr>
                 <td>Trayek</td>
-                <td>: Palembang – {{ $kapal->trayek ?? '................' }}</td>
+                <td>: {{ $kapal->tujuan ?? '................' }}</td>
             </tr>
         </table>
     </div>

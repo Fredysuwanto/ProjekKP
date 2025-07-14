@@ -10,82 +10,89 @@
         <i class="mdi mdi-ferry text-primary me-1"></i> Data Kapal
       </h4>
 
-      {{-- Alert Perhatian --}}
+      {{-- Alert perhatian --}}
       <div class="alert alert-warning d-flex align-items-center shadow-sm rounded" role="alert">
         <i class="mdi mdi-alert-circle-outline fs-4 me-2"></i>
-        <div>
-          <strong>Perhatian:</strong> Mohon periksa kembali setiap entri data kapal. Kesalahan input dapat memengaruhi validitas dokumen perizinan.
-        </div>
+        <div><strong>Perhatian:</strong> Pastikan data kapal valid sebelum digunakan untuk perizinan.</div>
       </div>
 
-      {{-- Tombol Tambah Kapal --}}
+      {{-- Tombol tambah --}}
       <a href="{{ route('kapal.create') }}" class="btn btn-primary btn-rounded mb-3">
         <i class="mdi mdi-plus-circle-outline me-1"></i> Tambah Kapal
       </a>
 
-      {{-- Flash Message --}}
-      @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-          <i class="mdi mdi-check-circle-outline me-1"></i> {{ session('success') }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      @endif
+      {{-- Flash message --}}
+      @foreach (['success' => 'check-circle', 'error' => 'alert'] as $type => $icon)
+        @if (session($type))
+          <div class="alert alert-{{ $type == 'success' ? 'success' : 'danger' }} alert-dismissible fade show shadow-sm" role="alert">
+            <i class="mdi mdi-{{ $icon }}-outline me-1"></i> {{ session($type) }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
+      @endforeach
 
-      @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-          <i class="mdi mdi-alert-outline me-1"></i> {{ session('error') }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      @endif
-
-      {{-- Tabel Data Kapal --}}
+      {{-- Tabel --}}
       <div class="table-responsive">
         @if ($kapal->isEmpty())
           <div class="alert alert-info text-center shadow-sm">
-            <i class="mdi mdi-information-outline me-1"></i> Belum ada data kapal yang terdaftar.
+            <i class="mdi mdi-information-outline me-1"></i> Belum ada data kapal.
           </div>
         @else
           <table class="table table-bordered text-center align-middle">
-            <thead style="background-color: #003974; color: white;">
+            <thead style="background:#003974;color:#fff">
               <tr>
                 <th>No</th>
                 <th>Nama Kapal</th>
-                <th>No. Plat</th>
+                <th>Plat</th>
                 <th>Jenis</th>
-                <th>Ukuran</th>
-                <th>Tanda Selar</th>
-                <th>Daya Mesin</th>
-                <th>Muatan</th>
-                <th>Jenis Perizinan</th>
+                <th>Izin</th>
+                <th>Tujuan</th>
                 <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
-              @foreach ($kapal as $index => $item)
+              @foreach ($kapal as $i => $item)
                 @php
-                  $sudahDiproses = $item->surats->contains(fn($surat) => $surat->status === 'diproses');
+                  $terkunci = $item->surats->contains(fn($s) => $s->status === 'diproses');
                 @endphp
                 <tr>
-                  <td>{{ $index + 1 }}</td>
+                  <td>{{ $i + 1 }}</td>
                   <td>{{ $item->nama }}</td>
                   <td>{{ $item->noplat }}</td>
                   <td>{{ $item->jenis }}</td>
-                  <td>{{ $item->ukuran }}</td>
-                  <td>{{ $item->tandaselar }}</td>
-                  <td>{{ $item->daya }}</td>
-                  <td>{{ $item->muatan }}</td>
                   <td>
-                    <span class="badge bg-primary text-white px-2 py-1">
-                      {{ $item->jenisperizinan }}
-                    </span>
+  @if($item->jenisperizinan === 'Trayek')
+    <span class="badge rounded-pill bg-info text-white px-3 py-2">
+      {{ $item->jenisperizinan }}
+    </span>
+  @elseif($item->jenisperizinan === 'Izin Operasional')
+    <span class="badge rounded-pill text-white px-3 py-2" style="background-color: #6f42c1;">
+      {{ $item->jenisperizinan }}
+    </span>
+  @else
+    <span class="badge bg-secondary text-white rounded-pill px-3 py-2">
+      {{ $item->jenisperizinan }}
+    </span>
+  @endif
+</td>
+
+                  <td>
+                    @if($item->jenisperizinan === 'Trayek')
+                      {{ $item->tujuan ?? '-' }}
+                    @else
+                      <span class="text-muted">—</span>
+                    @endif
                   </td>
                   <td>
-                    @if(!$sudahDiproses)
-                      <a href="{{ route('kapal.edit', $item->id) }}" class="btn btn-sm btn-warning rounded-pill">
-                        <i class="mdi mdi-pencil me-1"></i> Edit
+                    <a href="{{ route('kapal.show', $item->id) }}" class="btn btn-info btn-sm rounded-pill" title="Lihat Detail">
+                      <i class="mdi mdi-eye"></i> Detail
+                    </a>
+                    @if(!$terkunci)
+                      <a href="{{ route('kapal.edit', $item->id) }}" class="btn btn-warning btn-sm rounded-pill" title="Edit">
+                        <i class="mdi mdi-pencil"></i>
                       </a>
                     @else
-                      <span class="badge bg-secondary px-2 py-1">Terkunci</span>
+                      <span class="badge bg-secondary">Terkunci</span>
                     @endif
                   </td>
                 </tr>

@@ -20,6 +20,7 @@
   
   <link rel="stylesheet" href="{{url('css/style.css')}}">
   <style>
+    
   .navbar-menu-wrapper,
   .navbar-search-wrapper {
     background-color: transparent !important;

@@ -7,7 +7,7 @@
     <div class="card shadow border-0">
         <div class="card-body">
             <h4 class="fw-bold mb-2">
-                <i class="mdi mdi-file-document-outline text-primary me-1"></i>
+                <i class="mdi mdi-history menu-icon text-primary me-1"></i>
                 Riwayat Surat Izin Kapal
             </h4>
             <p class="text-muted mb-4">

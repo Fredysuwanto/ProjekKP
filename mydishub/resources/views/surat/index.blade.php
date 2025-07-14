@@ -56,28 +56,34 @@
                 </span>
               </td>
               <td>
-                @if ($surat->status === null)
-                  <span class="badge bg-warning text-dark px-3 py-2">Menunggu</span>
-                @else
-                  <span class="badge bg-info text-white px-3 py-2">{{ ucfirst($surat->status) }}</span>
-                @endif
-              </td>
-              @if(auth()->user()->role === 'a')
-              <td>
-                @if ($surat->status === null)
-                <div class="d-flex justify-content-center gap-2">
-                  <a href="{{ route('surat.proses', $surat->id) }}" class="btn btn-success btn-sm rounded-pill px-3">
-                    <i class="mdi mdi-check-circle-outline me-1"></i> Proses
-                  </a>
-                  <a href="{{ route('surat.tolak', $surat->id) }}" class="btn btn-danger btn-sm rounded-pill px-3">
-                    <i class="mdi mdi-close-circle-outline me-1"></i> Tolak
-                  </a>
-                </div>
-                @else
-                <span class="text-muted">-</span>
-                @endif
-              </td>
-              @endif
+  @if ($surat->status === null)
+    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Menunggu</span>
+  @elseif ($surat->status === 'diproses')
+    <span class="badge bg-success text-white px-3 py-2 rounded-pill">Diproses</span>
+  @elseif ($surat->status === 'ditolak')
+    <span class="badge bg-danger text-white px-3 py-2 rounded-pill">Ditolak</span>
+  @else
+    <span class="badge bg-secondary text-white px-3 py-2 rounded-pill">{{ ucfirst($surat->status) }}</span>
+  @endif
+</td>
+
+@if(auth()->user()->role === 'a')
+<td>
+  @if ($surat->status === null)
+    <div class="d-flex justify-content-center gap-2">
+      <a href="{{ route('surat.proses', $surat->id) }}" class="btn btn-success btn-sm rounded-pill px-3">
+        <i class="mdi mdi-check-circle-outline me-1"></i> Proses
+      </a>
+      <a href="{{ route('surat.tolak', $surat->id) }}" class="btn btn-danger btn-sm rounded-pill px-3">
+        <i class="mdi mdi-close-circle-outline me-1"></i> Tolak
+      </a>
+    </div>
+  @else
+    <span class="text-muted">-</span>
+  @endif
+</td>
+@endif
+
             </tr>
             @empty
             <tr>

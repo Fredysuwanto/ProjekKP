@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layout.main') 
 
 @section('content')
 <div class="container">
@@ -40,9 +40,18 @@
             <select name="kapal_id" id="kapal_id" class="form-control" required>
                 <option value="">-- Pilih Kapal --</option>
                 @foreach($kapals as $kapal)
-                    <option value="{{ $kapal->id }}" {{ old('kapal_id') == $kapal->id ? 'selected' : '' }}>
-                        {{ $kapal->noplat }} - {{ $kapal->nama }}
-                    </option>
+                    @php
+                        // Kapal dianggap sudah terdaftar surat bila ada surat aktif (null, diproses, disetujui)
+                        $sudahAdaSurat = $kapal->surats()
+                            ->whereIn('status', [null, 'diproses', 'disetujui'])
+                            ->exists();
+                    @endphp
+
+                    @unless($sudahAdaSurat)
+                        <option value="{{ $kapal->id }}" {{ old('kapal_id') == $kapal->id ? 'selected' : '' }}>
+                            {{ $kapal->noplat }} - {{ $kapal->nama }}
+                        </option>
+                    @endunless
                 @endforeach
             </select>
         </div>

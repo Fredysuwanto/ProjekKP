@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string("daya");
             $table->string("muatan");
             $table->string("jenisperizinan");
+            $table->string("tujuan")->nullable();
+
 
             $table->timestamps();
         });

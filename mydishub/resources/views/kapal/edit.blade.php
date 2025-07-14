@@ -3,84 +3,89 @@
 @section('title', 'Edit Kapal')
 
 @section('content')
-<div class="col-md-6 grid-margin stretch-card">
+<div class="col-md-8 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Edit Kapal</h4>
-            <p class="card-description">
-                Form untuk mengedit data kapal
-            </p>
-            <form method="POST" action="{{ route('kapal.update', $kapal->id) }}" class="forms-sample">
+            <p class="card-description">Form untuk mengedit data kapal</p>
+
+            {{-- Alert Flash --}}
+            @foreach (['success' => 'check-circle', 'error' => 'alert'] as $type => $icon)
+                @if (session($type))
+                    <div class="alert alert-{{ $type == 'success' ? 'success' : 'danger' }} alert-dismissible fade show" role="alert">
+                        <i class="mdi mdi-{{ $icon }}-outline me-1"></i> {{ session($type) }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+            @endforeach
+
+            <form method="POST" action="{{ route('kapal.update', $kapal->id) }}">
                 @csrf
                 @method('PUT')
 
-                <div class="form-group">
+                {{-- Nama --}}
+                <div class="form-group mb-3">
                     <label for="nama">Nama Kapal</label>
-                    <input type="text" class="form-control" id="nama" name="nama" 
+                    <input type="text" class="form-control" id="nama" name="nama"
                         value="{{ old('nama', $kapal->nama) }}" placeholder="Masukan Nama Kapal">
-                    @error('nama')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    @error('nama') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="noplat">No.Plat</label>
-                    <input type="text" class="form-control" id="noplat" name="noplat" 
-                        value="{{ old('noplat', $kapal->noplat) }}" placeholder="Masukan No Plat">
-                    @error('noplat')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                {{-- No Plat --}}
+                <div class="form-group mb-3">
+                    <label for="noplat">No. Plat</label>
+                    <input type="text" class="form-control" id="noplat" name="noplat"
+                        value="{{ old('noplat', $kapal->noplat) }}" placeholder="Masukan No. Plat">
+                    @error('noplat') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="form-group">
+                {{-- Jenis --}}
+                <div class="form-group mb-3">
                     <label for="jenis">Jenis Kapal</label>
-                    <input type="text" class="form-control" id="jenis" name="jenis" 
+                    <input type="text" class="form-control" id="jenis" name="jenis"
                         value="{{ old('jenis', $kapal->jenis) }}" placeholder="Masukan Jenis Kapal">
-                    @error('jenis')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    @error('jenis') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="form-group">
+                {{-- Ukuran --}}
+                <div class="form-group mb-3">
                     <label for="ukuran">Ukuran Kapal</label>
-                    <input type="text" class="form-control" id="ukuran" name="ukuran" 
+                    <input type="text" class="form-control" id="ukuran" name="ukuran"
                         value="{{ old('ukuran', $kapal->ukuran) }}" placeholder="Masukan Ukuran Kapal">
-                    @error('ukuran')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    @error('ukuran') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="form-group">
+                {{-- Tanda Selar --}}
+                <div class="form-group mb-3">
                     <label for="tandaselar">Tanda Selar</label>
-                    <input type="text" class="form-control" id="tandaselar" name="tandaselar" 
-                        value="{{ old('tandaselar', $kapal->tandaselar) }}" placeholder="Masukan tandaselar Kapal">
-                    @error('tandaselar')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    <input type="text" class="form-control" id="tandaselar" name="tandaselar"
+                        value="{{ old('tandaselar', $kapal->tandaselar) }}" placeholder="Masukan Tanda Selar">
+                    @error('tandaselar') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="form-group">
+                {{-- Daya Mesin --}}
+                <div class="form-group mb-3">
                     <label for="daya">Daya Mesin</label>
-                    <input type="text" class="form-control" id="daya" name="daya" 
+                    <input type="text" class="form-control" id="daya" name="daya"
                         value="{{ old('daya', $kapal->daya) }}" placeholder="Masukan Daya Mesin">
-                    @error('daya')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    @error('daya') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="form-group">
+                {{-- Muatan --}}
+                <div class="form-group mb-3">
                     <label for="muatan">Muatan Kapal</label>
-                    <input type="text" class="form-control" id="muatan" name="muatan" 
+                    <input type="text" class="form-control" id="muatan" name="muatan"
                         value="{{ old('muatan', $kapal->muatan) }}" placeholder="Masukan Muatan Kapal">
-                    @error('muatan')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    @error('muatan') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="form-group">
+                {{-- Jenis Perizinan --}}
+                <div class="form-group mb-3">
                     <label for="jenisperizinan">Jenis Perizinan Kapal</label>
-                    <select class="form-control" id="jenisperizinan" name="jenisperizinan">
-                        <option value="" disabled>-- Pilih Jenis Perizinan --</option>
+                    <select class="form-select" id="jenisperizinan" name="jenisperizinan">
+                        <option value="" disabled {{ old('jenisperizinan', $kapal->jenisperizinan) == '' ? 'selected' : '' }}>
+                            -- Pilih Jenis Perizinan --
+                        </option>
                         <option value="Izin Operasional" {{ old('jenisperizinan', $kapal->jenisperizinan) == 'Izin Operasional' ? 'selected' : '' }}>
                             Izin Operasional
                         </option>
@@ -88,15 +93,47 @@
                             Trayek
                         </option>
                     </select>
-                    @error('jenisperizinan')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    @error('jenisperizinan') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary mr-2">Update</button>
-                <a href="{{ url('kapal') }}" class="btn btn-light">Cancel</a>
+                {{-- Tujuan (Hanya jika Trayek) --}}
+                <div class="form-group mb-3" id="tujuan-group" style="display: none;">
+                    <label for="tujuan">Tujuan Trayek</label>
+                    <input type="text" class="form-control" id="tujuan" name="tujuan"
+                        value="{{ old('tujuan', $kapal->tujuan) }}" placeholder="Contoh: Palembang - Bangka">
+                    @error('tujuan') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+
+                {{-- Tombol --}}
+                <button type="submit" class="btn btn-primary me-2">
+                    <i class="mdi mdi-content-save-outline me-1"></i> Update
+                </button>
+                <a href="{{ route('kapal.index') }}" class="btn btn-light">Cancel</a>
             </form>
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectIzin = document.getElementById('jenisperizinan');
+        const tujuanGroup = document.getElementById('tujuan-group');
+
+        function toggleTujuan() {
+            if (selectIzin.value === 'Trayek') {
+                tujuanGroup.style.display = 'block';
+            } else {
+                tujuanGroup.style.display = 'none';
+            }
+        }
+
+        // Jalankan saat perubahan dropdown
+        selectIzin.addEventListener('change', toggleTujuan);
+
+        // Jalankan saat pertama kali halaman dimuat
+        toggleTujuan();
+    });
+</script>
 @endsection
