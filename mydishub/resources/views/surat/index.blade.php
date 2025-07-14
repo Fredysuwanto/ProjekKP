@@ -16,7 +16,7 @@
 
       @if(auth()->user()->role === 'b')
         <a href="{{ route('surat.create') }}" class="btn btn-primary btn-rounded mb-3">
-          <i class="mdi mdi-plus-circle-outline me-1"></i> Tambah Surat
+          <i class="mdi mdi-plus-circle-outline me-1"></i> Daftar Surat
         </a>
       @endif
 
