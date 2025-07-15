@@ -20,7 +20,7 @@
   
   <link rel="stylesheet" href="{{url('css/style.css')}}">
   <style>
-    
+
   .navbar-menu-wrapper,
   .navbar-search-wrapper {
     background-color: transparent !important;
@@ -48,14 +48,12 @@
 
        
          <li class="nav-item sidebar-category">
-          <p>Berita</p>
           <span></span>
         </li>
          <li class="nav-item">
           <a class="nav-link" href="{{ url('dashboard') }}">
             <i class="mdi mdi-view-quilt menu-icon"></i>
-            <span class="menu-title">Dashboard</span>
-            <div class="badge badge-info badge-pill">News</div>
+            <span class="menu-title">Beranda</span>
           </a>
         </li> 
 {{-- Cek jika user sudah login --}}
@@ -151,30 +149,15 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            min-height: 150px;">
+            min-height: 100px;
+            position: static !important;">
             
               <div class="container-fluid d-flex justify-content-between align-items-center px-4">
 <div class="d-flex flex-column align-items-start">
-  <a class="navbar-brand brand-logo mb-1" href="index.html">
+  <a class="navbar-brand brand-logo mb-1" href="dashboard">
     <img src="{{ asset('images/logo_dishub.png') }}" alt="logo" style="height: 40px; width: auto;">
   </a>
   <h5 class="mb-0 text-dark fw-bold">Selamat Datang di Website MyDishub</h5>
-{{-- <div class="d-flex flex-wrap justify-content-between align-items-center mt-2 w-100 gap-3">
-  {{-- Info Telepon --}}
-  {{-- <div class="d-flex align-items-center">
-    <i class="mdi mdi-phone-in-talk text-primary fs-4 me-2"></i>
-    <span class="fw-semibold">(0711) 352005 – 363125</span>
-  </div> --}}
-
-  {{-- Info Alamat --}}
-  {{-- <div class="d-flex align-items-center">
-    <i class="mdi mdi-map-marker text-primary fs-4 me-2"></i>
-    <div>
-      <span class="fw-semibold">Jl. Kapten A. Rivai No. 51</span><br>
-      <small class="text-muted">Palembang, Prov Sumsel</small>
-    </div>
-  </div> --}}
-{{-- </div> --}}
 
 </div>
 
@@ -219,8 +202,8 @@
 </nav>
 <!-- partial -->
   <div class="container-scroller ">
-    <div class="main-panel flex-fill ">
-      <div class="content-wrapper flex-grow-1">
+    <div class="main-panel flex-fill">
+        <div class="content-wrapper flex-grow-1">
     @yield('content')
   </div>
   <!-- content-wrapper ends -->

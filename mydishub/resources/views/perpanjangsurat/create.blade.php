@@ -2,8 +2,14 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4">Buat Surat Baru</h1>
-
+    <h1 class="mb-4">Buat Perpanjangan Surat Baru</h1>
+        <div class="col-12 mt-2">
+        <div class="alert alert-warning shadow-sm">
+            <i class="mdi mdi-alert-circle-outline me-2"></i>
+            <strong>Pastikan memilih surat yang telah kadaluarsa.</strong> Surat yang telah masih aktif tidak dapat diperpanjang. Kesalahan data dapat memilih surat dapat menyebabkan error. Silahkan cek masa surat anda di tabel riwayat
+        </div>
+    </div>
+    <br>
     @if(session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -34,19 +40,7 @@
     @endforeach
 </select>
         </div>
-
-        {{-- <div class="mb-3">
-            <label for="riwayat_id" class="form-label">Kapal</label>
-            <select name="riwayat_id" id="riwayat_id" class="form-control" required>
-                <option value="">-- Pilih Kapal --</option>
-                @foreach($kapals as $kapal)
-                    <option value="{{ $kapal->id }}" {{ old('riwayat_id') == $kapal->id ? 'selected' : '' }}>
-                        {{ $kapal->noplat }} - {{ $kapal->nama }}
-                    </option>
-                @endforeach
-            </select>
-        </div> --}}
-
+<br>
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 </div>

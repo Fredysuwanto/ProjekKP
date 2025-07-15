@@ -12626,7 +12626,10 @@ input[type="button"].btn-block {
 .tab-content > .active {
   display: block;
 }
-
+.navbar {
+  position: static !important;
+  top: auto !important;
+}
 .navbar {
   position: relative;
   display: flex;
