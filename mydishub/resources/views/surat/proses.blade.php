@@ -41,8 +41,23 @@
     .proses-container th {
         background-color: #eaeaea;
     }
+
+    .btn-pdf {
+        background-color: #1e40af;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .btn-pdf i {
+        margin-right: 5px;
+    }
 </style>
 
+<!-- PROSES SURAT IZIN KAPAL -->
 <div class="container proses-container">
     <h2>PROSES SURAT IZIN KAPAL</h2>
     <p class="subtitle">Daftar kapal yang saat ini sedang berjalan</p>
@@ -55,6 +70,7 @@
                 <th>Nama Kapal</th>
                 <th>Tanggal Pengajuan</th>
                 <th>Masa Berlaku</th>
+                <th>File Dokumen</th>
             </tr>
         </thead>
         <tbody>
@@ -65,15 +81,22 @@
                 <td>{{ $surat->kapal->nama }}</td>
                 <td>{{ \Carbon\Carbon::parse($surat->updated_at)->format('d-m-Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($surat->updated_at)->addYears(5)->format('d-m-Y') }}</td>
+                <td>
+                    <a href="{{ route('riwayat.cetak', $surat->id) }}" class="btn-pdf">
+                        <i class="mdi mdi-file-download-outline"></i> Unduh PDF
+                    </a>
+                </td>
             </tr>
             @empty
             <tr>
-                <td colspan="5">Tidak ada surat yang sedang diproses.</td>
+                <td colspan="6">Tidak ada surat yang sedang diproses.</td>
             </tr>
             @endforelse
         </tbody>
     </table>
 </div>
+
+<!-- PROSES PERPANJANG SURAT IZIN KAPAL -->
 <div class="container proses-container">
     <h2>PROSES PERPANJANG SURAT IZIN KAPAL</h2>
     <p class="subtitle">Daftar kapal yang saat ini sedang berjalan</p>
@@ -86,6 +109,7 @@
                 <th>Nama Kapal</th>
                 <th>Tanggal Pengajuan</th>
                 <th>Masa Berlaku</th>
+                <th>Dokumen</th>
             </tr>
         </thead>
         <tbody>
@@ -96,14 +120,18 @@
                 <td>{{ $perpanjangsurat->surat->kapal->nama }}</td>
                 <td>{{ \Carbon\Carbon::parse($perpanjangsurat->updated_at)->format('d-m-Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($perpanjangsurat->updated_at)->addYears(5)->format('d-m-Y') }}</td>
+                <td>
+                    <a href="{{ route('riwayat.cetak2', $perpanjangsurat->id) }}" class="btn-pdf">
+                        <i class="mdi mdi-file-download-outline"></i> Unduh PDF
+                    </a>
+                </td>
             </tr>
             @empty
             <tr>
-                <td colspan="5">Tidak ada surat yang sedang diproses.</td>
+                <td colspan="6">Tidak ada surat yang sedang diproses.</td>
             </tr>
             @endforelse
         </tbody>
     </table>
 </div>
-
 @endsection

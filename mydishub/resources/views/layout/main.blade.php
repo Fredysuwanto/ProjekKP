@@ -82,14 +82,14 @@
     <li class="nav-item">
       <a class="nav-link" href="{{ url('surat') }}">
         <i class="mdi mdi-file-multiple menu-icon"></i>
-        <span class="menu-title">Surat</span>
+        <span class="menu-title">Daftar Surat</span>
       </a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" href="{{ url('riwayat') }}">
         <i class="mdi mdi-history menu-icon"></i>
-        <span class="menu-title">Riwayat</span>
+        <span class="menu-title">Riwayat Surat</span>
       </a>
     </li>
         <li class="nav-item">
@@ -105,7 +105,7 @@
     <li class="nav-item">
       <a class="nav-link" href="{{ url('laporan') }}">
         <i class="mdi mdi-file-document-box menu-icon"></i>
-        <span class="menu-title">Laporan</span>
+        <span class="menu-title">Laporan Surat</span>
       </a>
     </li>
 

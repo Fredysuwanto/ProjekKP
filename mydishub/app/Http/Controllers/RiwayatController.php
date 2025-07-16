@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
@@ -34,9 +34,9 @@ class RiwayatController extends Controller
     public function cetakPDF($id)
     {
         $surat = Surat::with(['kapal', 'pemilik'])->findOrFail($id);
-        // $perpanjangsurat = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])->findOrFail($id);
-        // Hanya pemilik data atau admin yang bisa akses
-        if (auth()->user()->role !== 'a' && $surat->kapal->user_id !== auth()->id()) {
+
+        // Hanya admin atau pemilik data yang bisa akses
+        if (!(auth()->user()->role === 'a' || $surat->kapal->user_id === auth()->id())) {
             abort(403, 'Anda tidak memiliki akses ke surat ini.');
         }
 
@@ -50,7 +50,6 @@ class RiwayatController extends Controller
             abort(404, 'Jenis perizinan tidak dikenali.');
         }
 
-        // Tambahan data agar sesuai dengan kebutuhan blade (khusus surat trayek seperti contoh)
         $pemohon = $surat->pemilik;
         $kapal = $surat->kapal;
         $tanggal = Carbon::parse($surat->updated_at)->translatedFormat('d F Y');
@@ -63,19 +62,20 @@ class RiwayatController extends Controller
     public function show($id)
     {
         $surat = Surat::with(['pemilik', 'kapal'])->findOrFail($id);
-        // $perpanjangsurat = Perpanjangsurat::with(['surat.kapal','surat.pemilik'])->findOrFail($id);
-
         return view('riwayat.detail', compact('surat'));
     }
-        public function cetakPDF2($id)
+
+    public function cetakPDF2($id)
     {
         $perpanjangsurat = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])->findOrFail($id);
-        // Hanya pemilik data atau admin yang bisa akses
-        if (auth()->user()->role !== 'a' && $perpanjangsurat->surat->kapal->user_id !== auth()->id()) {
+        $surat = $perpanjangsurat->surat;
+
+        // Hanya admin atau pemilik data yang bisa akses
+        if (!(auth()->user()->role === 'a' || $surat->kapal->user_id === auth()->id())) {
             abort(403, 'Anda tidak memiliki akses ke surat ini.');
         }
 
-        $jenisPerizinan = strtolower($perpanjangsurat->surat->kapal->jenisperizinan);
+        $jenisPerizinan = strtolower($surat->kapal->jenisperizinan);
 
         if ($jenisPerizinan === 'trayek') {
             $view = 'riwayat.trayek';
@@ -85,12 +85,10 @@ class RiwayatController extends Controller
             abort(404, 'Jenis perizinan tidak dikenali.');
         }
 
-        // Tambahan data agar sesuai dengan kebutuhan blade (khusus surat trayek seperti contoh)
-        $pemohon = $perpanjangsurat->surat->pemilik;
-        $kapal = $perpanjangsurat->surat->kapal;
+        $pemohon = $surat->pemilik;
+        $kapal = $surat->kapal;
         $tanggal = Carbon::parse($perpanjangsurat->updated_at)->translatedFormat('d F Y');
         $berlaku_sampai = Carbon::parse($perpanjangsurat->updated_at)->addYears(5)->translatedFormat('d F Y');
-$surat = $perpanjangsurat->surat; // ✅ ini yang kamu lupa
 
         $pdf = Pdf::loadView($view, compact('perpanjangsurat','surat', 'pemohon', 'kapal', 'tanggal', 'berlaku_sampai'));
         return $pdf->download('surat-izin-kapal.pdf');
@@ -99,7 +97,6 @@ $surat = $perpanjangsurat->surat; // ✅ ini yang kamu lupa
     public function show2($id)
     {
         $perpanjangsurat = Perpanjangsurat::with(['surat.kapal','surat.pemilik'])->findOrFail($id);
-
         return view('riwayat.detail2', compact('perpanjangsurat'));
     }
 }

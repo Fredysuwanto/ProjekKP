@@ -14,10 +14,10 @@ use App\Http\Controllers\PerpanjangsuratController;
 // ==========================
 Route::get('/', function () {
     return redirect()->route('dashboard');
-})->middleware(['auth', 'verified']); // redirect ke dashboard
+})->middleware(['auth', 'verified']);
 
 // ==========================
-// Login Fallback (untuk redirect logout)
+// Login Fallback
 // ==========================
 Route::get('/login', function () {
     return redirect('/loginnew');
@@ -51,15 +51,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/kapal/{kapal}/detail', [KapalController::class, 'show'])->name('kapal.show');
         Route::resource('riwayat', RiwayatController::class);
         Route::get('/riwayat/detail/{id}', [RiwayatController::class, 'show'])->name('riwayat.detail');
-        Route::get('/riwayat/cetak/{id}', [RiwayatController::class, 'cetakPDF'])->name('riwayat.cetak');
         Route::get('/riwayat/detail2/{id}', [RiwayatController::class, 'show2'])->name('riwayat.detail2');
-        Route::get('/riwayat/cetak2/{id}', [RiwayatController::class, 'cetakPDF2'])->name('riwayat.cetak2');
     });
+
+    // ======== Dapat Diakses Admin & Pemilik: Unduh PDF Surat ========
+    Route::get('/riwayat/cetak/{id}', [RiwayatController::class, 'cetakPDF'])->name('riwayat.cetak');
+    Route::get('/riwayat/cetak2/{id}', [RiwayatController::class, 'cetakPDF2'])->name('riwayat.cetak2');
 
     // ======== Shared: Admin & Pemilik akses surat ========
     Route::resource('surat', SuratController::class);
     Route::get('/surat/proses/{id}', [SuratController::class, 'proses'])->name('surat.proses');
     Route::get('/surat/tolak/{id}', [SuratController::class, 'tolak'])->name('surat.tolak');
+
+    Route::resource('perpanjangsurat', PerpanjangsuratController::class);
+    Route::get('/perpanjangsurat/proses2/{id}', [PerpanjangsuratController::class, 'proses2'])->name('perpanjangsurat.proses2');
+    Route::get('/perpanjangsurat/tolak/{id}', [PerpanjangsuratController::class, 'tolak'])->name('perpanjangsurat.tolak');
 
     // ======== Halaman Tentang Kami ========
     Route::get('/tentang/profil', fn() => view('pages.profil'))->name('tentang.profil');
@@ -70,22 +76,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-        // ======== Shared: Admin & Pemilik akses surat ========
-    Route::resource('perpanjangsurat', PerpanjangsuratController::class);
-    Route::get('/perpanjangsurat/proses2/{id}', [PerpanjangsuratController::class, 'proses2'])->name('perpanjangsurat.proses2');
-    Route::get('/perpanjangsurat/tolak/{id}', [PerpanjangsuratController::class, 'tolak'])->name('perpanjangsurat.tolak');
-
 });
-    // ======== Untuk Role ADMIN (a) ========
-    Route::middleware('role:a')->group(function () {
-        Route::resource('laporan', LaporanController::class);
-        Route::get('/proses', [SuratController::class, 'prosesList'])->name('surat.prosesList');
-        Route::get('/proses2', [PerpanjangsuratController::class, 'prosesList'])->name('perpanjangsurat.prosesList');
-    });
+
+// ======== Untuk Role ADMIN (a) ========
+Route::middleware(['auth', 'verified', 'role:a'])->group(function () {
+    Route::resource('laporan', LaporanController::class);
+    Route::get('/proses', [SuratController::class, 'prosesList'])->name('surat.prosesList');
+    Route::get('/proses2', [PerpanjangsuratController::class, 'prosesList'])->name('perpanjangsurat.prosesList');
+});
+
 // ==========================
-// Route Auth (Login, Logout, Register)
+// Route Auth
 // ==========================
 require __DIR__.'/auth.php';
 // require __DIR__.'/profile.php';
-
