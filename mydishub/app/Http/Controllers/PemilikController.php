@@ -50,8 +50,14 @@ class PemilikController extends Controller
             'alamat' => 'required|string',
             'telepon' => 'required|string',
             'email' => 'required|email|max:255',
+            'file_ktp' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
-
+        if ($request->hasFile('file_ktp')) {
+            $file = $request->file('file_ktp');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('ktp_files', $fileName, 'public');
+            $val['file_ktp'] = $filePath;
+        }
         // Tambahkan user_id ke data yang akan disimpan
         $val['user_id'] = Auth::id();
 
@@ -90,7 +96,22 @@ class PemilikController extends Controller
             'email' => 'required|email|max:255',
         ]);
 
-        $pemilik->update($request->only('nama', 'nik', 'alamat', 'telepon', 'email'));
+        $data = $request->only('nama', 'nik', 'alamat', 'telepon', 'email');
+
+        // Update file KTP jika ada file baru
+        if ($request->hasFile('file_ktp')) {
+            // Hapus file lama jika ada
+            if ($pemilik->file_ktp && Storage::disk('public')->exists($pemilik->file_ktp)) {
+                Storage::disk('public')->delete($pemilik->file_ktp);
+            }
+
+            $file = $request->file('file_ktp');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('ktp_files', $fileName, 'public');
+            $data['file_ktp'] = $filePath;
+        }
+
+        $pemilik->update($data);
 
         return redirect()->route('pemilik.index')->with('success', 'Data berhasil diperbarui.');
     }

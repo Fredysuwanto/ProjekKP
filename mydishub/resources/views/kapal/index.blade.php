@@ -47,6 +47,7 @@
                 <th>Jenis</th>
                 <th>Izin</th>
                 <th>Tujuan</th>
+                <th>STNK Kapal</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -83,6 +84,15 @@
                       <span class="text-muted">—</span>
                     @endif
                   </td>
+    <td>
+        @if($item->file_stnk)
+            <a href="{{ Storage::url($item->file_stnk) }}" target="_blank" class="btn btn-sm btn-info">
+                <i class="mdi mdi-file-document"></i> Lihat STNK
+            </a>
+        @else
+            <span class="text-muted">Tidak ada file</span>
+        @endif
+    </td>
                   <td>
                     <a href="{{ route('kapal.show', $item->id) }}" class="btn btn-info btn-sm rounded-pill" title="Lihat Detail">
                       <i class="mdi mdi-eye"></i> Detail

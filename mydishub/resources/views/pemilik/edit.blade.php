@@ -53,6 +53,18 @@
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
+                <div class="form-group">
+    <label for="file_ktp">Update KTP</label>
+    <input type="file" class="form-control" id="file_ktp" name="file_ktp">
+    @error('file_ktp')
+        <span class="text-danger">{{$message}}</span>
+    @enderror
+    @if($pemilik->file_ktp)
+        <small class="text-muted">File saat ini: 
+            <a href="{{ Storage::url($pemilik->file_ktp) }}" target="_blank">Lihat</a>
+        </small>
+    @endif
+</div>
                 
                 
                 <button type="submit" class="btn btn-primary mr-2">Submit</button>

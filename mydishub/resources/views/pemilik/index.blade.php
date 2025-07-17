@@ -67,6 +67,18 @@
                 <td>{{ $item->email }}</td>
               </tr>
               <tr>
+    <th>File KTP</th>
+    <td>
+        @if($item->file_ktp)
+            <a href="{{ Storage::url($item->file_ktp) }}" target="_blank" class="btn btn-sm btn-info">
+                <i class="mdi mdi-file-document"></i> Lihat Dokumen
+            </a>
+        @else
+            <span class="text-muted">Tidak ada file</span>
+        @endif
+    </td>
+</tr>
+              <tr>
                 <td colspan="2" class="text-center">
                   <a href="{{ route('pemilik.edit', $item->id) }}" class="btn btn-sm btn-warning">
                     <i class="mdi mdi-pencil"></i> Edit

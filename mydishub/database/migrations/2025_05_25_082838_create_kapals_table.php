@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string("muatan");
             $table->string("jenisperizinan");
             $table->string("tujuan")->nullable();
+            $table->string('file_stnk')-> nullable();
+
 
 
             $table->timestamps();

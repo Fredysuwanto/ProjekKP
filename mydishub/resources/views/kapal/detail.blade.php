@@ -20,6 +20,18 @@
         @if ($kapal->jenisperizinan === 'Trayek')
         <tr><th>Tujuan</th><td>{{ $kapal->tujuan }}</td></tr>
         @endif
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">File STNK:</label>
+            <div class="col-sm-9">
+                @if($kapal->file_stnk)
+                    <a href="{{ Storage::url($kapal->file_stnk) }}" target="_blank" class="btn btn-sm btn-info">
+                        <i class="mdi mdi-file-document"></i> Lihat STNK
+                    </a>
+                @else
+                    <span class="text-muted">Tidak ada file</span>
+                @endif
+            </div>
+        </div>
       </table>
 
       <a href="{{ route('kapal.index') }}" class="btn btn-secondary">Kembali</a>

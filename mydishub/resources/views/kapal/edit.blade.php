@@ -103,7 +103,18 @@
                         value="{{ old('tujuan', $kapal->tujuan) }}" placeholder="Contoh: Palembang - Bangka">
                     @error('tujuan') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
-
+                <div class="form-group">
+    <label for="file_stnk">Update STNK</label>
+    <input type="file" class="form-control" id="file_stnk" name="file_stnk">
+    @error('file_stnk')
+        <span class="text-danger">{{$message}}</span>
+    @enderror
+    @if($kapal->file_stnk)
+        <small class="text-muted">File saat ini: 
+            <a href="{{ Storage::url($kapal->file_stnk) }}" target="_blank">Lihat</a>
+        </small>
+    @endif
+</div>
                 {{-- Tombol --}}
                 <button type="submit" class="btn btn-primary me-2">
                     <i class="mdi mdi-content-save-outline me-1"></i> Update

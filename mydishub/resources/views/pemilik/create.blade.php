@@ -52,6 +52,13 @@
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
+                <div class="form-group">
+    <label for="file_ktp">Upload KTP</label>
+    <input type="file" class="form-control" id="file_ktp" name="file_ktp" required>
+    @error('file_ktp')
+        <span class="text-danger">{{$message}}</span>
+    @enderror
+</div>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary mr-2">Submit</button>

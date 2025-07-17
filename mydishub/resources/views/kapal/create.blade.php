@@ -17,7 +17,7 @@
         </div>
       @endif
 
-      <form method="POST" action="{{ route('kapal.store') }}" class="forms-sample">
+      <form method="POST" action="{{ route('kapal.store') }}" class="forms-sample" enctype="multipart/form-data">
         @csrf
 
         {{-- Nama Kapal --}}
@@ -86,7 +86,13 @@
           <input type="text" class="form-control" id="tujuan" name="tujuan" value="{{ old('tujuan') }}" placeholder="Contoh: Palembang - Bangka">
           @error('tujuan') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
-
+                <div class="form-group">
+    <label for="file_stnk">Upload STNK</label>
+    <input type="file" class="form-control" id="file_stnk" name="file_stnk" required>
+    @error('file_stnk')
+        <span class="text-danger">{{$message}}</span>
+    @enderror
+</div>
         <button type="submit" class="btn btn-primary me-2">
           <i class="mdi mdi-content-save me-1"></i> Submit
         </button>

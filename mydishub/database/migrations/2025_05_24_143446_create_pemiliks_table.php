@@ -19,6 +19,8 @@ return new class extends Migration
              $table->string('alamat');
              $table->string('telepon');
              $table->string('email');
+             $table->string('file_ktp')-> nullable();
+
             $table->timestamps();
         });
     }

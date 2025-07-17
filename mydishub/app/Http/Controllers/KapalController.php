@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kapal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class KapalController extends Controller
@@ -30,6 +31,13 @@ class KapalController extends Controller
         $data            = $this->validated($request);
         $data['user_id'] = Auth::id();
 
+        // Upload file STNK
+        if ($request->hasFile('file_stnk')) {
+            $file = $request->file('file_stnk');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('stnk_files', $fileName, 'public');
+            $data['file_stnk'] = $filePath;
+        }
         Kapal::create($data);
 
         return $this->backWith('success', "{$data['nama']} berhasil disimpan.");
@@ -58,6 +66,19 @@ class KapalController extends Controller
         }
 
         $data = $this->validated($request);
+        
+        // Update file STNK jika ada file baru
+        if ($request->hasFile('file_stnk')) {
+            // Hapus file lama jika ada
+            if ($kapal->file_stnk && Storage::disk('public')->exists($kapal->file_stnk)) {
+                Storage::disk('public')->delete($kapal->file_stnk);
+            }
+
+            $file = $request->file('file_stnk');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('stnk_files', $fileName, 'public');
+            $data['file_stnk'] = $filePath;
+        }
         $kapal->update($data);
 
         return $this->backWith('success', 'Data kapal berhasil diperbarui.');
