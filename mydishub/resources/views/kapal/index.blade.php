@@ -1,24 +1,24 @@
 @extends('layout.main')
 
-@section('title', 'Data Kapal')
+@section('title', 'Data Perizinan')
 
 @section('content')
 <div class="container-fluid">
   <div class="card shadow-sm border-0">
     <div class="card-body">
-      <h4 class="fw-bold mb-3">
-        <i class="mdi mdi-ferry text-primary me-1"></i> Data Kapal
-      </h4>
+     <h4 class="fw-bold mb-3">
+  <i class="mdi mdi-file-document-outline text-primary me-1"></i> Surat Izin
+</h4>
 
       {{-- Alert perhatian --}}
       <div class="alert alert-warning d-flex align-items-center shadow-sm rounded" role="alert">
         <i class="mdi mdi-alert-circle-outline fs-4 me-2"></i>
-        <div><strong>Perhatian:</strong> Pastikan data kapal valid sebelum digunakan untuk perizinan.</div>
+        <div><strong>Perhatian:</strong> Pastikan data pemilik dan data kapal valid sebelum digunakan untuk perizinan.</div>
       </div>
 
       {{-- Tombol tambah --}}
       <a href="{{ route('kapal.create') }}" class="btn btn-primary btn-rounded mb-3">
-        <i class="mdi mdi-plus-circle-outline me-1"></i> Tambah Kapal
+        <i class="mdi mdi-plus-circle-outline me-1"></i> Daftar Izin
       </a>
 
       {{-- Flash message --}}
@@ -42,11 +42,11 @@
             <thead style="background:#003974;color:#fff">
               <tr>
                 <th>No</th>
+                <th>Nama Pemilik</th>
                 <th>Nama Kapal</th>
                 <th>Plat</th>
-                <th>Jenis</th>
                 <th>Izin</th>
-                <th>Tujuan</th>
+                <th>Status</th>
                 <th>STNK Kapal</th>
                 <th>Aksi</th>
               </tr>
@@ -54,45 +54,42 @@
             <tbody>
               @foreach ($kapal as $i => $item)
                 @php
-                  $terkunci = $item->surats->contains(fn($s) => $s->status === 'diproses');
+                  $status = $item->status ?? 'menunggu';
+                  $terkunci = $status === 'diproses';
                 @endphp
                 <tr>
                   <td>{{ $i + 1 }}</td>
+                  <td>{{ $item->user->name ?? '-' }}</td>
+
                   <td>{{ $item->nama }}</td>
                   <td>{{ $item->noplat }}</td>
-                  <td>{{ $item->jenis }}</td>
-                  <td>
-  @if($item->jenisperizinan === 'Trayek')
-    <span class="badge rounded-pill bg-info text-white px-3 py-2">
-      {{ $item->jenisperizinan }}
-    </span>
-  @elseif($item->jenisperizinan === 'Izin Operasional')
-    <span class="badge rounded-pill text-white px-3 py-2" style="background-color: #6f42c1;">
-      {{ $item->jenisperizinan }}
-    </span>
-  @else
-    <span class="badge bg-secondary text-white rounded-pill px-3 py-2">
-      {{ $item->jenisperizinan }}
-    </span>
-  @endif
-</td>
-
                   <td>
                     @if($item->jenisperizinan === 'Trayek')
-                      {{ $item->tujuan ?? '-' }}
+                      <span class="badge rounded-pill bg-info text-white px-3 py-2">{{ $item->jenisperizinan }}</span>
+                    @elseif($item->jenisperizinan === 'Izin Operasional')
+                      <span class="badge rounded-pill text-white px-3 py-2" style="background-color: #6f42c1;">{{ $item->jenisperizinan }}</span>
                     @else
-                      <span class="text-muted">—</span>
+                      <span class="badge bg-secondary text-white rounded-pill px-3 py-2">{{ $item->jenisperizinan }}</span>
                     @endif
                   </td>
-    <td>
-        @if($item->file_stnk)
-            <a href="{{ Storage::url($item->file_stnk) }}" target="_blank" class="btn btn-sm btn-info">
-                <i class="mdi mdi-file-document"></i> Lihat STNK
-            </a>
-        @else
-            <span class="text-muted">Tidak ada file</span>
-        @endif
-    </td>
+                  <td>
+                    @if ($status === 'diproses')
+                      <span class="badge bg-success text-white rounded-pill px-3 py-2">Diproses</span>
+                    @elseif ($status === 'ditolak')
+                      <span class="badge bg-danger text-white rounded-pill px-3 py-2">Ditolak</span>
+                    @else
+                      <span class="badge bg-warning text-dark rounded-pill px-3 py-2">Menunggu</span>
+                    @endif
+                  </td>
+                  <td>
+                    @if($item->file_stnk)
+                      <a href="{{ Storage::url($item->file_stnk) }}" target="_blank" class="btn btn-sm btn-info">
+                        <i class="mdi mdi-file-document"></i> Lihat STNK
+                      </a>
+                    @else
+                      <span class="text-muted">Tidak ada file</span>
+                    @endif
+                  </td>
                   <td>
                     <a href="{{ route('kapal.show', $item->id) }}" class="btn btn-info btn-sm rounded-pill" title="Lihat Detail">
                       <i class="mdi mdi-eye"></i> Detail
@@ -102,7 +99,9 @@
                         <i class="mdi mdi-pencil"></i>
                       </a>
                     @else
-                      <span class="badge bg-secondary">Terkunci</span>
+                       <button class="btn btn-secondary btn-sm rounded-circle" title="Terkunci" disabled>
+      <i class="mdi mdi-lock"></i>
+    </button>
                     @endif
                   </td>
                 </tr>

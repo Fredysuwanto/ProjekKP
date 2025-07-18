@@ -74,22 +74,22 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($proses as $index => $surat)
+            @forelse($proses as $index => $kapal)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $surat->pemilik->nama }}</td>
-                <td>{{ $surat->kapal->nama }}</td>
-                <td>{{ \Carbon\Carbon::parse($surat->updated_at)->format('d-m-Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($surat->updated_at)->addYears(5)->format('d-m-Y') }}</td>
+                <td>{{ $kapal->user->name ?? '-' }}</td>
+                <td>{{ $kapal->nama }}</td>
+                <td>{{ \Carbon\Carbon::parse($kapal->updated_at)->format('d-m-Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($kapal->updated_at)->addYears(5)->format('d-m-Y') }}</td>
                 <td>
-                    <a href="{{ route('riwayat.cetak', $surat->id) }}" class="btn-pdf">
+                    <a href="{{ route('riwayat.cetak', $kapal->id) }}" target="_blank" class="btn-pdf">
                         <i class="mdi mdi-file-download-outline"></i> Unduh PDF
                     </a>
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="6">Tidak ada surat yang sedang diproses.</td>
+                <td colspan="6">Tidak ada kapal yang sedang diproses.</td>
             </tr>
             @endforelse
         </tbody>
@@ -113,22 +113,22 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($proses2 as $index => $perpanjangsurat)
+            @forelse($proses2 as $index => $kapal)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $perpanjangsurat->surat->pemilik->nama }}</td>
-                <td>{{ $perpanjangsurat->surat->kapal->nama }}</td>
-                <td>{{ \Carbon\Carbon::parse($perpanjangsurat->updated_at)->format('d-m-Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($perpanjangsurat->updated_at)->addYears(5)->format('d-m-Y') }}</td>
+                <td>{{ $kapal->user->name ?? '-' }}</td>
+                <td>{{ $kapal->nama }}</td>
+                <td>{{ \Carbon\Carbon::parse($kapal->updated_at)->format('d-m-Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($kapal->updated_at)->addYears(5)->format('d-m-Y') }}</td>
                 <td>
-                    <a href="{{ route('riwayat.cetak2', $perpanjangsurat->id) }}" class="btn-pdf">
+                    <a href="{{ route('riwayat.cetak2', $kapal->id) }}" target="_blank" class="btn-pdf">
                         <i class="mdi mdi-file-download-outline"></i> Unduh PDF
                     </a>
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="6">Tidak ada surat yang sedang diproses.</td>
+                <td colspan="6">Tidak ada kapal yang sedang diperpanjang.</td>
             </tr>
             @endforelse
         </tbody>

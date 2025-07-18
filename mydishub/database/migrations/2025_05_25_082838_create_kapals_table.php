@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string("jenisperizinan");
             $table->string("tujuan")->nullable();
             $table->string('file_stnk')-> nullable();
+            $table->foreignId('pemilik_id')->constrained()->onDelete('cascade');
+
 
 
 

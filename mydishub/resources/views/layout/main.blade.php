@@ -74,17 +74,17 @@
 
     <li class="nav-item">
       <a class="nav-link d-flex align-items-center" href="{{ url('kapal') }}">
-        <i class="mdi mdi-grease-pencil menu-icon" style="margin-right: 10px; font-size: 20px;"></i>
-        <span class="menu-title">Data Kapal</span>
+        <i class="mdi mdi-file-multiple menu-icon" style="margin-right: 10px; font-size: 20px;"></i>
+        <span class="menu-title">Daftar Perizinan</span>
       </a>
     </li>
 
-    <li class="nav-item">
+    {{-- <li class="nav-item">
       <a class="nav-link" href="{{ url('surat') }}">
         <i class="mdi mdi-file-multiple menu-icon"></i>
         <span class="menu-title">Daftar Surat</span>
       </a>
-    </li>
+    </li> --}}
 
     <li class="nav-item">
       <a class="nav-link" href="{{ url('riwayat') }}">

@@ -6,8 +6,9 @@
 <div class="col-md-8 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title fw-bold"><i class="mdi mdi-ferry me-1 text-primary"></i> Tambah Kapal</h4>
-      <p class="card-description mb-4">Silakan isi data lengkap kapal yang akan ditambahkan.</p>
+<h4 class="fw-bold mb-3">
+  <i class="mdi mdi-file-document-outline text-primary me-1"></i> Surat Izin
+</h4>      <p class="card-description mb-4">Silakan isi data lengkap kapal yang akan ditambahkan beserta jenis perizinannya.</p>
 
       {{-- Notifikasi Sukses --}}
       @if (session('success'))
@@ -19,6 +20,25 @@
 
       <form method="POST" action="{{ route('kapal.store') }}" class="forms-sample" enctype="multipart/form-data">
         @csrf
+
+        {{-- Nama Pemilik --}}
+<div class="form-group mb-3">
+  <label for="pemilik">Nama Pemilik</label>
+  <input type="text" class="form-control" value="{{ $pemilik->nama ?? '-' }}" readonly>
+</div>
+
+{{-- Alamat Pemilik --}}
+<div class="form-group mb-3">
+  <label for="alamat">Alamat Pemilik</label>
+  <input type="text" class="form-control" value="{{ $pemilik->alamat ?? '-' }}" readonly>
+</div>
+
+{{-- NIK/NPWP --}}
+<div class="form-group mb-3">
+  <label for="nik">NIK / NPWP</label>
+  <input type="text" class="form-control" value="{{ $pemilik->nik ?? '-' }}" readonly>
+</div>
+
 
         {{-- Nama Kapal --}}
         <div class="form-group mb-3">
@@ -44,14 +64,14 @@
         {{-- Ukuran --}}
         <div class="form-group mb-3">
           <label for="ukuran">Ukuran Kapal</label>
-          <input type="text" class="form-control" id="ukuran" name="ukuran" value="{{ old('ukuran') }}" placeholder="Masukkan Ukuran Kapal">
+          <input type="text" class="form-control" id="ukuran" name="ukuran" value="{{ old('ukuran') }}" placeholder="Contoh: 75 meter">
           @error('ukuran') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
 
         {{-- Tanda Selar --}}
         <div class="form-group mb-3">
           <label for="tandaselar">Tanda Selar</label>
-          <input type="text" class="form-control" id="tandaselar" name="tandaselar" value="{{ old('tandaselar') }}" placeholder="Masukkan Tanda Selar Kapal">
+          <input type="text" class="form-control" id="tandaselar" name="tandaselar" value="{{ old('tandaselar') }}" placeholder="Masukkan Tanda Selar">
           @error('tandaselar') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
 
@@ -65,7 +85,7 @@
         {{-- Muatan --}}
         <div class="form-group mb-3">
           <label for="muatan">Muatan Kapal</label>
-          <input type="text" class="form-control" id="muatan" name="muatan" value="{{ old('muatan') }}" placeholder="Masukkan Muatan Kapal">
+          <input type="text" class="form-control" id="muatan" name="muatan" value="{{ old('muatan') }}" placeholder="Contoh: 50 Ton Ikan Segar">
           @error('muatan') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
 
@@ -86,13 +106,14 @@
           <input type="text" class="form-control" id="tujuan" name="tujuan" value="{{ old('tujuan') }}" placeholder="Contoh: Palembang - Bangka">
           @error('tujuan') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
-                <div class="form-group">
-    <label for="file_stnk">Upload STNK</label>
-    <input type="file" class="form-control" id="file_stnk" name="file_stnk" required>
-    @error('file_stnk')
-        <span class="text-danger">{{$message}}</span>
-    @enderror
-</div>
+
+        {{-- Upload STNK --}}
+        <div class="form-group mb-4">
+          <label for="file_stnk">Upload STNK</label>
+          <input type="file" class="form-control" id="file_stnk" name="file_stnk" required>
+          @error('file_stnk') <span class="text-danger">{{ $message }}</span> @enderror
+        </div>
+
         <button type="submit" class="btn btn-primary me-2">
           <i class="mdi mdi-content-save me-1"></i> Submit
         </button>
@@ -114,9 +135,7 @@
     }
 
     izinSelect.addEventListener('change', toggleTujuanField);
-
-    // Panggil saat load awal untuk handle old value
-    toggleTujuanField();
+    toggleTujuanField(); // on load
   });
 </script>
 @endsection

@@ -1,102 +1,71 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
-use App\Models\Perpanjangsurat;
-use App\Models\Surat;
+use App\Models\Kapal;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
 class RiwayatController extends Controller
 {
+    /**
+     * Menampilkan daftar riwayat kapal yang diproses
+     */
     public function index()
     {
         if (auth()->user()->role === 'a') {
-            $riwayat = Surat::with(['kapal', 'pemilik'])->where('status', 'diproses')->get();
-            $riwayat2 = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])->where('status', 'diproses')->get();
+            // Admin melihat semua kapal yang diproses
+            $kapals = Kapal::with('user')->where('status', 'diproses')->get();
         } else {
-            $riwayat = Surat::with(['kapal', 'pemilik'])
+            // Pemilik hanya melihat kapalnya sendiri
+            $kapals = Kapal::with('user')
                         ->where('status', 'diproses')
-                        ->whereHas('kapal', function ($query) {
-                            $query->where('user_id', auth()->id());
-                        })->get();
-            $riwayat2 = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])
-                        ->where('status', 'diproses')
-                        ->whereHas('surat.kapal', function ($query) {
-                            $query->where('user_id', auth()->id());
-                        })->get();
+                        ->where('user_id', auth()->id())
+                        ->get();
         }
 
-        return view('riwayat.index', compact('riwayat','riwayat2'));
+        return view('riwayat.index', compact('kapals'));
     }
 
+    /**
+     * Unduh PDF Surat Izin Kapal (operasional atau trayek)
+     */
     public function cetakPDF($id)
     {
-        $surat = Surat::with(['kapal', 'pemilik'])->findOrFail($id);
+        $kapal = Kapal::with('user')->findOrFail($id);
 
-        // Hanya admin atau pemilik data yang bisa akses
-        if (!(auth()->user()->role === 'a' || $surat->kapal->user_id === auth()->id())) {
-            abort(403, 'Anda tidak memiliki akses ke surat ini.');
+        // Cek hak akses: hanya admin atau pemilik kapal
+        if (!(auth()->user()->role === 'a' || $kapal->user_id === auth()->id())) {
+            abort(403, 'Anda tidak memiliki akses ke kapal ini.');
         }
 
-        $jenisPerizinan = strtolower($surat->kapal->jenisperizinan);
+        // Tentukan view berdasarkan jenis perizinan
+        $jenisPerizinan = strtolower($kapal->jenisperizinan);
+        $view = match ($jenisPerizinan) {
+            'trayek' => 'riwayat.trayek',
+            'izin operasional' => 'riwayat.operasional',
+            default => abort(404, 'Jenis perizinan tidak dikenali.')
+        };
 
-        if ($jenisPerizinan === 'trayek') {
-            $view = 'riwayat.trayek';
-        } elseif ($jenisPerizinan === 'izin operasional') {
-            $view = 'riwayat.operasional';
-        } else {
-            abort(404, 'Jenis perizinan tidak dikenali.');
-        }
+        // Ambil data pemilik dari relasi user
+        $pemilik = $kapal->user;
 
-        $pemohon = $surat->pemilik;
-        $kapal = $surat->kapal;
-        $tanggal = Carbon::parse($surat->updated_at)->translatedFormat('d F Y');
-        $berlaku_sampai = Carbon::parse($surat->updated_at)->addYears(5)->translatedFormat('d F Y');
+        // Format tanggal dan masa berlaku
+        $tanggal = Carbon::parse($kapal->updated_at)->translatedFormat('d F Y');
+        $berlaku_sampai = Carbon::parse($kapal->updated_at)->addYears(5)->translatedFormat('d F Y');
 
-        $pdf = Pdf::loadView($view, compact('surat', 'pemohon', 'kapal', 'tanggal', 'berlaku_sampai'));
-        return $pdf->download('surat-izin-kapal.pdf');
+        // Generate PDF dari view yang sesuai
+        $pdf = Pdf::loadView($view, compact('kapal', 'pemilik', 'tanggal', 'berlaku_sampai'));
+        return $pdf->download('surat-izin-kapal-' . $kapal->nama . '.pdf');
     }
 
+    /**
+     * Detail kapal untuk user atau admin
+     */
     public function show($id)
     {
-        $surat = Surat::with(['pemilik', 'kapal'])->findOrFail($id);
-        return view('riwayat.detail', compact('surat'));
-    }
-
-    public function cetakPDF2($id)
-    {
-        $perpanjangsurat = Perpanjangsurat::with(['surat.kapal', 'surat.pemilik'])->findOrFail($id);
-        $surat = $perpanjangsurat->surat;
-
-        // Hanya admin atau pemilik data yang bisa akses
-        if (!(auth()->user()->role === 'a' || $surat->kapal->user_id === auth()->id())) {
-            abort(403, 'Anda tidak memiliki akses ke surat ini.');
-        }
-
-        $jenisPerizinan = strtolower($surat->kapal->jenisperizinan);
-
-        if ($jenisPerizinan === 'trayek') {
-            $view = 'riwayat.trayek';
-        } elseif ($jenisPerizinan === 'izin operasional') {
-            $view = 'riwayat.operasional';
-        } else {
-            abort(404, 'Jenis perizinan tidak dikenali.');
-        }
-
-        $pemohon = $surat->pemilik;
-        $kapal = $surat->kapal;
-        $tanggal = Carbon::parse($perpanjangsurat->updated_at)->translatedFormat('d F Y');
-        $berlaku_sampai = Carbon::parse($perpanjangsurat->updated_at)->addYears(5)->translatedFormat('d F Y');
-
-        $pdf = Pdf::loadView($view, compact('perpanjangsurat','surat', 'pemohon', 'kapal', 'tanggal', 'berlaku_sampai'));
-        return $pdf->download('surat-izin-kapal.pdf');
-    }
-
-    public function show2($id)
-    {
-        $perpanjangsurat = Perpanjangsurat::with(['surat.kapal','surat.pemilik'])->findOrFail($id);
-        return view('riwayat.detail2', compact('perpanjangsurat'));
+        $kapal = Kapal::with('user')->findOrFail($id);
+        return view('riwayat.detail', compact('kapal'));
     }
 }

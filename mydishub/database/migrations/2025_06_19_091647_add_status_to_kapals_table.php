@@ -11,7 +11,7 @@ return new class extends Migration
      */
    public function up()
 {
-    Schema::table('surats', function (Blueprint $table) {
+    Schema::table('kapals', function (Blueprint $table) {
         $table->string('status')->nullable(); // null = belum diproses
     });
 }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('surats', function (Blueprint $table) {
+        Schema::table('kapals', function (Blueprint $table) {
             //
         });
     }

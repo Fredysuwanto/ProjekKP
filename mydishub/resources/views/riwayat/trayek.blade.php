@@ -51,7 +51,14 @@
     <h3>SURAT PERSETUJUAN TRAYEK</h3>
     <h3>ANGKUTAN SUNGAI DAN DANAU ANTAR KABUPATEN / KOTA DALAM PROVINSI</h3>
 
-    <p><strong>Nomor:</strong> 551.31 / 0001 / 4 /DISHUB-25</p>
+    @php
+        $lastId = $kapal->id ?? 1;
+        $nomor = '551.31/' . str_pad($lastId, 4, '0', STR_PAD_LEFT) . '/4/Dishub-25';
+        $pemilik = $kapal->user;
+        $dataPemilik = $pemilik->pemilik ?? null;
+    @endphp
+
+    <p><strong>Nomor:</strong> {{ $nomor }}</p>
 
     <div class="section">
         <strong>DASAR HUKUM</strong>
@@ -71,35 +78,35 @@
         <table>
             <tr>
                 <td style="width: 30%;">Nama Pemohon</td>
-            <td>: {{ $surat->pemilik->nama ?? '.......................................................' }}</td>
+                <td>: {{ $pemilik->name ?? '.......................................................' }}</td>
             </tr>
             <tr>
                 <td>Alamat Pemilik</td>
-            <td>: {{ $surat->pemilik->alamat ?? '.......................................................' }}</td>
+                <td>: {{ $dataPemilik->alamat ?? '.......................................................' }}</td>
             </tr>
             <tr>
                 <td>Nama Kapal</td>
-            <td>: {{ $surat->kapal->nama ?? '.......................................................' }}</td>
+                <td>: {{ $kapal->nama ?? '.......................................................' }}</td>
             </tr>
             <tr>
                 <td>Tanda Selar</td>
-                <td>: {{ $surat->kapal->tandaselar  ?? '................' }}</td>
+                <td>: {{ $kapal->tandaselar  ?? '................' }}</td>
             </tr>
             <tr>
                 <td>Ukuran</td>
-            <td>: {{ $surat->kapal->ukuran ?? '.......................................................' }}</td>
+                <td>: {{ $kapal->ukuran ?? '.......................................................' }}</td>
             </tr>
             <tr>
                 <td>Jenis Kapal</td>
-            <td>: {{ $surat->kapal->jenis ?? '.......................................................' }}</td>
+                <td>: {{ $kapal->jenis ?? '.......................................................' }}</td>
             </tr>
             <tr>
                 <td>Daya Mesin</td>
-            <td>: {{ $surat->kapal->daya ?? '.......................................................' }}</td>
+                <td>: {{ $kapal->daya ?? '.......................................................' }}</td>
             </tr>
             <tr>
                 <td>Tanggal</td>
-                <td>: {{ $tanggal ?? '................' }}</td>
+                <td>: {{ $tanggal ?? \Carbon\Carbon::now()->translatedFormat('d F Y') }}</td>
             </tr>
             <tr>
                 <td>Trayek</td>
@@ -124,7 +131,7 @@
 
     <div class="signature">
         <p>Dikeluarkan di: Palembang</p>
-        <p>Pada Tanggal: {{ $tanggal ?? '................' }}</p>
+        <p>Pada Tanggal: {{ $tanggal ?? \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
         <br><br>
         <p><strong>KEPALA DINAS PERHUBUNGAN</strong><br>PROVINSI SUMATERA SELATAN</p>
         <br><br><br>

@@ -17,39 +17,39 @@
                     <tbody>
                         <tr>
                             <th style="width: 25%">Nama Pemilik</th>
-                            <td>{{ $surat->pemilik->nama }}</td>
+                            <td>{{ $pemilik->nama }}</td>
                         </tr>
                         <tr>
                             <th>Alamat Pemilik</th>
-                            <td>{{ $surat->pemilik->alamat }}</td>
+                            <td>{{ $pemilik->alamat }}</td>
                         </tr>
                         <tr>
                             <th>Nama Kapal</th>
-                            <td>{{ $surat->kapal->nama }}</td>
+                            <td>{{ $kapal->nama }}</td>
                         </tr>
                         <tr>
                             <th>Nomor Plat</th>
-                            <td>{{ $surat->kapal->noplat }}</td>
+                            <td>{{ $kapal->noplat }}</td>
                         </tr>
                         <tr>
                             <th>Jenis Kapal</th>
-                            <td>{{ $surat->kapal->jenis }}</td>
+                            <td>{{ $kapal->jenis }}</td>
                         </tr>
                         <tr>
                             <th>Ukuran</th>
-                            <td>{{ $surat->kapal->ukuran }}</td>
+                            <td>{{ $kapal->ukuran }}</td>
                         </tr>
                          <tr>
                             <th>Tanda Selar</th>
-                            <td>{{ $surat->kapal->tandaselar }}</td>
+                            <td>{{ $kapal->tandaselar }}</td>
                         </tr>
                         <tr>
                             <th>Daya Mesin</th>
-                            <td>{{ $surat->kapal->daya }}</td>
+                            <td>{{ $kapal->daya }}</td>
                         </tr>
                         <tr>
                             <th>Muatan</th>
-                            <td>{{ $surat->kapal->muatan }}</td>
+                            <td>{{ $kapal->muatan }}</td>
                         </tr>
                         <tr>
                             <th>Jenis Perizinan</th>

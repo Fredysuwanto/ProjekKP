@@ -19,11 +19,17 @@
                 @endif
             @endforeach
 
-            <form method="POST" action="{{ route('kapal.update', $kapal->id) }}">
+            <form method="POST" action="{{ route('kapal.update', $kapal->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
-                {{-- Nama --}}
+                {{-- Nama Pemilik --}}
+                <div class="form-group mb-3">
+                    <label for="pemilik">Nama Pemilik</label>
+                    <input type="text" class="form-control" id="pemilik" value="{{ $kapal->user->name ?? '-' }}" readonly>
+                </div>
+
+                {{-- Nama Kapal --}}
                 <div class="form-group mb-3">
                     <label for="nama">Nama Kapal</label>
                     <input type="text" class="form-control" id="nama" name="nama"
@@ -103,19 +109,20 @@
                         value="{{ old('tujuan', $kapal->tujuan) }}" placeholder="Contoh: Palembang - Bangka">
                     @error('tujuan') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
+
+                {{-- STNK --}}
                 <div class="form-group">
-    <label for="file_stnk">Update STNK</label>
-    <input type="file" class="form-control" id="file_stnk" name="file_stnk">
-    @error('file_stnk')
-        <span class="text-danger">{{$message}}</span>
-    @enderror
-    @if($kapal->file_stnk)
-        <small class="text-muted">File saat ini: 
-            <a href="{{ Storage::url($kapal->file_stnk) }}" target="_blank">Lihat</a>
-        </small>
-    @endif
-</div>
-                {{-- Tombol --}}
+                    <label for="file_stnk">Update STNK</label>
+                    <input type="file" class="form-control" id="file_stnk" name="file_stnk">
+                    @error('file_stnk') <span class="text-danger">{{ $message }}</span> @enderror
+
+                    @if($kapal->file_stnk)
+                        <small class="text-muted">File saat ini: 
+                            <a href="{{ Storage::url($kapal->file_stnk) }}" target="_blank">Lihat</a>
+                        </small>
+                    @endif
+                </div>
+
                 <button type="submit" class="btn btn-primary me-2">
                     <i class="mdi mdi-content-save-outline me-1"></i> Update
                 </button>
@@ -133,17 +140,10 @@
         const tujuanGroup = document.getElementById('tujuan-group');
 
         function toggleTujuan() {
-            if (selectIzin.value === 'Trayek') {
-                tujuanGroup.style.display = 'block';
-            } else {
-                tujuanGroup.style.display = 'none';
-            }
+            tujuanGroup.style.display = selectIzin.value === 'Trayek' ? 'block' : 'none';
         }
 
-        // Jalankan saat perubahan dropdown
         selectIzin.addEventListener('change', toggleTujuan);
-
-        // Jalankan saat pertama kali halaman dimuat
         toggleTujuan();
     });
 </script>

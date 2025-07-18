@@ -45,4 +45,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+   public function pemilik()
+{
+    return $this->hasOne(Pemilik::class);
+}
+
+
 }

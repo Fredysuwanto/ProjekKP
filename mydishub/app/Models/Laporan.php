@@ -9,7 +9,7 @@ class Laporan extends Model
 {
     use HasFactory;
 
-    protected $table = 'surats'; // Gunakan tabel surats
+    protected $table = 'kapals'; // Gunakan tabel kapals
 
     // Tidak perlu fillable karena hanya untuk read/report
     public function kapal()
