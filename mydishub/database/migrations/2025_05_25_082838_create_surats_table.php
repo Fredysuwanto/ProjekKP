@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kapals', function (Blueprint $table) {
+        Schema::create('surats', function (Blueprint $table) {
             $table->id();
             $table->string("nama");
             $table->string("noplat");
@@ -24,7 +24,10 @@ return new class extends Migration
             $table->string("tujuan")->nullable();
             $table->string('file_stnk')-> nullable();
             $table->foreignId('pemilik_id')->constrained()->onDelete('cascade');
-
+// Di dalam Schema::create('surats', ...)
+$table->date('tanggal_kadaluarsa')->nullable(); // Tanggal kadaluarsa surat
+$table->string('status_perpanjangan')->default('aktif'); // 'aktif', 'kadaluarsa', 'diperpanjang'
+$table->date('tanggal_perpanjangan')->nullable(); // Tanggal terakhir diperpanjang
 
 
 
@@ -37,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kapals');
+        Schema::dropIfExists('surats');
     }
 };

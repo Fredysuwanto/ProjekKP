@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kapal;
+use App\Models\Surat;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -16,16 +16,16 @@ class RiwayatController extends Controller
     {
         if (auth()->user()->role === 'a') {
             // Admin melihat semua kapal yang diproses
-            $kapals = Kapal::with('user')->where('status', 'diproses')->get();
+            $surats = Surat::with('user')->where('status', 'diproses')->get();
         } else {
-            // Pemilik hanya melihat kapalnya sendiri
-            $kapals = Kapal::with('user')
+            // Pemilik hanya melihat Suratnya sendiri
+            $surats = Surat::with('user')
                         ->where('status', 'diproses')
                         ->where('user_id', auth()->id())
                         ->get();
         }
 
-        return view('riwayat.index', compact('kapals'));
+        return view('riwayat.index', compact('surats'));
     }
 
     /**
@@ -33,15 +33,15 @@ class RiwayatController extends Controller
      */
     public function cetakPDF($id)
     {
-        $kapal = Kapal::with('user')->findOrFail($id);
+        $surat = Surat::with('user')->findOrFail($id);
 
-        // Cek hak akses: hanya admin atau pemilik kapal
-        if (!(auth()->user()->role === 'a' || $kapal->user_id === auth()->id())) {
-            abort(403, 'Anda tidak memiliki akses ke kapal ini.');
+        // Cek hak akses: hanya admin atau pemilik Surat
+        if (!(auth()->user()->role === 'a' || $surat->user_id === auth()->id())) {
+            abort(403, 'Anda tidak memiliki akses ke Surat ini.');
         }
 
         // Tentukan view berdasarkan jenis perizinan
-        $jenisPerizinan = strtolower($kapal->jenisperizinan);
+        $jenisPerizinan = strtolower($surat->jenisperizinan);
         $view = match ($jenisPerizinan) {
             'trayek' => 'riwayat.trayek',
             'izin operasional' => 'riwayat.operasional',
@@ -49,23 +49,23 @@ class RiwayatController extends Controller
         };
 
         // Ambil data pemilik dari relasi user
-        $pemilik = $kapal->user;
+        $pemilik = $surat->user;
 
         // Format tanggal dan masa berlaku
-        $tanggal = Carbon::parse($kapal->updated_at)->translatedFormat('d F Y');
-        $berlaku_sampai = Carbon::parse($kapal->updated_at)->addYears(5)->translatedFormat('d F Y');
+        $tanggal = Carbon::parse($surat->updated_at)->translatedFormat('d F Y');
+        $berlaku_sampai = Carbon::parse($surat->updated_at)->addYears(5)->translatedFormat('d F Y');
 
         // Generate PDF dari view yang sesuai
-        $pdf = Pdf::loadView($view, compact('kapal', 'pemilik', 'tanggal', 'berlaku_sampai'));
-        return $pdf->download('surat-izin-kapal-' . $kapal->nama . '.pdf');
+        $pdf = Pdf::loadView($view, compact('surat', 'pemilik', 'tanggal', 'berlaku_sampai'));
+        return $pdf->download('surat-izin-surat-' . $surat->nama . '.pdf');
     }
 
     /**
-     * Detail kapal untuk user atau admin
+     * Detail surat untuk user atau admin
      */
     public function show($id)
     {
-        $kapal = Kapal::with('user')->findOrFail($id);
-        return view('riwayat.detail', compact('kapal'));
+        $surat = Surat::with('user')->findOrFail($id);
+        return view('riwayat.detail', compact('surat'));
     }
 }

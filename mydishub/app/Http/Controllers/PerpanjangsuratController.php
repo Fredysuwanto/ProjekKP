@@ -32,9 +32,7 @@ class PerpanjangsuratController extends Controller
      */
 public function create()
 {
-    $surats = Surat::with(['kapal', 'pemilik'])
-                    ->where('user_id', auth()->id())->get();
-
+    $surats = Surat::all(); // atau Surat::where('user_id', auth()->id())->get();
     return view('perpanjangsurat.create', compact('surats'));
 }
     /**

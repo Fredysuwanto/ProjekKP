@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Kapal;
 use App\Models\Laporan;
 use App\Models\Perpanjangsurat;
 use Illuminate\Http\Request;
@@ -15,9 +13,11 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        $kapals = Kapal::with('user')->get();
+        $surats = Surat::with('user')->get();
+                $perpanjang = Perpanjangsurat::with(['surat'])->get();
 
-    return view('laporan.index', compact('kapals'));
+
+    return view('laporan.index', compact('surats','perpanjang'));
     }
 
     /**

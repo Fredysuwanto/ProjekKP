@@ -27,28 +27,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($kapals as $index => $kapal)
+                        @forelse($surats as $index => $surat)
                             @php
-                                $jenis = $kapal->jenisperizinan;
+                                $jenis = $surat->jenisperizinan;
                                 $badgeColor = $jenis === 'Izin Operasional' ? 'primary' : 'info';
                             @endphp
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td class="fw-medium">{{ $kapal->nama ?? '-' }}</td>
+                                <td class="fw-medium">{{ $surat->nama ?? '-' }}</td>
                                 <td>
                                     <span class="badge bg-{{ $badgeColor }} text-white px-3 py-2 rounded-pill shadow-sm">
                                         {{ $jenis }}
                                     </span>
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($kapal->updated_at)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($surat->updated_at)->format('d-m-Y') }}</td>
                                 <td>
-                                    <a href="{{ route('kapal.show', $kapal->id) }}" 
+                                    <a href="{{ route('surat.show', $surat->id) }}" 
                                        class="btn btn-outline-info btn-sm rounded-pill shadow-sm">
                                         <i class="mdi mdi-eye-outline me-1"></i> Detail
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('riwayat.cetak', $kapal->id) }}" 
+                                    <a href="{{ route('riwayat.cetak', $surat->id) }}" 
                                        class="btn btn-sm text-white fw-semibold rounded-pill shadow-sm" 
                                        style="background-color: #1e40af;">
                                         <i class="mdi mdi-file-download-outline me-1"></i> Unduh PDF
@@ -59,7 +59,7 @@
                             <tr>
                                 <td colspan="6" class="text-center text-muted py-4">
                                     <i class="mdi mdi-information-outline fs-4 me-2"></i>
-                                    Belum ada data kapal yang diproses.
+                                    Belum ada data surat yang diproses.
                                 </td>
                             </tr>
                         @endforelse

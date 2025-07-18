@@ -73,7 +73,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link d-flex align-items-center" href="{{ url('kapal') }}">
+      <a class="nav-link d-flex align-items-center" href="{{ url('surat') }}">
         <i class="mdi mdi-file-multiple menu-icon" style="margin-right: 10px; font-size: 20px;"></i>
         <span class="menu-title">Daftar Perizinan</span>
       </a>

@@ -9,12 +9,12 @@ class Laporan extends Model
 {
     use HasFactory;
 
-    protected $table = 'kapals'; // Gunakan tabel kapals
+    protected $table = 'surats'; // Gunakan tabel kapals
 
     // Tidak perlu fillable karena hanya untuk read/report
-    public function kapal()
+    public function surat()
     {
-        return $this->belongsTo(Kapal::class);
+        return $this->belongsTo(Surat::class);
     }
 
     public function pemilik()

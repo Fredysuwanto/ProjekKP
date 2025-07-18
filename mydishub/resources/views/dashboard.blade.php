@@ -63,23 +63,5 @@
         </div>
     </div>
 </div>
-@php
-    use App\Models\Kapal;
 
-    $totalKapal = auth()->check() && auth()->user()->role === 'b'
-        ? Kapal::where('user_id', auth()->id())->count()
-        : Kapal::count();
-@endphp
-
-<div class="row mb-4">
-    <div class="col-md-3 mb-2">
-        <div class="card text-white bg-primary shadow-sm">
-            <div class="card-body">
-                <h6 class="fw-bold">Total Kapal</h6>
-                <h3>{{ $totalKapal ?? 0 }}</h3>
-            </div>
-        </div>
-    </div>
-    <!-- Tambahkan card lainnya untuk Surat Aktif, Riwayat, dll -->
-</div>
 @endsection

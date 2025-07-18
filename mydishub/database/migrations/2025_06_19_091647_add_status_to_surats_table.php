@@ -11,9 +11,10 @@ return new class extends Migration
      */
    public function up()
 {
-    Schema::table('kapals', function (Blueprint $table) {
+    Schema::table('surats', function (Blueprint $table) {
         $table->string('status')->nullable(); // null = belum diproses
     });
+    
 }
 
     /**
@@ -21,8 +22,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('kapals', function (Blueprint $table) {
-            //
+    Schema::table('surats', function (Blueprint $table) {
+        if (Schema::hasColumn('surats', 'status')) {
+            $table->dropColumn('status');
+        }
         });
+        
     }
 };

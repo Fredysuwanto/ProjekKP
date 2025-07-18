@@ -47,8 +47,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ======== Untuk Role PEMILIK (b) ========
     Route::middleware('role:b')->group(function () {
         Route::resource('pemilik', PemilikController::class);
-        Route::resource('kapal', KapalController::class);
-        Route::get('/kapal/{kapal}/detail', [KapalController::class, 'show'])->name('kapal.show');
+        Route::resource('surat', SuratController::class);
+        Route::get('/surat/{surat}/detail', [SuratController::class, 'show'])->name('surat.show');
         Route::resource('riwayat', RiwayatController::class);
         Route::get('/riwayat/detail/{id}', [RiwayatController::class, 'show'])->name('riwayat.detail');
         Route::get('/riwayat/detail2/{id}', [RiwayatController::class, 'show2'])->name('riwayat.detail2');
@@ -60,12 +60,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // ======== Shared: Admin & Pemilik akses surat ========
     Route::resource('surat', SuratController::class);
-    Route::get('/surat/proses/{id}', [SuratController::class, 'proses'])->name('surat.proses');
-    Route::get('/surat/tolak/{id}', [SuratController::class, 'tolak'])->name('surat.tolak');
-    Route::get('/kapal/proses/{kapal}', [KapalController::class, 'proses'])->name('kapal.proses');
-    Route::get('/kapal/tolak/{kapal}', [KapalController::class, 'tolak'])->name('kapal.tolak');
-Route::get('/proses', [KapalController::class, 'proses'])->name('kapal.proses');
-
+    // Route::get('/surat/proses/{id}', [SuratController::class, 'proses'])->name('surat.proses');
+    // Route::get('/surat/tolak/{id}', [SuratController::class, 'tolak'])->name('surat.tolak');
+    Route::get('/surat/proses/{surat}', [SuratController::class, 'proses'])->name('surat.proses');
+    Route::get('/surat/tolak/{surat}', [SuratController::class, 'tolak'])->name('surat.tolak');
+Route::get('/proses', [SuratController::class, 'proses'])->name('surat.proses');
 
     Route::resource('perpanjangsurat', PerpanjangsuratController::class);
     Route::get('/perpanjangsurat/proses2/{id}', [PerpanjangsuratController::class, 'proses2'])->name('perpanjangsurat.proses2');
@@ -85,12 +84,12 @@ Route::get('/proses', [KapalController::class, 'proses'])->name('kapal.proses');
 // ======== Untuk Role ADMIN (a) ========
 Route::middleware(['auth', 'verified', 'role:a'])->group(function () {
     Route::resource('laporan', LaporanController::class);
-    Route::get('/proses', [KapalController::class, 'prosesList'])->name('surat.prosesList');
+    Route::get('/proses', [SuratController::class, 'prosesList'])->name('surat.prosesList');
     Route::get('/proses2', [PerpanjangsuratController::class, 'prosesList'])->name('perpanjangsurat.prosesList');
 
     // ✅ Tambahan khusus untuk pemrosesan kapal dari laporan
-    Route::get('/laporan/proses/{kapal}', [LaporanController::class, 'proses'])->name('laporan.proses');
-    Route::get('/laporan/tolak/{kapal}', [LaporanController::class, 'tolak'])->name('laporan.tolak');
+    Route::get('/laporan/proses/{surat}', [LaporanController::class, 'proses'])->name('laporan.proses');
+    Route::get('/laporan/tolak/{surat}', [LaporanController::class, 'tolak'])->name('laporan.tolak');
 });
 
 // ==========================

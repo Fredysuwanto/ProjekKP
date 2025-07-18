@@ -18,7 +18,7 @@
         </div>
       @endif
 
-      <form method="POST" action="{{ route('kapal.store') }}" class="forms-sample" enctype="multipart/form-data">
+      <form method="POST" action="{{ route('surat.store') }}" class="forms-sample" enctype="multipart/form-data">
         @csrf
 
         {{-- Nama Pemilik --}}
@@ -113,11 +113,12 @@
           <input type="file" class="form-control" id="file_stnk" name="file_stnk" required>
           @error('file_stnk') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
+{{-- Tambahkan setelah field file_stnk --}}
 
         <button type="submit" class="btn btn-primary me-2">
           <i class="mdi mdi-content-save me-1"></i> Submit
         </button>
-        <a href="{{ route('kapal.index') }}" class="btn btn-secondary">Batal</a>
+        <a href="{{ route('surat.index') }}" class="btn btn-secondary">Batal</a>
       </form>
     </div>
   </div>

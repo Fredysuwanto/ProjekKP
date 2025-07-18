@@ -26,23 +26,23 @@
                 <th>Jenis</th>
                 <th>Perizinan</th>
                 <th>Tujuan</th>
-                <th>Dokumen Penting</th>
+                <th>Dokumen</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($kapals as $kapal)
+            @forelse ($surats as $surat)
                 <tr>
-                    <td>{{ $kapal->user->name ?? '-' }}</td>
-                    <td>{{ $kapal->nama }}</td>
-                    <td>{{ $kapal->noplat }}</td>
-                    <td>{{ $kapal->jenis }}</td>
-                    <td>{{ $kapal->jenisperizinan }}</td>
-                    <td>{{ $kapal->tujuan ?? '-' }}</td>
+                    <td>{{ $surat->user->name ?? '-' }}</td>
+                    <td>{{ $surat->nama }}</td>
+                    <td>{{ $surat->noplat }}</td>
+                    <td>{{ $surat->jenis }}</td>
+                    <td>{{ $surat->jenisperizinan }}</td>
+                    <td>{{ $surat->tujuan ?? '-' }}</td>
                     <td class="text-center">
                         <!-- STNK -->
-                        @if($kapal->file_stnk)
-                            <a href="{{ Storage::url($kapal->file_stnk) }}" target="_blank" class="btn btn-sm btn-info mb-1">
+                        @if($surat->file_stnk)
+                            <a href="{{ Storage::url($surat->file_stnk) }}" target="_blank" class="btn btn-sm btn-info mb-1">
                                 <i class="mdi mdi-file-document"></i> STNK
                             </a>
                         @else
@@ -50,8 +50,8 @@
                         @endif
 
                         <!-- KTP -->
-                        @if($kapal->user && $kapal->user->pemilik && $kapal->user->pemilik->file_ktp)
-                            <a href="{{ Storage::url($kapal->user->pemilik->file_ktp) }}" target="_blank" class="btn btn-sm btn-primary">
+                        @if($surat->user && $surat->user->pemilik && $surat->user->pemilik->file_ktp)
+                            <a href="{{ Storage::url($surat->user->pemilik->file_ktp) }}" target="_blank" class="btn btn-sm btn-primary">
                                 <i class="mdi mdi-card-account-details"></i> KTP
                             </a>
                         @else
@@ -59,7 +59,7 @@
                         @endif
                     </td>
                     <td class="text-center">
-                        @php $status = $kapal->status ?? 'menunggu'; @endphp
+                        @php $status = $surat->status ?? 'menunggu'; @endphp
                         @if ($status === 'diproses')
                             <span class="badge bg-success">Diproses</span>
                         @elseif ($status === 'ditolak')
@@ -88,17 +88,17 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($kapals->where('status', null) as $kapal)
+            @forelse ($surats->where('status', null) as $surat)
                 <tr>
-                    <td>{{ $kapal->user->name ?? '-' }}</td>
-                    <td>{{ $kapal->nama }}</td>
+                    <td>{{ $surat->user->name ?? '-' }}</td>
+                    <td>{{ $surat->nama }}</td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-2">
                             <button class="btn btn-sm btn-outline-success btn-konfirmasi"
-                                    data-url="{{ route('kapal.proses', $kapal->id) }}"
+                                    data-url="{{ route('surat.proses', $surat->id) }}"
                                     data-action="proses">Proses</button>
                             <button class="btn btn-sm btn-outline-danger btn-konfirmasi"
-                                    data-url="{{ route('kapal.tolak', $kapal->id) }}"
+                                    data-url="{{ route('surat.tolak', $surat->id) }}"
                                     data-action="tolak">Tolak</button>
                         </div>
                     </td>
@@ -110,7 +110,98 @@
             @endforelse
         </tbody>
     </table>
+    <!-- Tabel Data Perpanjang Surat -->
+    <h5 class="fw-bold mb-3">Tabel Data Perpanjang Surat</h5>
+    <table class="table table-bordered table-striped mb-5" style="font-size: 15px;">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>Nama Pemilik</th>
+                <th>Nama Kapal</th>
+                <th>No Plat</th>
+                <th>Jenis Perizinan</th>
+                <th>Tujuan</th>
+                <th>Dokumen</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($perpanjang as $ps)
+                <tr>
+                    <td>{{ $ps->surat->user->name }}</td>
+                    <td>{{ $ps->surat->nama }}</td>
+                    <td>{{ $ps->surat->noplat }}</td>
+                    <td>{{ $ps->surat->jenisperizinan }}</td>
+                    <td>{{ $ps->surat->tujuan ?? '-' }}</td>
+                    <td class= text-center>
+                        @if($ps->surat->user->pemilik->file_ktp)
+                            <a href="{{ Storage::url($ps->surat->user->pemilik->file_ktp) }}" target="_blank" class="btn btn-sm btn-primary mb-1">
+                                <i class="mdi mdi-account-card-details"></i> KTP
+                            </a><br>
+                        @else
+                            <span class="text-muted d-block">KTP - Tidak Ada</span>
+                        @endif
 
+                        @if($ps->surat->file_stnk)
+                            <a href="{{ Storage::url($ps->surat->file_stnk) }}" target="_blank" class="btn btn-sm btn-info mt-1">
+                                <i class="mdi mdi-file-document"></i> STNK
+                            </a>
+                        @else
+                            <span class="text-muted d-block">Dokumen - Tidak Ada</span>
+                        @endif
+                    </td>
+                                        <td class="text-center">
+                        @php $status = $surat->status ?? 'menunggu'; @endphp
+                        @if ($status === 'diproses')
+                            <span class="badge bg-success">Diproses</span>
+                        @elseif ($status === 'ditolak')
+                            <span class="badge bg-danger">Ditolak</span>
+                        @else
+                            <span class="badge bg-secondary">Belum Diproses</span>
+                        @endif
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="8" class="text-center">Tidak ada data kapal ditemukan.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+    <!-- Tabel Aksi Pemrosesan Surat Perpanjangan -->
+    <h5 class="fw-bold mt-5 mb-3">Tabel Aksi Pemrosesan Surat perpanjangan</h5>
+    <table class="table table-bordered table-striped" style="font-size: 15px;">
+        <thead class="table-light text-center">
+            <tr>
+                <th>Nama Pemilik</th>
+                <th>Nama Kapal</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+ @forelse ($perpanjang as $ps)
+                @if ($ps->status === 'Menunggu')
+                    <tr>
+                        <td>{{ $ps->surat->user->name }}</td>
+                        <td>{{ $ps->surat->nama }}</td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center gap-2">
+                                <button class="btn btn-sm btn-outline-success btn-konfirmasi"
+                                        data-url="{{ route('perpanjangsurat.proses2', $ps->id) }}"
+                                        data-action="proses">Proses</button>
+                                <button class="btn btn-sm btn-outline-danger btn-konfirmasi"
+                                        data-url="{{ route('perpanjangsurat.tolak', $ps->id) }}"
+                                        data-action="tolak">Tolak</button>
+                            </div>
+                        </td>
+                    </tr>
+                @endif
+            @empty
+                <tr>
+                    <td colspan="3" class="text-center">Tidak ada data surat untuk diproses.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
     <!-- Footer -->
     <div class="text-end mt-5">
         <p><strong>Palembang, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</strong></p>
@@ -132,12 +223,12 @@
                 let judul = '';
                 let icon = 'question';
                 if (action === 'proses') {
-                    judul = 'Proses Kapal?';
-                    pesan = 'Apakah data kapal sudah valid dan ingin diproses sekarang?';
+                    judul = 'Proses Surat?';
+                    pesan = 'Apakah data surat sudah valid dan ingin diproses sekarang?';
                     icon = 'info';
                 } else if (action === 'tolak') {
-                    judul = 'Tolak Kapal?';
-                    pesan = 'Apakah Anda yakin ingin menolak kapal ini? Tindakan ini tidak bisa dibatalkan.';
+                    judul = 'Tolak Surat?';
+                    pesan = 'Apakah Anda yakin ingin menolak Surat ini? Tindakan ini tidak bisa dibatalkan.';
                     icon = 'warning';
                 }
                 Swal.fire({

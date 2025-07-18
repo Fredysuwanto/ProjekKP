@@ -1,25 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Kapal;
+use App\Models\Surat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Carbon;
 
-class KapalController extends Controller
+class SuratController extends Controller
 {
     /**
      * Tampilkan daftar kapal milik user login.
      */
     public function index()
     {
-        $kapal = Kapal::where('user_id', Auth::id())->get();
-        return view('kapal.index', compact('kapal'));
+        $surat = Surat::where('user_id', Auth::id())->get();
+        return view('surat.index', compact('surat'));
     }
 
     /**
-     * Tampilkan form untuk input kapal baru.
+     * Tampilkan form untuk input surat baru.
      */
     public function create()
     {
@@ -30,11 +30,11 @@ class KapalController extends Controller
             return redirect()->route('pemilik.create')->with('error', 'Silakan isi data pemilik terlebih dahulu.');
         }
 
-        return view('kapal.create', compact('pemilik'));
+        return view('surat.create', compact('pemilik'));
     }
 
     /**
-     * Simpan data kapal baru ke database.
+     * Simpan data surat baru ke database.
      */
     public function store(Request $request)
     {
@@ -56,40 +56,40 @@ class KapalController extends Controller
             $data['file_stnk'] = $filePath;
         }
 
-        Kapal::create($data);
+        Surat::create($data);
         return $this->backWith('success', "{$data['nama']} berhasil disimpan.");
     }
 
     /**
      * Tampilkan form edit kapal.
      */
-    public function edit(Kapal $kapal)
+    public function edit(Surat $surat)
     {
-        $this->authorizeKapal($kapal);
+        $this->authorizeSurat($surat);
 
-        if ($kapal->surats()->where('status', 'diproses')->exists()) {
-            return $this->backWith('error', 'Kapal ini sudah digunakan dalam surat izin dan tidak dapat diedit.');
-        }
+        // if ($surat->surats()->where('status', 'diproses')->exists()) {
+        //     return $this->backWith('error', 'surat ini sudah digunakan dalam surat izin dan tidak dapat diedit.');
+        // }
 
-        return view('kapal.edit', compact('kapal'));
+        return view('surat.edit', compact('surat'));
     }
 
     /**
-     * Update data kapal.
+     * Update data surat.
      */
-    public function update(Request $request, Kapal $kapal)
+    public function update(Request $request, Surat $surat)
     {
-        $this->authorizeKapal($kapal);
+        $this->authorizeSurat($surat);
 
-        if ($kapal->surats()->where('status', 'diproses')->exists()) {
-            return $this->backWith('error', 'Kapal ini sudah digunakan dalam surat izin dan tidak dapat diperbarui.');
+        if ($surat->surats()->where('status', 'diproses')->exists()) {
+            return $this->backWith('error', 'surat ini sudah digunakan dalam surat izin dan tidak dapat diperbarui.');
         }
 
         $data = $this->validated($request);
 
         if ($request->hasFile('file_stnk')) {
-            if ($kapal->file_stnk && Storage::disk('public')->exists($kapal->file_stnk)) {
-                Storage::disk('public')->delete($kapal->file_stnk);
+            if ($surat->file_stnk && Storage::disk('public')->exists($surat->file_stnk)) {
+                Storage::disk('public')->delete($surat->file_stnk);
             }
 
             $file = $request->file('file_stnk');
@@ -98,27 +98,27 @@ class KapalController extends Controller
             $data['file_stnk'] = $filePath;
         }
 
-        $kapal->update($data);
-        return $this->backWith('success', 'Data kapal berhasil diperbarui.');
+        $surat->update($data);
+        return $this->backWith('success', 'Data surat berhasil diperbarui.');
     }
 
     /**
-     * Hapus kapal jika belum digunakan.
+     * Hapus surat jika belum digunakan.
      */
-    public function destroy(Kapal $kapal)
+    public function destroy(Surat $surat)
     {
-        $this->authorizeKapal($kapal);
+        $this->authorizeSurat($surat);
 
-        if ($kapal->surats()->where('status', 'diproses')->exists()) {
-            return $this->backWith('error', 'Kapal ini sudah digunakan dalam surat izin dan tidak dapat dihapus.');
+        if ($surat->surats()->where('status', 'diproses')->exists()) {
+            return $this->backWith('error', 'surat ini sudah digunakan dalam surat izin dan tidak dapat dihapus.');
         }
 
-        $kapal->delete();
-        return $this->backWith('success', 'Data kapal berhasil dihapus.');
+        $surat->delete();
+        return $this->backWith('success', 'Data surat berhasil dihapus.');
     }
 
     /**
-     * Validasi form input kapal.
+     * Validasi form input surat.
      */
     private function validated(Request $request): array
     {
@@ -142,12 +142,12 @@ class KapalController extends Controller
     }
 
     /**
-     * Pastikan user yang login adalah pemilik data kapal.
+     * Pastikan user yang login adalah pemilik data surat.
      */
-    private function authorizeKapal(Kapal $kapal): void
+    private function authorizeSurat(Surat $surat): void
     {
-        if ($kapal->user_id !== Auth::id()) {
-            abort(403, 'Anda tidak memiliki izin terhadap kapal ini.');
+        if ($surat->user_id !== Auth::id()) {
+            abort(403, 'Anda tidak memiliki izin terhadap surat ini.');
         }
     }
 
@@ -156,53 +156,54 @@ class KapalController extends Controller
      */
     private function backWith(string $type, string $msg)
     {
-        return redirect()->route('kapal.index')->with($type, $msg);
+        return redirect()->route('surat.index')->with($type, $msg);
     }
 
     /**
      * Tampilkan detail kapal.
      */
-    public function show(Kapal $kapal)
+    public function show(Surat $surat)
     {
-        $this->authorizeKapal($kapal);
-        return view('kapal.detail', compact('kapal'));
+        $this->authorizeSurat($surat);
+        return view('surat.detail', compact('surat'));
     }
 
     /**
-     * Proses kapal untuk dipindahkan ke riwayat.
+     * Proses surat untuk dipindahkan ke riwayat.
      */
-    public function proses(Kapal $kapal)
+    public function proses(Surat $surat)
     {
-        $kapal->status = 'diproses';
-        $kapal->save();
+        
+        $surat->status = 'diproses';
+        $surat->save();
 
-        return redirect()->route('laporan.index')->with('success', 'Kapal berhasil diproses.');
+        return redirect()->route('laporan.index')->with('success', 'surat berhasil diproses.');
     }
 
     /**
-     * Tolak permohonan kapal.
+     * Tolak permohonan surat.
      */
-    public function tolak(Kapal $kapal)
+    public function tolak(Surat $surat)
     {
-        $kapal->status = 'ditolak';
-        $kapal->save();
+        $surat->status = 'ditolak';
+        $surat->save();
 
-        return redirect()->route('laporan.index')->with('success', 'Kapal ditolak.');
+        return redirect()->route('laporan.index')->with('success', 'surat ditolak.');
     }
 
     /**
-     * Tampilkan daftar kapal dalam proses dan perpanjangan.
+     * Tampilkan daftar surat dalam proses dan perpanjangan.
      */
     public function prosesList()
     {
-        $proses = Kapal::with('user')
+        $proses = Surat::with('user')
             ->where('status', 'diproses')
             ->get();
 
-        $proses2 = Kapal::with('user')
+        $proses2 = Surat::with('user')
             ->where('status', 'diperpanjang')
             ->get();
 
-        return view('kapal.proses', compact('proses', 'proses2'));
+        return view('surat.proses', compact('proses', 'proses2'));
     }
 }

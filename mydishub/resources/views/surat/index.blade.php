@@ -17,7 +17,7 @@
       </div>
 
       {{-- Tombol tambah --}}
-      <a href="{{ route('kapal.create') }}" class="btn btn-primary btn-rounded mb-3">
+      <a href="{{ route('surat.create') }}" class="btn btn-primary btn-rounded mb-3">
         <i class="mdi mdi-plus-circle-outline me-1"></i> Daftar Izin
       </a>
 
@@ -33,7 +33,7 @@
 
       {{-- Tabel --}}
       <div class="table-responsive">
-        @if ($kapal->isEmpty())
+        @if ($surat->isEmpty())
           <div class="alert alert-info text-center shadow-sm">
             <i class="mdi mdi-information-outline me-1"></i> Belum ada data kapal.
           </div>
@@ -52,13 +52,14 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($kapal as $i => $item)
+              @foreach ($surat as $i => $item)
                 @php
                   $status = $item->status ?? 'menunggu';
                   $terkunci = $status === 'diproses';
                 @endphp
                 <tr>
                   <td>{{ $i + 1 }}</td>
+                  
                   <td>{{ $item->user->name ?? '-' }}</td>
 
                   <td>{{ $item->nama }}</td>
@@ -91,11 +92,11 @@
                     @endif
                   </td>
                   <td>
-                    <a href="{{ route('kapal.show', $item->id) }}" class="btn btn-info btn-sm rounded-pill" title="Lihat Detail">
+                    <a href="{{ route('surat.show', $item->id) }}" class="btn btn-info btn-sm rounded-pill" title="Lihat Detail">
                       <i class="mdi mdi-eye"></i> Detail
                     </a>
                     @if(!$terkunci)
-                      <a href="{{ route('kapal.edit', $item->id) }}" class="btn btn-warning btn-sm rounded-pill" title="Edit">
+                      <a href="{{ route('surat.edit', $item->id) }}" class="btn btn-warning btn-sm rounded-pill" title="Edit">
                         <i class="mdi mdi-pencil"></i>
                       </a>
                     @else

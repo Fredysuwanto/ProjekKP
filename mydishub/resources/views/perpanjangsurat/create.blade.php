@@ -30,12 +30,11 @@
         @csrf
 
         <div class="mb-3">
-            <label for="riwayat_id" class="form-label">Pilih Surat</label>
+            <label for="surat_id" class="form-label">Pilih Surat</label>
 <select name="surat_id" class="form-control" required>
-    <option value="">-- Pilih Riwayat Surat --</option>
     @foreach($surats as $surat)
         <option value="{{ $surat->id }}">
-            {{ $surat->pemilik->nama }} - {{ $surat->kapal->noplat }}
+            {{ $surat->nama }} - {{ $surat->noplat }}
         </option>
     @endforeach
 </select>

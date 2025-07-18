@@ -24,9 +24,9 @@
     <h3 class="text-center">KAPAL SUNGAI DAN DANAU</h3>
 
     @php
-        $lastId = $kapal->id ?? 1;
+        $lastId = $surat->id ?? 1;
         $nomor = '551.31/' . str_pad($lastId, 4, '0', STR_PAD_LEFT) . '/4/Dishub-25';
-        $pemilik = $kapal->user;
+        $pemilik = $surat->user;
         $dataPemilik = $pemilik->pemilik ?? null;
     @endphp
 
@@ -40,16 +40,16 @@
 
     <table style="margin-top: 10px;">
         <tr>
-            <td style="width: 250px;">NAMA KAPAL</td>
-            <td>: {{ strtoupper($kapal->jenis ?? '') }} “{{ $kapal->nama ?? '...................' }}”</td>
+            <td style="width: 250px;">NAMA surat</td>
+            <td>: {{ strtoupper($surat->jenis ?? '') }} “{{ $surat->nama ?? '...................' }}”</td>
         </tr>
         <tr>
             <td>UKURAN</td>
-            <td>: {{ $kapal->ukuran ?? '..,.. X ..,.. X ..,.. M' }}</td>
+            <td>: {{ $surat->ukuran ?? '..,.. X ..,.. X ..,.. M' }}</td>
         </tr>
         <tr>
             <td>TANDA SELAR / NO. PLAT</td>
-            <td>: {{ $kapal->tandaselar ?? 'GT. .... NO. ......' }}</td>
+            <td>: {{ $surat->tandaselar ?? 'GT. .... NO. ......' }}</td>
         </tr>
         <tr>
             <td>DI PERAIRAN SUNGAI DAN DANAU</td>
