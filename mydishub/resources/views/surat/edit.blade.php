@@ -1,12 +1,12 @@
 @extends('layout.main')
 
-@section('title', 'Edit Kapal')
+@section('title', 'Edit surat')
 
 @section('content')
 <div class="col-md-8 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Edit Kapal</h4>
+            <h4 class="card-title">Edit surat</h4>
             <p class="card-description">Form untuk mengedit data kapal</p>
 
             {{-- Alert Flash --}}
@@ -19,45 +19,52 @@
                 @endif
             @endforeach
 
-            <form method="POST" action="{{ route('kapal.update', $kapal->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('surat.update', $surat->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 {{-- Nama Pemilik --}}
                 <div class="form-group mb-3">
                     <label for="pemilik">Nama Pemilik</label>
-                    <input type="text" class="form-control" id="pemilik" value="{{ $kapal->user->name ?? '-' }}" readonly>
+                    <input type="text" class="form-control" id="pemilik" value="{{ $surat->user->name ?? '-' }}" readonly>
                 </div>
 
-                {{-- Nama Kapal --}}
+                {{-- Nama surat --}}
                 <div class="form-group mb-3">
-                    <label for="nama">Nama Kapal</label>
+                    <label for="nama">Nama surat</label>
                     <input type="text" class="form-control" id="nama" name="nama"
-                        value="{{ old('nama', $kapal->nama) }}" placeholder="Masukan Nama Kapal">
+                        value="{{ old('nama', $surat->nama) }}" placeholder="Masukan Nama surat">
                     @error('nama') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
                 {{-- No Plat --}}
                 <div class="form-group mb-3">
                     <label for="noplat">No. Plat</label>
-                    <input type="text" class="form-control" id="noplat" name="noplat"
-                        value="{{ old('noplat', $kapal->noplat) }}" placeholder="Masukan No. Plat">
-                    @error('noplat') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
+           <input type="text" name="noplat" class="form-control @error('noplat') is-invalid @enderror" value="{{ old('noplat', $surat->noplat ?? '') }}">
 
-                {{-- Jenis --}}
-                <div class="form-group mb-3">
-                    <label for="jenis">Jenis Kapal</label>
-                    <input type="text" class="form-control" id="jenis" name="jenis"
-                        value="{{ old('jenis', $kapal->jenis) }}" placeholder="Masukan Jenis Kapal">
-                    @error('jenis') <span class="text-danger">{{ $message }}</span> @enderror
+@error('noplat')
+  <div class="invalid-feedback">
+    {{ $message }}
+  </div>
+@enderror
                 </div>
+<br>
+                {{-- Jenis --}}
+        <div class="form-group mb-3">
+          <label for="jenis">Jenis Kapal</label>
+          <select name="jenis" id="jenis">
+            <option value="tongkang">Tongkang</option>
+            <option value="jukung">Jukung</option>
+                        <option value="motorgandeng">Motor Gandeng</option>
+          </select>
+        
+        </div>
 
                 {{-- Ukuran --}}
                 <div class="form-group mb-3">
-                    <label for="ukuran">Ukuran Kapal</label>
+                    <label for="ukuran">Ukuran surat</label>
                     <input type="text" class="form-control" id="ukuran" name="ukuran"
-                        value="{{ old('ukuran', $kapal->ukuran) }}" placeholder="Masukan Ukuran Kapal">
+                        value="{{ old('ukuran', $surat->ukuran) }}" placeholder="Masukan Ukuran surat">
                     @error('ukuran') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
@@ -65,7 +72,7 @@
                 <div class="form-group mb-3">
                     <label for="tandaselar">Tanda Selar</label>
                     <input type="text" class="form-control" id="tandaselar" name="tandaselar"
-                        value="{{ old('tandaselar', $kapal->tandaselar) }}" placeholder="Masukan Tanda Selar">
+                        value="{{ old('tandaselar', $surat->tandaselar) }}" placeholder="Masukan Tanda Selar">
                     @error('tandaselar') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
@@ -73,29 +80,29 @@
                 <div class="form-group mb-3">
                     <label for="daya">Daya Mesin</label>
                     <input type="text" class="form-control" id="daya" name="daya"
-                        value="{{ old('daya', $kapal->daya) }}" placeholder="Masukan Daya Mesin">
+                        value="{{ old('daya', $surat->daya) }}" placeholder="Masukan Daya Mesin">
                     @error('daya') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
                 {{-- Muatan --}}
                 <div class="form-group mb-3">
-                    <label for="muatan">Muatan Kapal</label>
+                    <label for="muatan">Muatan surat</label>
                     <input type="text" class="form-control" id="muatan" name="muatan"
-                        value="{{ old('muatan', $kapal->muatan) }}" placeholder="Masukan Muatan Kapal">
+                        value="{{ old('muatan', $surat->muatan) }}" placeholder="Masukan Muatan surat">
                     @error('muatan') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
                 {{-- Jenis Perizinan --}}
                 <div class="form-group mb-3">
-                    <label for="jenisperizinan">Jenis Perizinan Kapal</label>
+                    <label for="jenisperizinan">Jenis Perizinan surat</label>
                     <select class="form-select" id="jenisperizinan" name="jenisperizinan">
-                        <option value="" disabled {{ old('jenisperizinan', $kapal->jenisperizinan) == '' ? 'selected' : '' }}>
+                        <option value="" disabled {{ old('jenisperizinan', $surat->jenisperizinan) == '' ? 'selected' : '' }}>
                             -- Pilih Jenis Perizinan --
                         </option>
-                        <option value="Izin Operasional" {{ old('jenisperizinan', $kapal->jenisperizinan) == 'Izin Operasional' ? 'selected' : '' }}>
+                        <option value="Izin Operasional" {{ old('jenisperizinan', $surat->jenisperizinan) == 'Izin Operasional' ? 'selected' : '' }}>
                             Izin Operasional
                         </option>
-                        <option value="Trayek" {{ old('jenisperizinan', $kapal->jenisperizinan) == 'Trayek' ? 'selected' : '' }}>
+                        <option value="Trayek" {{ old('jenisperizinan', $surat->jenisperizinan) == 'Trayek' ? 'selected' : '' }}>
                             Trayek
                         </option>
                     </select>
@@ -106,7 +113,7 @@
                 <div class="form-group mb-3" id="tujuan-group" style="display: none;">
                     <label for="tujuan">Tujuan Trayek</label>
                     <input type="text" class="form-control" id="tujuan" name="tujuan"
-                        value="{{ old('tujuan', $kapal->tujuan) }}" placeholder="Contoh: Palembang - Bangka">
+                        value="{{ old('tujuan', $surat->tujuan) }}" placeholder="Contoh: Palembang - Bangka">
                     @error('tujuan') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
@@ -116,9 +123,9 @@
                     <input type="file" class="form-control" id="file_stnk" name="file_stnk">
                     @error('file_stnk') <span class="text-danger">{{ $message }}</span> @enderror
 
-                    @if($kapal->file_stnk)
+                    @if($surat->file_stnk)
                         <small class="text-muted">File saat ini: 
-                            <a href="{{ Storage::url($kapal->file_stnk) }}" target="_blank">Lihat</a>
+                            <a href="{{ Storage::url($surat->file_stnk) }}" target="_blank">Lihat</a>
                         </small>
                     @endif
                 </div>
@@ -126,7 +133,7 @@
                 <button type="submit" class="btn btn-primary me-2">
                     <i class="mdi mdi-content-save-outline me-1"></i> Update
                 </button>
-                <a href="{{ route('kapal.index') }}" class="btn btn-light">Cancel</a>
+                <a href="{{ route('surat.index') }}" class="btn btn-light">Cancel</a>
             </form>
         </div>
     </div>

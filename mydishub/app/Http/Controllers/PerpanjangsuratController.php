@@ -141,7 +141,7 @@ if (now()->lessThan($tanggal_pengajuan->addYears(5))) {
                             $q->where('user_id', auth()->id());
                         })
                         ->orderBy('updated_at', 'desc')
-                        ->get();
+                        ->get();    
         }
 
         return view('perpanjangsurat.proses2', compact('proses2'));

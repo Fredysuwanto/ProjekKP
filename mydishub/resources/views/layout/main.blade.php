@@ -145,11 +145,12 @@
     <div class="container-fluid page-body-wrapper">
       <!-- partial:./partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row"
-           style="background-image: url('{{ asset('images/header.png') }}');             
-            background-size: contain;
+           style="background-image: url('{{ asset('images/header.png') }}');
+             
+            background-size: 400px;
             background-repeat: no-repeat;
             background-position: center;
-            min-height: 100px;
+            max-height: 175px;
             position: static !important;">
             
               <div class="container-fluid d-flex justify-content-between align-items-center px-4">

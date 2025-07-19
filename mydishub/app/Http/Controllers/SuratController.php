@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Carbon;
-
+use App\Models\Perpanjangsurat;
+use Illuminate\Validation\Rule;
 class SuratController extends Controller
 {
     /**
@@ -120,28 +121,40 @@ class SuratController extends Controller
     /**
      * Validasi form input surat.
      */
-    private function validated(Request $request): array
-    {
-        $request->validate([
-            'jenisperizinan' => 'required|in:Izin Operasional,Trayek',
-        ]);
+private function validated(Request $request): array
+{
+    $request->validate([
+        'jenisperizinan' => 'required|in:Izin Operasional,Trayek',
+    ]);
 
-        $rules = [
-            'nama' => 'required|max:25',
-            'noplat' => 'required|max:16',
-            'jenis' => 'required|max:16',
-            'ukuran' => 'required',
-            'tandaselar' => 'required',
-            'daya' => 'required',
-            'muatan' => 'required',
-            'jenisperizinan' => 'required',
-            'tujuan' => $request->jenisperizinan === 'Trayek' ? 'required|max:100' : 'nullable',
-        ];
+    $userId = Auth::id();
+    $suratId = $request->route('surat')->id ?? null;
 
-        return $request->validate($rules);
-    }
+    $rules = [
+        'nama'            => 'required|max:25',
+        'noplat'          => [
+            'required',
+            'max:16',
+            Rule::unique('surats')->ignore($suratId)->where(function ($query) use ($userId) {
+                return $query->where('user_id', $userId);
+            }),
+        ],
+        'jenis'           => 'required|max:16',
+        'ukuran'          => 'required',
+        'tandaselar'      => 'required',
+        'daya'            => 'required',
+        'muatan'          => 'required',
+        'jenisperizinan'  => 'required',
+        'tujuan'          => $request->jenisperizinan === 'Trayek' ? 'required|max:100' : 'nullable',
+    ];
 
-    /**
+        $messages = [
+    'nama.required' => 'Nama kapal wajib diisi.',
+    'noplat.unique' => 'Kapal sudah terdaftar.',
+    'ukuran.required' => 'Ukuran kapal harus diisi.',
+    ];
+    return $request->validate($rules);
+}    /**
      * Pastikan user yang login adalah pemilik data surat.
      */
     private function authorizeSurat(Surat $surat): void
@@ -196,13 +209,32 @@ class SuratController extends Controller
      */
     public function prosesList()
     {
-        $proses = Surat::with('user')
-            ->where('status', 'diproses')
-            ->get();
+        if (auth()->user()->role === 'a') {
+            $proses = Surat::with([ 'user'])
+                        ->where('status', 'diproses')
+                        ->orderBy('updated_at', 'desc')
+                        ->get();
+            $proses2 = Perpanjangsurat::with(['surat'])
+                    ->where('status', 'diproses')
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
+        } else {
+            $proses = Surat::with([ 'user'])
+                        ->where('status', 'diproses')
+                        ->whereHas( function ($q) {
+                            $q->where('user_id', auth()->id());
+                        })
+                        ->orderBy('updated_at', 'desc')
+                        ->get();
+            $proses2 = Perpanjangsurat::with(['surat'])
+                    ->where('status', 'diproses')
+                    ->whereHas('surat.kapal', function ($q) {
+                        $q->where('user_id', auth()->id());
+                    })
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
+        }
 
-        $proses2 = Surat::with('user')
-            ->where('status', 'diperpanjang')
-            ->get();
 
         return view('surat.proses', compact('proses', 'proses2'));
     }

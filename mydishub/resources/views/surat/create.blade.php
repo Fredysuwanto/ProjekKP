@@ -48,17 +48,27 @@
         </div>
 
         {{-- No. Plat --}}
-        <div class="form-group mb-3">
-          <label for="noplat">No. Plat</label>
-          <input type="text" class="form-control" id="noplat" name="noplat" value="{{ old('noplat') }}" placeholder="Masukkan No. Plat">
-          @error('noplat') <small class="text-danger">{{ $message }}</small> @enderror
+                <div class="form-group mb-3">
+          <label for="nama">No Plat Kapal</label>
+<input type="text" name="noplat" class="form-control @error('noplat') is-invalid @enderror" value="{{ old('noplat', $surat->noplat ?? '') }}">
+
+@error('noplat')
+  <div class="invalid-feedback">
+    {{ $message }}
+  </div>
         </div>
 
+@enderror
+<br>
         {{-- Jenis Kapal --}}
         <div class="form-group mb-3">
           <label for="jenis">Jenis Kapal</label>
-          <input type="text" class="form-control" id="jenis" name="jenis" value="{{ old('jenis') }}" placeholder="Masukkan Jenis Kapal">
-          @error('jenis') <small class="text-danger">{{ $message }}</small> @enderror
+          <select name="jenis" id="jenis">
+            <option value="tongkang">Tongkang</option>
+            <option value="jukung">Jukung</option>
+                        <option value="motorgandeng">Motor Gandeng</option>
+          </select>
+        
         </div>
 
         {{-- Ukuran --}}

@@ -64,6 +64,7 @@
               </td>
               @if(auth()->user()->role === 'a')
               <td>
+
                 @if ($ps->status === null)
                 <div class="d-flex justify-content-center gap-2">
                   <a href="{{ route('perpanjangsurat.proses', $ps->id) }}" class="btn btn-success btn-sm rounded-pill px-3">

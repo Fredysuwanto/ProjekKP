@@ -17,45 +17,41 @@
                     <tbody>
                         <tr>
                             <th style="width: 25%">Nama Pemilik</th>
-                            <td>{{ $perpanjangsurat->surat->pemilik->nama }}</td>
-                        </tr>
-                        <tr>
-                            <th>Alamat Pemilik</th>
-                            <td>{{ $perpanjangsurat->surat->pemilik->alamat }}</td>
+                            <td>{{ $perpanjangsurat->surat->nama }}</td>
                         </tr>
                         <tr>
                             <th>Nama Kapal</th>
-                            <td>{{ $perpanjangsurat->surat->kapal->nama }}</td>
+                            <td>{{ $perpanjangsurat->surat->nama }}</td>
                         </tr>
                         <tr>
                             <th>Nomor Plat</th>
-                            <td>{{ $perpanjangsurat->surat->kapal->noplat }}</td>
+                            <td>{{ $perpanjangsurat->surat->noplat }}</td>
                         </tr>
                         <tr>
                             <th>Jenis Kapal</th>
-                            <td>{{ $perpanjangsurat->surat->kapal->jenis }}</td>
+                            <td>{{ $perpanjangsurat->surat->jenis }}</td>
                         </tr>
                         <tr>
                             <th>Ukuran</th>
-                            <td>{{ $perpanjangsurat->surat->kapal->ukuran }}</td>
+                            <td>{{ $perpanjangsurat->surat->ukuran }}</td>
                         </tr>
                          <tr>
                             <th>Tanda Selar</th>
-                            <td>{{ $perpanjangsurat->surat->kapal->tandaselar }}</td>
+                            <td>{{ $perpanjangsurat->surat->tandaselar }}</td>
                         </tr>
                         <tr>
                             <th>Daya Mesin</th>
-                            <td>{{ $perpanjangsurat->surat->kapal->daya }}</td>
+                            <td>{{ $perpanjangsurat->surat->daya }}</td>
                         </tr>
                         <tr>
                             <th>Muatan</th>
-                            <td>{{ $perpanjangsurat->surat->kapal->muatan }}</td>
+                            <td>{{ $perpanjangsurat->surat->muatan }}</td>
                         </tr>
                         <tr>
                             <th>Jenis Perizinan</th>
                             <td>
                                  <span class="badge text-white px-2 py-1" style="background-color: #007bff;">
-                                 {{ $perpanjangsurat->surat->kapal->jenisperizinan }}
+                                 {{ $perpanjangsurat->surat->jenisperizinan }}
                                 </span>
                             </td>
                         </tr>

@@ -25,9 +25,6 @@ return new class extends Migration
             $table->string('file_stnk')-> nullable();
             $table->foreignId('pemilik_id')->constrained()->onDelete('cascade');
 // Di dalam Schema::create('surats', ...)
-$table->date('tanggal_kadaluarsa')->nullable(); // Tanggal kadaluarsa surat
-$table->string('status_perpanjangan')->default('aktif'); // 'aktif', 'kadaluarsa', 'diperpanjang'
-$table->date('tanggal_perpanjangan')->nullable(); // Tanggal terakhir diperpanjang
 
 
 

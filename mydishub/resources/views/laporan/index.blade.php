@@ -149,8 +149,8 @@
                             <span class="text-muted d-block">Dokumen - Tidak Ada</span>
                         @endif
                     </td>
-                                        <td class="text-center">
-                        @php $status = $surat->status ?? 'menunggu'; @endphp
+                        <td class="text-center">
+                        @php $status = $ps->surat->status ?? 'menunggu'; @endphp
                         @if ($status === 'diproses')
                             <span class="badge bg-success">Diproses</span>
                         @elseif ($status === 'ditolak')

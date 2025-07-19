@@ -52,9 +52,9 @@
     <h3>ANGKUTAN SUNGAI DAN DANAU ANTAR KABUPATEN / KOTA DALAM PROVINSI</h3>
 
     @php
-        $lastId = $kapal->id ?? 1;
+        $lastId = $surat->id ?? 1;
         $nomor = '551.31/' . str_pad($lastId, 4, '0', STR_PAD_LEFT) . '/4/Dishub-25';
-        $pemilik = $kapal->user;
+        $pemilik = $surat->user;
         $dataPemilik = $pemilik->pemilik ?? null;
     @endphp
 
@@ -86,23 +86,23 @@
             </tr>
             <tr>
                 <td>Nama Kapal</td>
-                <td>: {{ $kapal->nama ?? '.......................................................' }}</td>
+                <td>: {{ $surat->nama ?? '.......................................................' }}</td>
             </tr>
             <tr>
                 <td>Tanda Selar</td>
-                <td>: {{ $kapal->tandaselar  ?? '................' }}</td>
+                <td>: {{ $surat->tandaselar  ?? '................' }}</td>
             </tr>
             <tr>
                 <td>Ukuran</td>
-                <td>: {{ $kapal->ukuran ?? '.......................................................' }}</td>
+                <td>: {{ $surat->ukuran ?? '.......................................................' }}</td>
             </tr>
             <tr>
                 <td>Jenis Kapal</td>
-                <td>: {{ $kapal->jenis ?? '.......................................................' }}</td>
+                <td>: {{ $surat->jenis ?? '.......................................................' }}</td>
             </tr>
             <tr>
                 <td>Daya Mesin</td>
-                <td>: {{ $kapal->daya ?? '.......................................................' }}</td>
+                <td>: {{ $surat->daya ?? '.......................................................' }}</td>
             </tr>
             <tr>
                 <td>Tanggal</td>
@@ -110,7 +110,7 @@
             </tr>
             <tr>
                 <td>Trayek</td>
-                <td>: {{ $kapal->tujuan ?? '................' }}</td>
+                <td>: {{ $surat->tujuan ?? '................' }}</td>
             </tr>
         </table>
     </div>
